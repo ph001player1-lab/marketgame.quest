@@ -1,0 +1,37 @@
+---
+layout: layouts/base.njk
+permalink: /
+pageKind: home
+hasPrograms: true
+title: "Market Game — ежемесячная деловая игра для торгово-промышленных палат"
+ogTitle: "Управляйте бизнесом. Конкурируйте на рынке. Учитесь в деле."
+description: "Деловая игра-симулятор для торгово-промышленных палат и бизнес-объединений: платит палата или спонсор. Предприниматели региона каждый месяц соревнуются на одном общем рынке. Бесплатная демо-игра на 60 минут."
+---
+<section class="hero hero--home">
+  <div class="wrap hero__in">
+    <div class="hero__text">
+      <span class="eyebrow">Деловая игра для торгово-промышленных палат</span>
+      <h1>Управляйте бизнесом. Конкурируйте на рынке. <span>Учитесь в деле.</span></h1>
+      <p class="lede">Market Game — ежемесячная деловая игра-симулятор для вашей палаты. Предприниматели региона управляют конкурирующими компаниями на одном общем рынке и видят, как цена, реклама, мощности и деньги решают, кто победит. Платит палата — или спонсор.</p>
+      <div class="btns">
+        <button type="button" class="btn" data-lead="">Заказать демо-игру</button>
+        <a class="btn btn--line" href="#programs">Смотреть программы</a>
+      </div>
+      <p class="undercta">Бесплатная демо-игра на 60 минут для правления или команды. Время менеджер согласует с вами.</p>
+    </div>
+    {% include "partials/selector.njk" %}
+  </div>
+</section>
+
+<div class="flow">
+{% include "partials/map.njk" %}
+{% include "partials/benefits.njk" %}
+{% include "partials/experience.njk" %}
+{% include "partials/programs.njk" %}
+{% include "partials/calculator.njk" %}
+{% include "partials/banks.njk" %}
+{% include "partials/how.njk" %}
+{% include "partials/about.njk" %}
+{% include "partials/faq.njk" %}
+</div>
+{% include "partials/cta.njk" %}

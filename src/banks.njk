@@ -1,0 +1,214 @@
+---
+layout: layouts/base.njk
+permalink: /banks/
+pageKind: banks
+hasPrograms: false
+title: "Market Game для банков и спонсоров — ваш банк в игре"
+ogTitle: "Ваш банк — в игре"
+description: "Спонсируйте ежемесячные деловые игры в торгово-промышленных палатах: ваш бренд на кредите внутри игры, ваш сертифицированный ведущий в зале, контакты предпринимателей, давших согласие. Эксклюзивные территории."
+---
+{% set B = pricing.bank %}
+{% set P = pricing.packages %}
+{% set O = pricing.options %}
+{% set reachLo = B.participantsPerGame[0] * P.annual.games %}
+{% set reachHi = B.participantsPerGame[1] * P.annual.games %}
+<section class="hero">
+  <div class="wrap hero__in">
+    <div class="hero__text">
+      <span class="eyebrow">Банкам и спонсорам</span>
+      <h1>Ваш банк — <span>в игре</span></h1>
+      <p class="lede">Market Game каждый месяц собирает предпринимателей региона в их торгово-промышленной палате. Рано или поздно каждой команде нужен кредит — и выдать его может ваш банк: на экране и в зале.</p>
+      <div class="btns">
+        <button type="button" class="btn" data-lead="bank">Заказать демо для команды</button>
+        <a class="btn btn--line" href="#availability">Свободные регионы</a>
+      </div>
+      <p class="undercta">Бесплатная демо-игра на 60 минут для команды по работе с МСП, маркетинга или PR.</p>
+    </div>
+    {% include "partials/selector.njk" %}
+  </div>
+</section>
+
+<section class="sect" id="gets" aria-labelledby="getsTitle">
+  <div class="wrap">
+    <span class="eyebrow">Что получает банк</span>
+    <h2 id="getsTitle">Личные встречи с предпринимателями — каждый месяц</h2>
+    <div class="cards cards--3">
+      <article class="card">
+        <span class="card__tag">В игре</span>
+        <h3>Ваш бренд на кредите</h3>
+        <p>Когда у команды кончаются деньги и она берёт кредит, кредит носит имя вашего банка. Ваше имя на экранах всю игру.</p>
+      </article>
+      <article class="card">
+        <span class="card__tag">В зале</span>
+        <h3>Свой ведущий</h3>
+        <p>Ваш сертифицированный представитель ведёт игру очно — два часа личного контакта с владельцами бизнеса, а не стойка в конце зала.</p>
+      </article>
+      <article class="card">
+        <span class="card__tag">В приглашениях</span>
+        <h3>«При поддержке»</h3>
+        <p>Ваше имя в приглашениях палаты, на странице регистрации и в сертификатах участников.</p>
+      </article>
+      <article class="card">
+        <span class="card__tag">Контакты</span>
+        <h3>Контакты с согласием</h3>
+        <p>Контакты участников, которые при регистрации согласились получать от вас сообщения. Без согласия — никого.</p>
+      </article>
+      <article class="card">
+        <span class="card__tag">Отчёты</span>
+        <h3>Отчёт после каждой игры</h3>
+        <p>Кто играл, какие компании участвовали и что участники унесли с собой — плюс ежеквартальные встречи для эксклюзивных партнёров.</p>
+      </article>
+      <article class="card">
+        <span class="card__tag">Финграмотность</span>
+        <h3>Программы банка для МСП</h3>
+        <p>Обучение предпринимателей с участием сотрудников банка может войти в программы финансовой грамотности, поддержки МСП и социальной ответственности. Решает сам банк.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sect sect--tint" id="host" aria-labelledby="hostTitle">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Свой ведущий</span>
+      <h2 id="hostTitle">Зал ведёт ваш банкир</h2>
+    </div>
+    <div class="prose">
+      <p class="lede">По умолчанию наш ведущий подключается по видео на большой экран палаты. Многие банки предпочитают поставить перед залом своего человека.</p>
+      <ul class="ticks">
+        <li>Сертификация: {{ O.hostCertification | rub }} за человека — обучение плюс две игры рядом с нашим ведущим</li>
+        <li>После этого ваш представитель ведёт игры очно, а наша команда сопровождает игру по видео</li>
+        <li>В эксклюзивном партнёрстве включено: {{ B.hostsIncludedMetro }} ведущих для города, {{ B.hostsIncludedState }} для региона</li>
+      </ul>
+      <p>Условия кредита в игре — игровые. Ничто на экране не является предложением финансовой услуги, поэтому согласование с юристами и комплаенсом проходит просто.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sect" id="pricing" aria-labelledby="pricingTitle">
+  <div class="wrap split split--even">
+    <div>
+      <span class="eyebrow">Цены</span>
+      <h2 id="pricingTitle">Одна цена за палату</h2>
+      <p class="lede">Вы оплачиваете игры, палата даёт зал и приглашает своих членов. Цена та же, что и когда палата платит сама.</p>
+      <p class="pricebox__reach">При {{ B.participantsPerGame[0] }}–{{ B.participantsPerGame[1] }} участниках за игру {{ P.annual.price | rub }} — это {{ reachLo }}–{{ reachHi }} предпринимателей в год, около {{ (P.annual.price / reachHi) | round | rub }}–{{ (P.annual.price / reachLo) | round | rub }} за личный контакт.</p>
+    </div>
+    <div class="pricebox">
+      <table class="ptable">
+        <tbody>
+          <tr><th scope="row">Демо-игра для вашей команды</th><td>Бесплатно</td></tr>
+          <tr><th scope="row">Одна игра при поддержке банка</th><td>{{ P.signature.price | rub }}</td></tr>
+          <tr><th scope="row">{{ P.annual.games | plural('игра', 'игры', 'игр') }} в одной палате</th><td>{{ P.annual.price | rub }} в год</td></tr>
+          <tr><th scope="row">От {{ B.volumeFrom }} палат</th><td>{{ B.volumePrice | rub }} за палату в год</td></tr>
+          <tr><th scope="row">Игра сверх пакета</th><td>{{ O.extraGame | rub }} · {{ O.extraGameVolume | rub }} от {{ B.volumeFrom }} палат</td></tr>
+          <tr><th scope="row">Сертификация ведущего</th><td>{{ O.hostCertification | rub }} за человека</td></tr>
+          <tr><th scope="row">Игра на английском</th><td>+{{ O.english | rub }}</td></tr>
+          <tr><th scope="row">Очный ведущий из нашей команды</th><td>+{{ O.inPerson | rub }} плюс дорога</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="sect sect--ink" id="exclusive" aria-labelledby="exTitle">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Эксклюзивный банковский партнёр</span>
+      <h2 id="exTitle">Единственный кредитор в игре — на вашей территории</h2>
+    </div>
+    <div class="prose">
+      <p class="lede">Эксклюзив не продаётся отдельно: он приходит с объёмом. Спонсируйте игры в {{ B.exclusiveMetroFrom }} палатах города или в {{ B.exclusiveStateFrom }} палатах региона — и другие кредиторы в наших играх там не появятся.</p>
+      <ul class="ticks">
+        <li>Первое право спонсировать каждую новую палату на вашей территории</li>
+        <li>Выделенный менеджер и ежеквартальные встречи</li>
+        <li>Отчёты о посещаемости и участниках для программ банка</li>
+        <li>Сертификация ведущих включена: {{ B.hostsIncludedMetro }} человека для города, {{ B.hostsIncludedState }} для региона</li>
+      </ul>
+      <div class="btns">
+        <button type="button" class="btn" data-lead="bank" data-lead-note="Эксклюзивный банковский партнёр">Обсудить эксклюзив</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sect" id="availability" aria-labelledby="avTitle">
+  <div class="wrap">
+    <span class="eyebrow">Свободные регионы</span>
+    <h2 id="avTitle">Где ваш банк может стать партнёром</h2>
+    <p class="lede">Отметьте регионы, где вы работаете с бизнесом. Картину по ним мы принесём на демо.</p>
+    <div class="avail" data-avail>
+      <div class="avail__bar">
+        <p class="avail__sum" data-avail-sum aria-live="polite">Регионы не выбраны.</p>
+        <button type="button" class="btn btn--sm" data-lead="bank" data-avail-go>Заказать демо по этим регионам</button>
+      </div>
+      <div class="atable-wrap">
+      <table class="atable">
+        <thead>
+          <tr>
+            <th scope="col"><span class="sr">Выбрать</span></th>
+            <th scope="col">Регион</th>
+            <th scope="col">Банковский партнёр</th>
+            <th scope="col">Палат в списке</th>
+            <th scope="col">Программ идёт</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in regions %}{% set i = regionInfo[s.abbr] %}
+          <tr>
+            <td><input type="checkbox" value="{{ s.abbr }}" data-name="{{ s.name }}" data-open="{{ 1 if i.bank.status == 'open' else 0 }}" aria-label="Выбрать: {{ s.name }}"></td>
+            <th scope="row"><a href="/{{ s.slug }}/">{{ s.name }}</a></th>
+            <td>{% if i.bank.status == 'open' %}<span class="badge badge--open">Свободно</span>{% else %}<span class="badge badge--taken">{{ i.bank.name or ('Эксклюзив' if i.bank.status == 'exclusive' else 'Партнёр') }}</span>{% endif %}</td>
+            <td>{{ i.chambers.length if i.chambers.length else '—' }}</td>
+            <td>{{ i.active or '—' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sect sect--tint" id="sponsors" aria-labelledby="spTitle">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Вы не банк?</span>
+      <h2 id="spTitle">Другие спонсоры</h2>
+    </div>
+    <div class="prose">
+      <p class="lede">Лизинговые и факторинговые компании получают ту же интеграцию в игру, что и банки. Страховые компании, крупные работодатели и другие компании региона спонсируют игры с именем на экранах, «При поддержке» в приглашениях и своим сертифицированным ведущим.</p>
+      <div class="btns">
+        <button type="button" class="btn" data-lead="sponsor">Заказать демо как спонсор</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sect" id="how" aria-labelledby="howTitle">
+  <div class="wrap">
+    <span class="eyebrow">Как это работает</span>
+    <h2 id="howTitle">От демо до первой игры</h2>
+    <div class="steps">
+      <article><h3>Закажите демо-игру</h3><p>Менеджер свяжется с вами в течение рабочего дня и назначит удобное для команды время.</p></article>
+      <article><h3>Сыграйте демо</h3><p>60 минут онлайн для команды по работе с МСП, маркетинга или PR. Бесплатно.</p></article>
+      <article><h3>Выберите территорию</h3><p>Одна палата, несколько палат там, где вы работаете, город или весь регион.</p></article>
+      <article><h3>Соберите палаты</h3><p>Палаты подключаем мы — или вы приводите палаты, которые уже спонсируете.</p></article>
+      <article><h3>Сертифицируйте ведущих</h3><p>По желанию: ваши люди ведут игры очно после обучения и двух игр рядом с нашим ведущим.</p></article>
+      <article><h3>Игры и отчёты каждый месяц</h3><p>Ваш бренд в каждой игре, отчёт после каждой, ежеквартальные встречи для эксклюзивных партнёров.</p></article>
+    </div>
+  </div>
+</section>
+
+{% include "partials/faq.njk" %}
+
+<section class="sect sect--dark final" aria-labelledby="ctaTitle">
+  <div class="wrap">
+    <span class="eyebrow">Ваш следующий шаг</span>
+    <h2 id="ctaTitle">Посмотрите игру вместе с командой</h2>
+    <p class="lede">Закажите бесплатную демо-игру на 60 минут. Менеджер согласует удобное для вас время.</p>
+    <div class="btns">
+      <button type="button" class="btn" data-lead="bank">Заказать демо для команды</button>
+      <a class="btn btn--line" href="/print/bank/">Описание для банка (PDF)</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,18 @@
+{
+  "name": "marketgame-quest",
+  "version": "1.0.0",
+  "private": true,
+  "description": "marketgame.quest — программы Market Game для торгово-промышленных палат, банков и спонсоров России",
+  "type": "module",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve",
+    "sync": "node scripts/sync-sheet.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  }
+}

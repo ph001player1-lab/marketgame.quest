@@ -1,0 +1,28 @@
+{
+  "brand": "Market Game",
+  "url": "https://marketgame.quest",
+  "description": "Деловая игра-симулятор для торгово-промышленных палат, банков и спонсоров. Предприниматели вашего региона управляют конкурирующими компаниями на одном общем рынке. Бесплатная демо-игра на 60 минут.",
+
+  "game": {
+    "url": "https://marketgame.club/ru/"
+  },
+
+  "formEndpoint": "",
+
+  "contact": {
+    "email": "contact@marketgame.quest",
+    "telegram": "https://t.me/Nickbv"
+  },
+
+  "company": {
+    "legalName": "",
+    "address": "",
+    "registration": ""
+  },
+
+  "author": {
+    "name": "Николай Буленков"
+  },
+
+  "privacyUpdated": "5 октября 2026 года"
+}

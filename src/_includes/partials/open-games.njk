@@ -1,0 +1,21 @@
+{# Открытые игры: одна в месяц в каждом регионе, по местному времени.
+   Даты считает assets/js/schedule.js по правилам из regions.json;
+   здесь — то же правило словами, на случай без JavaScript. #}
+{% set fmt = pricing.formats[schedule.format] %}
+<section class="sect sect--dark" id="open-games" aria-labelledby="ogTitle">
+  <div class="wrap">
+    <span class="eyebrow">Открытые игры</span>
+    {% if region %}
+    <h2 id="ogTitle">Открытые игры {{ region.in }}</h2>
+    <p class="lede">Раз в месяц мы проводим открытую онлайн-игру по местному времени региона. Присоединиться может любой — простой способ попробовать игру для сотрудников палаты, правления или членов. Игры самой палаты идут по её собственному расписанию.</p>
+    <p class="games__rule">{{ region.game | gameRule }}, {{ regionInfo[region.abbr].zone }}.</p>
+    {% else %}
+    <h2 id="ogTitle">Открытые игры по всей России</h2>
+    <p class="lede">У каждого региона своя открытая онлайн-игра раз в месяц, по местному времени. Команды из любого региона могут прийти на любую игру — рынок, где никто не играет на своём поле.</p>
+    {% endif %}
+
+    <div class="games" data-open-games="{{ region.abbr if region else 'all' }}" data-limit="{{ 3 if region else 8 }}"></div>
+
+    <p class="games__note">Онлайн, на русском. Формат «{{ fmt.name }}» — {{ fmt.who | lower }}, {{ fmt.ticket | rub }} за команду, {{ schedule.hours | hours }}. Регистрация — на <a href="{{ site.game.url }}">marketgame.club</a>.</p>
+  </div>
+</section>

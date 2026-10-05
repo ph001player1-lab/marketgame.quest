@@ -1,0 +1,93 @@
+---
+layout: layouts/base.njk
+permalink: /international/
+pageKind: international
+hasPrograms: true
+title: "Market Game International — деловые игры для сообществ, которые торгуют через границы"
+ogTitle: "Для деловых сообществ, которые торгуют через границы"
+description: "Онлайн-игры, в которых команды из разных стран соревнуются на одном рынке. Для двусторонних палат, деловых советов, объединений экспортёров и иностранных компаний, выходящих на российский рынок. Бесплатная демо-игра на 60 минут."
+---
+<section class="hero">
+  <div class="wrap hero__in">
+    <div class="hero__text">
+      <span class="eyebrow">Международные программы</span>
+      <h1>Для сообществ, <span>которые торгуют через границы</span></h1>
+      <p class="lede">Двусторонние палаты, деловые советы, объединения экспортёров и иностранные компании, которые выходят на российский рынок: ваши участники соревнуются онлайн на одном рынке с командами из разных стран.</p>
+      <div class="btns">
+        <button type="button" class="btn" data-lead="">Заказать демо-игру</button>
+        <a class="btn btn--line" href="#programs">Смотреть программы</a>
+      </div>
+      <p class="undercta">Бесплатная демо-игра на 60 минут для правления или команды. Цены в рублях; игра на английском — опция.</p>
+    </div>
+    {% include "partials/selector.njk" %}
+  </div>
+</section>
+
+<div class="flow">
+<section class="sect" id="who" aria-labelledby="whoTitle">
+  <div class="wrap">
+    <span class="eyebrow">Для кого</span>
+    <h2 id="whoTitle">Участники, чей рынок больше одной страны</h2>
+    <div class="cards cards--4">
+      <article class="card">
+        <span class="card__tag">За рубежом</span>
+        <h3>Российские деловые сообщества за рубежом</h3>
+        <p>Программа для международных деловых сообществ — онлайн, на русском или английском.</p>
+      </article>
+      <article class="card">
+        <span class="card__tag">Двусторонние</span>
+        <h3>Двусторонние палаты и деловые советы</h3>
+        <p>Участники из двух экономик встречаются на одном рынке и видят, как конкурирует каждая сторона.</p>
+      </article>
+      <article class="card">
+        <span class="card__tag">ВЭД</span>
+        <h3>Экспортёры и объединения ВЭД</h3>
+        <p>Для компаний, которые импортируют, экспортируют или продают за рубежом.</p>
+      </article>
+      <article class="card">
+        <span class="card__tag">Выход на рынок</span>
+        <h3>Компании, выходящие на российский рынок</h3>
+        <p>Отрепетируйте первый год на рынке, где местные игроки уже конкурируют.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sect sect--tint" id="focus" aria-labelledby="focusTitle">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Что меняется</span>
+      <h2 id="focusTitle">Выход на рынок, где местные уже конкурируют</h2>
+    </div>
+    <div class="prose">
+      <p class="lede">Команды из разных стран встречаются на одном рынке, и каждая приносит свои деловые привычки. Игра показывает, что происходит, когда эти привычки сталкиваются.</p>
+      <ul class="ticks">
+        <li>Цена против старожилов, которые знают покупателей</li>
+        <li>Кассовый разрыв длинных отсрочек платежа</li>
+        <li>Реклама на рынке, который вы ещё не знаете</li>
+        <li>Когда торговое финансирование помогает — а когда кредит лишь сдвигает разрыв</li>
+      </ul>
+      <p>Спонсоры международных программ — обычно банки с торговым финансированием и сервисами для ВЭД.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sect sect--dark" id="open-games" aria-labelledby="ogTitle">
+  <div class="wrap">
+    <span class="eyebrow">Открытые игры</span>
+    <h2 id="ogTitle">Попробуйте игру на открытой сессии</h2>
+    <p class="lede">Открытые онлайн-игры идут каждую неделю — на русском и на английском. Присоединиться может любой: простой способ для сотрудников или правления попробовать игру до демо.</p>
+    <div class="btns">
+      <a class="btn" href="{{ site.game.url }}#calendar">Открытые игры на marketgame.club</a>
+    </div>
+  </div>
+</section>
+
+{% include "partials/programs.njk" %}
+{% include "partials/calculator.njk" %}
+{% include "partials/banks.njk" %}
+{% include "partials/how.njk" %}
+{% include "partials/about.njk" %}
+{% include "partials/faq.njk" %}
+</div>
+{% include "partials/cta.njk" %}

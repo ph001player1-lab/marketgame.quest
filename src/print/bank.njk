@@ -1,0 +1,62 @@
+---
+layout: layouts/print.njk
+permalink: /print/bank/
+title: "Описание для банка — Market Game"
+fields: '<label>Название банка <input type="text" data-input="sponsor" placeholder="Ваш банк"></label>'
+---
+{% set P = pricing.packages %}
+{% set O = pricing.options %}
+{% set B = pricing.bank %}
+{% set reachLo = B.participantsPerGame[0] * P.annual.games %}
+{% set reachHi = B.participantsPerGame[1] * P.annual.games %}
+<header class="doc__head">
+  <p class="doc__brand">Market <em>Game</em></p>
+  <p class="doc__kind">Описание для банка<span data-show-if="sponsor"> · <b data-fill="sponsor"></b></span></p>
+</header>
+
+<h1 class="doc__title">Ваш банк — в игре</h1>
+<p class="doc__lede">Market Game каждый месяц собирает предпринимателей региона в их торгово-промышленной палате на деловую игру-симулятор. Команды управляют конкурирующими компаниями на одном рынке, и рано или поздно каждой нужен кредит. Выдать его может ваш банк — на экране и в зале.</p>
+
+<div class="doc__cols">
+  <section>
+    <h2>Что получает банк</h2>
+    <ul>
+      <li><b>Ваш бренд на кредите внутри игры</b> и ваше имя на экранах.</li>
+      <li><b>Свой ведущий</b> в зале после сертификации ({{ O.hostCertification | rub }} за человека).</li>
+      <li><b>«При поддержке»</b> в приглашениях палаты и в сертификатах.</li>
+      <li><b>Контакты участников</b>, которые дали согласие.</li>
+      <li><b>Отчёты</b> после каждой игры; ежеквартальные встречи для эксклюзивных партнёров.</li>
+      <li><b>Программы банка:</b> игры могут войти в программы финансовой грамотности и поддержки МСП; решает сам банк.</li>
+    </ul>
+    <p class="doc__small">Условия кредита в игре — игровые; ничто на экране не является предложением финансовой услуги.</p>
+  </section>
+  <section>
+    <h2>Цены</h2>
+    <table class="doc__table doc__table--price">
+      <tr><th>Демо-игра для вашей команды</th><td>Бесплатно</td></tr>
+      <tr><th>Одна игра при поддержке банка</th><td>{{ P.signature.price | rub }}</td></tr>
+      <tr><th>{{ P.annual.games | plural('игра', 'игры', 'игр') }} в одной палате</th><td>{{ P.annual.price | rub }} в год</td></tr>
+      <tr><th>От {{ B.volumeFrom }} палат</th><td>{{ B.volumePrice | rub }} за палату в год</td></tr>
+      <tr><th>Эксклюзив: город</th><td>от {{ B.exclusiveMetroFrom }} палат</td></tr>
+      <tr><th>Эксклюзив: регион</th><td>от {{ B.exclusiveStateFrom }} палат</td></tr>
+    </table>
+    <p>При {{ B.participantsPerGame[0] }}–{{ B.participantsPerGame[1] }} участниках за игру {{ P.annual.price | rub }} — это <b>{{ reachLo }}–{{ reachHi }} предпринимателей в год</b>, около {{ (P.annual.price / reachHi) | round | rub }}–{{ (P.annual.price / reachLo) | round | rub }} за личный контакт.</p>
+  </section>
+</div>
+
+<section>
+  <h2>Эксклюзивный банковский партнёр</h2>
+  <p>Единственный кредитор в наших играх на вашей территории, первое право спонсировать каждую новую палату там, выделенный менеджер, ежеквартальные встречи, отчёты для программ банка и сертификация ведущих в пакете ({{ B.hostsIncludedMetro }} человека для города, {{ B.hostsIncludedState }} для региона).</p>
+</section>
+
+<section class="doc__state" data-show-if="region">
+  <h2><span data-fill="regionIn"></span></h2>
+  <ul class="doc__facts">
+    <li><span>Банковский партнёр</span><b data-fill="bank"></b></li>
+    <li><span>Программ идёт</span><b data-fill="active"></b></li>
+  </ul>
+</section>
+
+<footer class="doc__foot">
+  <p><b>Следующий шаг:</b> бесплатная демо-игра на 60 минут для вашей команды. Заявка — на <b>{{ site.url | replace("https://", "") }}/banks/</b></p>
+</footer>

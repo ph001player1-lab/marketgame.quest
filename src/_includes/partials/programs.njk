@@ -1,0 +1,97 @@
+{# Пакеты, форматы и опции. Все цифры — из src/_data/pricing.json. #}
+{% set P = pricing.packages %}
+{% set O = pricing.options %}
+{% set B = pricing.bank %}
+<section class="sect" id="programs" aria-labelledby="programsTitle">
+  <div class="wrap">
+    <span class="eyebrow">Программы и цены</span>
+    <h2 id="programsTitle">Цена одна — кто бы ни платил</h2>
+    <p class="lede">Любой пакет может оплатить палата или спонсор — банк или другая компания региона. Цена от этого не меняется.</p>
+
+    <div class="plans">
+      <article class="plan">
+        <span class="plan__tag">Сначала попробуйте</span>
+        <h3 class="plan__name">{{ P.demo.name }}</h3>
+        <p class="plan__price">Бесплатно</p>
+        <p class="plan__per">60 минут · онлайн</p>
+        <p class="plan__who">Для правления, сотрудников палаты или команды банка. Посмотрите игру до покупки.</p>
+        <button type="button" class="btn btn--line" data-lead="">Заказать демо-игру</button>
+      </article>
+
+      <article class="plan">
+        <span class="plan__tag">Одна игра</span>
+        <h3 class="plan__name">{{ P.pilot.name }}</h3>
+        <p class="plan__price">{{ P.pilot.price | rub }}</p>
+        <p class="plan__per">одна игра · до 20 команд</p>
+        <ul class="plan__facts">
+          <li>Проверьте формат на своих участниках</li>
+          <li>Тексты приглашений и короткий отчёт</li>
+          <li>Засчитывается в годовую программу, если договор подписан в течение {{ pricing.pilotCreditDays }} дней</li>
+          <li>Палате-основателю региона — {{ pricing.foundingPilot | rub }}</li>
+        </ul>
+      </article>
+
+      <article class="plan">
+        <span class="plan__tag">Полный пакет</span>
+        <h3 class="plan__name">{{ P.signature.name }}</h3>
+        <p class="plan__price">{{ P.signature.price | rub }}</p>
+        <p class="plan__per">одна игра · до 20 команд</p>
+        <ul class="plan__facts">
+          <li>Бренд палаты на экранах и в материалах</li>
+          <li>Пакет спонсора: «При поддержке», логотип, слово спонсору</li>
+          <li>Сертификаты участникам</li>
+          <li>Отчёт для правления и спонсора</li>
+        </ul>
+      </article>
+
+      <article class="plan plan--hot">
+        <span class="plan__tag">Выгоднее всего</span>
+        <h3 class="plan__name">{{ P.annual.name }}</h3>
+        <p class="plan__price">{{ P.annual.price | rub }}</p>
+        <p class="plan__per">в год · {{ P.annual.games | plural('игра', 'игры', 'игр') }}, раз в месяц</p>
+        <ul class="plan__facts">
+          <li>{{ P.annual.perGame | rub }} за игру, оплата помесячно</li>
+          <li>Разные аудитории: будущие предприниматели, владельцы бизнеса, молодые предприниматели, программы для руководителей, команды компаний — членов палаты</li>
+          <li>Рейтинг сезона и финал на годовом собрании палаты</li>
+          <li>Брендинг, пакет спонсора, сертификаты и отчёт после каждой игры</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="paybox">
+      <p><b>Платит спонсор?</b> Для палаты игры бесплатны. Вы подписываете тот же договор на 12 игр: даёте зал, приглашаете участников и ведёте регистрацию, а спонсор платит нам. <a href="/banks/">Как устроено спонсорство</a></p>
+      <p><b>Банки и спонсоры</b>, которые поддерживают несколько палат: {{ B.volumePrice | rub }} за палату в год от {{ B.volumeFrom }} палат; эксклюзивная территория — от {{ B.exclusiveMetroFrom }} палат в городе или от {{ B.exclusiveStateFrom }} в регионе.</p>
+    </div>
+
+    <h3 class="subhead" id="formats">Три формата игры</h3>
+    <p class="mute narrow">Каждая игра идёт в одном формате, как лиги наших открытых игр. Билет — за команду, а команда — это один человек или несколько.</p>
+    <div class="formats">
+      {% for key, f in pricing.formats %}
+      <article class="format">
+        <h4 class="format__name">{{ f.name }}</h4>
+        <p class="format__who">{{ f.who }}</p>
+        <dl class="format__facts">
+          <div><dt>Игра</dt><dd>{{ f.months | plural('игровой месяц', 'игровых месяца', 'игровых месяцев') }} · {{ f.hours | hours }}</dd></div>
+          <div><dt>Рекомендуемый билет</dt><dd>{{ f.ticket | rub }} за команду</dd></div>
+        </dl>
+        {% if key == 'elite' %}<p class="format__note">+{{ O.elite | rub }} за игру сверх пакета</p>{% endif %}
+      </article>
+      {% endfor %}
+    </div>
+
+    <h3 class="subhead" id="options">К любому пакету</h3>
+    <ul class="opts">
+      <li><b>Очный ведущий из нашей команды</b><span>+{{ O.inPerson | rub }} за игру, плюс дорога по факту</span></li>
+      <li><b>Игра на английском</b><span>+{{ O.english | rub }} за игру</span></li>
+      <li><b>Формат «{{ pricing.formats.elite.name }}»</b><span>+{{ O.elite | rub }} за игру · 4 часа, расширенный разбор</span></li>
+      <li><b>Игра сверх пакета</b><span>{{ O.extraGame | rub }} за игру</span></li>
+      <li><b>Свой ведущий у спонсора</b><span>{{ O.hostCertification | rub }} за человека · сертификация сотрудников банка или спонсора</span></li>
+    </ul>
+    <p class="note">По умолчанию участники сидят в вашем зале, а наш ведущий подключается по видео на большой экран. Очный ведущий — по желанию, или игру может вести сертифицированный представитель спонсора.</p>
+
+    <p class="docs">
+      <a class="doc" href="/print/brief/{% if region %}?region={{ region.abbr }}{% endif %}">Описание программы для правления <small>PDF</small></a>
+      <a class="doc" href="/print/prospectus/{% if region %}?region={{ region.abbr }}{% endif %}">Предложение для спонсора с названием палаты <small>PDF</small></a>
+    </p>
+  </div>
+</section>

@@ -1,0 +1,18 @@
+{# Малый бизнес региона в цифрах. Показывается, только когда в regions.json
+   у региона заполнено поле stats — формат описан в README. #}
+{% set st = region.stats %}
+{% if st %}
+<section class="sect sect--tint" id="stats" aria-labelledby="statsTitle">
+  <div class="wrap">
+    <span class="eyebrow">Малый бизнес {{ region.in }}</span>
+    <h2 id="statsTitle">Ваши участники — часть этих цифр</h2>
+    <dl class="specs">
+      {% if st.smallBusinesses %}<div><dt>Субъектов МСП</dt><dd>{{ st.smallBusinesses | num }}</dd>{% if st.employees %}<p>в них работают {{ st.employees | num }} человек</p>{% endif %}</div>{% endif %}
+      {% if st.newBusinesses %}<div><dt>Новых ИП и компаний{% if st.newBusinessesYear %}, {{ st.newBusinessesYear }}{% endif %}</dt><dd>{{ st.newBusinesses | num }}</dd><p>люди, которые начинают своё дело, — аудитория формата «{{ pricing.formats.start.name }}»</p></div>{% endif %}
+      {% if st.selfEmployed %}<div><dt>Самозанятых</dt><dd>{{ st.selfEmployed | num }}</dd><p>будущие предприниматели, которым предстоит вырасти в бизнес</p></div>{% endif %}
+      {% if st.smeLoans %}<div><dt>Кредиты МСП{% if st.smeLoansYear %}, {{ st.smeLoansYear }}{% endif %}</dt><dd>{{ st.smeLoans | num }} млрд ₽</dd><p>малый и средний бизнес занимает, чтобы расти</p></div>{% endif %}
+    </dl>
+    {% if st.sources %}<p class="specnote">Источники: {{ st.sources }}</p>{% endif %}
+  </div>
+</section>
+{% endif %}

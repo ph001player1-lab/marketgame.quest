@@ -1,0 +1,62 @@
+---
+layout: layouts/print.njk
+permalink: /print/brief/
+title: "Описание программы — Market Game"
+fields: '<label>Название палаты <input type="text" data-input="chamber" placeholder="например, ТПП Ярославской области"></label>'
+---
+{% set P = pricing.packages %}
+{% set O = pricing.options %}
+{% set F = pricing.formats %}
+<header class="doc__head">
+  <p class="doc__brand">Market <em>Game</em></p>
+  <p class="doc__kind">Описание программы<span data-show-if="chamber"> · <b data-fill="chamber"></b></span><span data-show-if="region"> · <span data-fill="regionName"></span></span></p>
+</header>
+
+<h1 class="doc__title">Ежемесячная деловая игра для наших членов</h1>
+<p class="doc__lede">Market Game — деловая игра-симулятор. Предприниматели региона управляют конкурирующими компаниями на одном общем рынке и видят, как цена, реклама, мощности и деньги решают, кто победит. Игра идёт в нашем зале раз в месяц; ведущий подключается по видео на большой экран.</p>
+
+<div class="doc__cols">
+  <section>
+    <h2>Почему это подходит нашей палате</h2>
+    <ul>
+      <li><b>Вовлечённость.</b> Ежемесячное событие, которое члены палаты ждут: они принимают решения и соревнуются, а не слушают лекцию.</li>
+      <li><b>Доход помимо взносов.</b> Билеты продаём мы, и деньги остаются палате.</li>
+      <li><b>Спонсорство.</b> Программу может оплатить банк или другой спонсор — тогда для палаты она бесплатна.</li>
+      <li><b>Знакомства по делу.</b> Борьба за одних и тех же покупателей расскажет членам палаты друг о друге больше, чем фуршет.</li>
+      <li><b>Под ключ.</b> С нас — зал; Market Game даёт ведущего, тексты приглашений и отчёт после каждой игры.</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Форматы и рекомендуемые билеты</h2>
+    <table class="doc__table">
+      {% for key, f in F %}
+      <tr><th>{{ f.name }}</th><td>{{ f.who }}<br><small>{{ f.months | plural('игровой месяц', 'игровых месяца', 'игровых месяцев') }} · {{ f.hours | hours }}</small></td><td>{{ f.ticket | rub }} за команду</td></tr>
+      {% endfor %}
+    </table>
+    <p class="doc__small">От четырёх до двадцати команд в игре; команда — один человек или несколько. Скидки для членов палаты — как обычно.</p>
+  </section>
+</div>
+
+<section>
+  <h2>Пакеты</h2>
+  <table class="doc__table doc__table--price">
+    <tr><th>{{ P.demo.name }}</th><td>60 минут онлайн для правления или сотрудников</td><td>Бесплатно</td></tr>
+    <tr><th>{{ P.pilot.name }}</th><td>Одна игра; засчитывается в годовую программу, если договор подписан в течение {{ pricing.pilotCreditDays }} дней<span data-show-if="founding-open">. Цена для палаты-основателя: {{ pricing.foundingPilot | rub }}</span></td><td>{{ P.pilot.price | rub }}</td></tr>
+    <tr><th>{{ P.signature.name }}</th><td>Одна игра с брендингом, пакетом спонсора, сертификатами и отчётом для правления</td><td>{{ P.signature.price | rub }}</td></tr>
+    <tr><th>{{ P.annual.name }}</th><td>{{ P.annual.games | plural('игра', 'игры', 'игр') }}, раз в месяц; {{ P.annual.perGame | rub }} за игру, оплата помесячно</td><td>{{ P.annual.price | rub }} в год</td></tr>
+  </table>
+  <p class="doc__small">Опции: очный ведущий +{{ O.inPerson | rub }} за игру плюс дорога · игра на английском +{{ O.english | rub }} · формат «{{ F.elite.name }}» +{{ O.elite | rub }} · игра сверх пакета {{ O.extraGame | rub }}. Цена одна, платит ли палата или спонсор; со спонсором палата подписывает договор на 12 игр и даёт зал и участников.</p>
+</section>
+
+<section class="doc__state" data-show-if="region">
+  <h2><span data-fill="regionIn"></span></h2>
+  <ul class="doc__facts">
+    <li><span>Часовой пояс</span><b data-fill="zone"></b></li>
+    <li><span>Место палаты-основателя</span><b data-fill="founding"></b></li>
+    <li><span>Банковский партнёр</span><b data-fill="bank"></b></li>
+  </ul>
+</section>
+
+<footer class="doc__foot">
+  <p><b>Следующий шаг:</b> бесплатная демо-игра на 60 минут для правления. Заявка — на <b>{{ site.url | replace("https://", "") }}</b><span data-show-if="region">/<span data-fill="regionSlug"></span>/</span></p>
+</footer>

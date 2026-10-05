@@ -1,0 +1,93 @@
+# Сборка и публикация marketgame.quest на GitHub Pages.
+#
+# Когда запускается:
+#   - при каждом изменении основной ветки репозитория (Settings → General →
+#     Default branch), как бы она ни называлась;
+#   - раз в час — забрать свежие статусы палат и банков из таблицы продаж
+#     (scripts/sync-sheet.mjs читает их через скрипт Google Apps Script,
+#     адрес — src/_data/site.json → formEndpoint). Если в таблице ничего
+#     не поменялось, сайт не пересобирается;
+#   - вручную: Actions → Build and deploy → Run workflow.
+#
+# Никаких секретов не нужно. Если когда-нибудь понадобится другой источник
+# статусов, его можно задать секретами CHAMBERS_CSV_URL и BANKS_CSV_URL.
+
+name: Build and deploy
+
+on:
+  push:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    # Публикуем только основную ветку: изменения в остальных ветках сайт не трогают
+    if: github.event_name != 'push' || github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.decide.outputs.publish }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Sync chambers and banks from the sales sheet
+        id: sync
+        env:
+          CHAMBERS_CSV_URL: ${{ secrets.CHAMBERS_CSV_URL }}
+          BANKS_CSV_URL: ${{ secrets.BANKS_CSV_URL }}
+        run: node scripts/sync-sheet.mjs
+
+      # Изменения базы сохраняем в репозитории: так видна история статусов
+      - name: Commit updated data
+        if: steps.sync.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/_data/chambers.json src/_data/banks.json
+          git commit -m "Update chambers and banks from the sales sheet"
+          git push origin HEAD:${{ github.ref_name }}
+
+      - name: Decide whether to publish
+        id: decide
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ] || [ "${{ steps.sync.outputs.changed }}" = "true" ]; then
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build
+        if: steps.decide.outputs.publish == 'true'
+        run: npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.decide.outputs.publish == 'true'
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    if: needs.build.outputs.publish == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

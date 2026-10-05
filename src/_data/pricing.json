@@ -1,0 +1,37 @@
+{
+  "packages": {
+    "demo":      { "name": "Демо-игра",         "price": 0,      "games": 1 },
+    "pilot":     { "name": "Пробная игра",      "price": 20000,  "games": 1 },
+    "signature": { "name": "Разовая игра",      "price": 50000,  "games": 1 },
+    "annual":    { "name": "Годовая программа", "price": 300000, "games": 12, "perGame": 25000 }
+  },
+
+  "bank": {
+    "volumeFrom": 5,
+    "volumePrice": 250000,
+    "volumePerGame": 20000,
+    "exclusiveMetroFrom": 3,
+    "exclusiveStateFrom": 10,
+    "hostsIncludedMetro": 2,
+    "hostsIncludedState": 5,
+    "participantsPerGame": [15, 20]
+  },
+
+  "options": {
+    "inPerson": 15000,
+    "english": 8000,
+    "elite": 25000,
+    "extraGame": 25000,
+    "extraGameVolume": 20000,
+    "hostCertification": 40000
+  },
+
+  "formats": {
+    "start":  { "name": "Старт", "who": "Те, кто собирается открыть бизнес",      "months": 12, "hours": 2,   "ticket": 2000 },
+    "growth": { "name": "Рост",  "who": "Владельцы действующего бизнеса",         "months": 24, "hours": 2.5, "ticket": 8500 },
+    "elite":  { "name": "Элита", "who": "Руководители и управленческие команды",  "months": 36, "hours": 4,   "ticket": 250000 }
+  },
+
+  "foundingPilot": 10000,
+  "pilotCreditDays": 90
+}
