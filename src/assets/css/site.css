@@ -509,7 +509,7 @@ button.badge:hover{background:var(--green);color:#fff;border-color:var(--green)}
 .ecalc__role small{display:block;font-size:14.5px;line-height:1.45;color:var(--dark-mute)}
 .ecalc__role input:checked+span{border-color:var(--red);background:rgba(216,66,42,.16);box-shadow:inset 0 0 0 1px var(--red)}
 .ecalc__role input:focus-visible+span{outline:3px solid var(--red);outline-offset:2px}
-.ecalc[data-role="agent"] [data-only="ae"],.ecalc[data-role="ae"] [data-only="agent"]{display:none}
+.ecalc[data-role="junior"] [data-only="senior"],.ecalc[data-role="senior"] [data-only="junior"]{display:none}
 .ecalc__table td:nth-child(2){font-size:13.5px;white-space:normal;line-height:1.35}
 .ecalc__table td:last-child{width:96px}
 .ecalc__fields{display:grid;gap:12px;align-items:end}

@@ -12,6 +12,9 @@ description: "Удалённая работа в отделе продаж: B2B-
    сценарий калькулятора и воронка — src/_data/agents.js; цены —
    pricing.json. Считает и отправляет отклик assets/js/agents.js. #}
 {% set T = agents.terms.manager %}
+{% set J = agents.terms.junior %}
+{% set jRate = (J.rate * 100) | round %}
+{% set jRenew = (J.renewalRate * 100) | round %}
 {% set D = agents.defaults %}
 {% set FN = agents.funnel %}
 {% set P = pricing.packages %}
@@ -88,10 +91,17 @@ description: "Удалённая работа в отделе продаж: B2B-
 <section class="sect sect--dark" id="calculator" aria-labelledby="calcTitle">
   <div class="wrap">
     <span class="eyebrow">Калькулятор дохода</span>
-    <h2 id="calcTitle">Сколько зарабатывает менеджер с опытом</h2>
-    <p class="lede">Оклад {{ T.salary | rub }} в месяц и {{ rate }}% с каждого контракта, нового и продления. Введите продажи, которые ожидаете за 90 дней. Цены — те же, что на страницах программ.</p>
+    <h2 id="calcTitle">Сколько можно заработать за первые 90 дней</h2>
+    <p class="lede">Выберите вакансию и введите продажи, которые ожидаете за 90 дней. Цены — те же, что на страницах программ.</p>
 
-    <div class="calc ecalc" data-ecalc>
+    <div class="calc ecalc" data-ecalc data-role="junior">
+      <div class="ecalc__roles" role="radiogroup" aria-label="Вакансия">
+        <label class="ecalc__role"><input type="radio" name="calcRole" value="junior" checked>
+          <span><b>Без оклада</b><small>{{ jRate }}% с новых продаж, {{ jRenew }}% с продлений и {{ J.perGame | rub }} за каждую игру, которую вы проведёте как ведущий</small></span></label>
+        <label class="ecalc__role"><input type="radio" name="calcRole" value="senior">
+          <span><b>С окладом</b><small>{{ T.salary | rub }} в месяц и {{ rate }}% с каждого контракта, нового и продления</small></span></label>
+      </div>
+
       <div class="calc__presets" role="group" aria-label="Пример">
         <span class="calc__presets-t">Пример:</span>
         <button type="button" class="pill" data-preset aria-pressed="true">10 продаж за 90 дней</button>
@@ -122,6 +132,7 @@ description: "Удалённая работа в отделе продаж: B2B-
             <legend>Подробности</legend>
             <div class="ecalc__fields">
               <label class="calc__field">Сообществ в одной сделке с банком<input type="number" name="bankChambers" value="{{ D.bankChambers }}" min="{{ B.volumeFrom }}" max="200" step="1" inputmode="numeric"></label>
+              <label class="calc__field" data-only="junior">Игр, которые вы проведёте как ведущий, по {{ J.perGame | rub }}<input type="number" name="hosted" value="{{ D.hosted }}" min="0" max="999" step="1" inputmode="numeric"></label>
               <label class="calc__field">Годовые контракты, которые продлеваются, % (допущение)<input type="number" name="renew" value="{{ D.renew }}" min="0" max="100" step="5" inputmode="numeric"></label>
             </div>
           </fieldset>
@@ -132,17 +143,19 @@ description: "Удалённая работа в отделе продаж: B2B-
           <p class="calc__total plus" data-out="quarter">—</p>
           <p class="calc__verdict" data-out="verdict"></p>
           <dl class="calc__stats">
-            <div><dt>Оклад за 3 месяца</dt><dd data-out="salary">—</dd></div>
-            <div><dt>{{ rate }}% с контрактов</dt><dd data-out="commission">—</dd></div>
+            <div data-only="senior"><dt>Оклад за 3 месяца</dt><dd data-out="salary">—</dd></div>
+            <div><dt>Процент с продаж, <span data-out="rate">{{ jRate }}%</span></dt><dd data-out="commission">—</dd></div>
+            <div data-only="junior"><dt>Игры в роли ведущего</dt><dd data-out="hosting">—</dd></div>
           </dl>
           <div class="ecalc__more">
             <div>
               <p class="calc__lab">В среднем в месяц</p>
               <p class="ecalc__num" data-out="month">—</p>
-              <p class="ecalc__sub">Ориентир вакансии — {{ T.income[0] | rub }}–{{ T.income[1] | rub }}</p>
+              <p class="ecalc__sub" data-only="senior">Ориентир вакансии — {{ T.income[0] | rub }}–{{ T.income[1] | rub }}</p>
+              <p class="ecalc__sub" data-only="junior">Без оклада: доход зависит только от продаж</p>
             </div>
             <div>
-              <p class="calc__lab">Процент со второго года</p>
+              <p class="calc__lab">Продления на второй год</p>
               <p class="ecalc__num" data-out="year2">—</p>
               <p class="ecalc__sub" data-out="year2note"></p>
             </div>

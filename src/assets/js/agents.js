@@ -37,7 +37,12 @@
   var cform = calc && calc.querySelector('[data-ecalc-form]');
   var out = {};
   var presetBtn = calc && calc.querySelector('[data-preset]');
-  var T = A.terms.manager;
+  var TERMS = { junior: A.terms.junior, senior: A.terms.manager };
+
+  function role() {
+    var r = calc.querySelector('input[name="calcRole"]:checked');
+    return r ? r.value : 'junior';
+  }
 
   if (calc) {
     each(calc.querySelectorAll('[data-out]'), function (el) { out[el.getAttribute('data-out')] = el; });
@@ -59,6 +64,7 @@
       annual: num(f.annual, 0, 999),
       bank: num(f.bank, 0, 99),
       bankChambers: num(f.bankChambers, P.bank.volumeFrom, 200),
+      hosted: num(f.hosted, 0, 999),
       renew: num(f.renew, 0, 100)
     };
   }
@@ -68,7 +74,10 @@
   }
 
   function render() {
+    var r = role();
+    var T = TERMS[r];
     var v = values();
+    calc.setAttribute('data-role', r);
 
     var bankValue = v.bank * v.bankChambers * PRICE.bank;
     var value = v.pilot * PRICE.pilot + v.signature * PRICE.signature + v.annual * PRICE.annual + bankValue;
@@ -78,21 +87,26 @@
 
     var commission = value * T.rate;
     var salary = T.salary * MONTHS;
-    var quarter = salary + commission;
-    // Второй год: продления контрактов, проданных за первые 12 месяцев
-    // (те же продажи каждые 90 дней)
-    var year2 = yearly * 4 * T.rate * v.renew / 100;
+    var hosting = r === 'junior' ? v.hosted * T.perGame : 0;
+    var quarter = salary + commission + hosting;
+    // Второй год: процент с продлений контрактов, проданных за первые
+    // 12 месяцев (те же продажи каждые 90 дней)
+    var year2 = yearly * 4 * T.renewalRate * v.renew / 100;
 
     out.quarter.textContent = money(quarter);
     out.salary.textContent = money(salary);
     out.commission.textContent = money(commission);
+    out.rate.textContent = Math.round(T.rate * 100) + '%';
+    out.hosting.textContent = money(hosting);
     out.month.textContent = money(quarter / MONTHS);
     out.year2.textContent = money(year2);
 
-    out.verdict.textContent = plural(sales, 'продажа', 'продажи', 'продаж') + ' — контракты на ' + money(value) + '.';
+    var verdict = plural(sales, 'продажа', 'продажи', 'продаж') + ' — контракты на ' + money(value) + '.';
+    if (r === 'junior' && v.hosted) verdict += ' Плюс ' + plural(v.hosted, 'игра', 'игры', 'игр') + ' в роли ведущего.';
+    out.verdict.textContent = verdict;
 
     out.year2note.textContent = yearly
-      ? 'За год, если продлится ' + v.renew + '% годовых контрактов'
+      ? Math.round(T.renewalRate * 100) + '% с продлений за год, если продлится ' + v.renew + '% годовых контрактов'
       : 'Продлеваются годовые программы и спонсорство банков, разовые игры — нет';
 
     if (presetBtn) presetBtn.setAttribute('aria-pressed', isDefault(v) ? 'true' : 'false');
@@ -112,6 +126,7 @@
       this.value = values().bankChambers;
       render();
     });
+    each(calc.querySelectorAll('input[name="calcRole"]'), function (i) { i.addEventListener('change', render); });
     if (presetBtn) presetBtn.addEventListener('click', applyDefaults);
     render();
   }

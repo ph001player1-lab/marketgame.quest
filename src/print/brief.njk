@@ -43,7 +43,7 @@ fields: '<label>Сообщество или компания <input type="text" 
     <tr><th>{{ P.demo.name }}</th><td>60 минут онлайн для руководства или команды</td><td>Бесплатно</td></tr>
     <tr><th>{{ P.pilot.name }}</th><td>Одна игра; стоимость засчитывается при переходе на годовую программу в течение {{ pricing.pilotCreditDays }} дней<span data-show-if="founding-open">. Эксклюзивному партнёру региона — {{ pricing.foundingPilot | rub }}</span></td><td>{{ P.pilot.price | rub }}</td></tr>
     <tr><th>{{ P.signature.name }}</th><td>Одна игра с брендингом, спонсорским пакетом, сертификатами и отчётом для руководства</td><td>{{ P.signature.price | rub }}</td></tr>
-    <tr><th>{{ P.annual.name }}</th><td>{{ P.annual.games | plural('игра', 'игры', 'игр') }}, раз в месяц; {{ P.annual.perGame | rub }} за игру, оплата помесячно</td><td>{{ P.annual.price | rub }} в год</td></tr>
+    <tr><th>{{ P.annual.name }}</th><td>{{ P.annual.games | plural('игра', 'игры', 'игр') }}, раз в месяц; {{ P.annual.perGame | rub }} за игру</td><td>{{ P.annual.price | rub }} в год</td></tr>
   </table>
   <p class="doc__small">Опции: ведущий на месте +{{ O.inPerson | rub }} за игру плюс дорога · игра на английском +{{ O.english | rub }} · формат «{{ F.elite.name }}» +{{ O.elite | rub }} · дополнительная игра {{ O.extraGame | rub }}. Стоимость одинакова, платим ли мы сами или спонсор; если платит спонсор, договор на 12 игр всё равно подписываем мы, предоставляем зал и приглашаем участников. {{ site.vat }}</p>
 </section>
