@@ -1,19 +1,19 @@
 ---
 layout: layouts/print.njk
 permalink: /print/brief/
-title: "Описание программы — Market Game"
+title: "Описание программы — Бизнес Квест"
 fields: '<label>Название палаты <input type="text" data-input="chamber" placeholder="например, ТПП Ярославской области"></label>'
 ---
 {% set P = pricing.packages %}
 {% set O = pricing.options %}
 {% set F = pricing.formats %}
 <header class="doc__head">
-  <p class="doc__brand">Market <em>Game</em></p>
+  <p class="doc__brand">Бизнес <em>Квест</em></p>
   <p class="doc__kind">Описание программы<span data-show-if="chamber"> · <b data-fill="chamber"></b></span><span data-show-if="region"> · <span data-fill="regionName"></span></span></p>
 </header>
 
 <h1 class="doc__title">Ежемесячная деловая игра для наших членов</h1>
-<p class="doc__lede">Market Game — деловая игра-симулятор. Предприниматели региона управляют конкурирующими компаниями на одном общем рынке и видят, как цена, реклама, мощности и деньги решают, кто победит. Игра идёт в нашем зале раз в месяц; ведущий подключается по видео на большой экран.</p>
+<p class="doc__lede">Бизнес Квест — деловая игра-симулятор. Предприниматели региона управляют конкурирующими компаниями на одном общем рынке и видят, как цена, реклама, мощности и деньги решают, кто победит. Игра идёт в нашем зале раз в месяц; ведущий подключается по видео на большой экран.</p>
 
 <div class="doc__cols">
   <section>
@@ -23,7 +23,7 @@ fields: '<label>Название палаты <input type="text" data-input="cha
       <li><b>Доход помимо взносов.</b> Билеты продаём мы, и деньги остаются палате.</li>
       <li><b>Спонсорство.</b> Программу может оплатить банк или другой спонсор — тогда для палаты она бесплатна.</li>
       <li><b>Знакомства по делу.</b> Борьба за одних и тех же покупателей расскажет членам палаты друг о друге больше, чем фуршет.</li>
-      <li><b>Под ключ.</b> С нас — зал; Market Game даёт ведущего, тексты приглашений и отчёт после каждой игры.</li>
+      <li><b>Под ключ.</b> С нас — зал; ведущий, тексты приглашений и отчёт после каждой игры — от команды «Бизнес Квест».</li>
     </ul>
   </section>
   <section>
@@ -45,7 +45,7 @@ fields: '<label>Название палаты <input type="text" data-input="cha
     <tr><th>{{ P.signature.name }}</th><td>Одна игра с брендингом, пакетом спонсора, сертификатами и отчётом для правления</td><td>{{ P.signature.price | rub }}</td></tr>
     <tr><th>{{ P.annual.name }}</th><td>{{ P.annual.games | plural('игра', 'игры', 'игр') }}, раз в месяц; {{ P.annual.perGame | rub }} за игру, оплата помесячно</td><td>{{ P.annual.price | rub }} в год</td></tr>
   </table>
-  <p class="doc__small">Опции: очный ведущий +{{ O.inPerson | rub }} за игру плюс дорога · игра на английском +{{ O.english | rub }} · формат «{{ F.elite.name }}» +{{ O.elite | rub }} · игра сверх пакета {{ O.extraGame | rub }}. Цена одна, платит ли палата или спонсор; со спонсором палата подписывает договор на 12 игр и даёт зал и участников.</p>
+  <p class="doc__small">Опции: очный ведущий +{{ O.inPerson | rub }} за игру плюс дорога · игра на английском +{{ O.english | rub }} · формат «{{ F.elite.name }}» +{{ O.elite | rub }} · игра сверх пакета {{ O.extraGame | rub }}. Цена одна, платит ли палата или спонсор; со спонсором палата подписывает договор на 12 игр и даёт зал и участников. {{ site.vat }}</p>
 </section>
 
 <section class="doc__state" data-show-if="region">

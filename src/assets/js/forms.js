@@ -249,7 +249,6 @@
   function fallbackLink() {
     var c = D.contact || {};
     if (c.email) return '<a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a>';
-    if (c.telegram) return '<a href="' + esc(c.telegram) + '" target="_blank" rel="noopener">Telegram</a>';
     return '';
   }
 

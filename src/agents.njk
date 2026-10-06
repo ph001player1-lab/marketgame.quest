@@ -3,195 +3,95 @@ layout: layouts/base.njk
 permalink: /agents/
 pageKind: agents
 hasPrograms: false
-title: "Карьера в Market Game — продажи торгово-промышленным палатам и банкам"
-ogTitle: "Продавайте Market Game палатам и их спонсорам"
-description: "Работа в продажах с вознаграждением от сделок: Market Game для торгово-промышленных палат, бизнес-объединений, банков и спонсоров России. Независимые агенты и первый менеджер по ключевым клиентам. Калькулятор дохода, карта продаж на 90 дней и плейбук."
+title: "Карьера в Бизнес Квесте — вакансии B2B-менеджеров по продажам"
+ogTitle: "Вакансии: B2B-менеджер по продажам — без опыта и с опытом"
+description: "Удалённая работа в отделе продаж: B2B-менеджер без опыта (обучение с нуля, свободный график) и B2B-менеджер с опытом (оклад 100 000 ₽ + 15%, доход 150 000–350 000 ₽ в месяц). Калькулятор дохода, карта продаж на 90 дней и плейбук."
 ---
-{# Страница карьеры для агентов по продажам. Условия ролей, сценарий
-   калькулятора, воронка, вакансии и плейбук — src/_data/agents.js; цены —
-   pricing.json. Считает и отправляет заявку assets/js/agents.js. Языки
-   проведения игр на этой странице не упоминаем; слово «зарплата» не
-   используем — только «доход» и «вознаграждение»: агенты работают по
-   договору как самозанятые или ИП. #}
-{% set T = agents.terms %}
+{# Страница карьеры: две вакансии отдела продаж, калькулятор дохода
+   менеджера с опытом, карта продаж и плейбук. Тексты вакансий, условия,
+   сценарий калькулятора и воронка — src/_data/agents.js; цены —
+   pricing.json. Считает и отправляет отклик assets/js/agents.js. #}
+{% set T = agents.terms.manager %}
 {% set D = agents.defaults %}
 {% set FN = agents.funnel %}
 {% set P = pricing.packages %}
 {% set B = pricing.bank %}
-{% set agentRate = (T.agent.rate * 100) | round %}
-{% set renewRate = (T.agent.renewalRate * 100) | round %}
-{% set aeRate = (T.ae.rate * 100) | round %}
-<script id="mg-agents" type="application/json">{{ { terms: T, defaults: D, funnel: FN } | jsonScript | safe }}</script>
+{% set rate = (T.rate * 100) | round %}
+<script id="mg-agents" type="application/json">{{ { terms: agents.terms, defaults: D, funnel: FN } | jsonScript | safe }}</script>
 
 <section class="hero">
   <div class="wrap hero__in">
     <div class="hero__text">
-      <span class="eyebrow">Карьера · Агенты по продажам</span>
-      <h1>Продавайте Market Game торгово-промышленным палатам <span>и их спонсорам</span></h1>
-      <p class="lede">Палаты проводят для своих членов живую деловую игру, банки и компании региона её спонсируют. Вы сводите их вместе — как независимый агент с вознаграждением от сделок или как наш первый менеджер по ключевым клиентам.</p>
+      <span class="eyebrow">Карьера · Отдел продаж</span>
+      <h1>Продавайте Бизнес Квест палатам, <span>объединениям и банкам</span></h1>
+      <p class="lede">Мы разрабатываем цифровые бизнес-симуляторы для бизнеса и расширяем команду отдела продаж. Две открытые вакансии: для тех, кто хочет освоить B2B-продажи с нуля, и для опытных B2B-менеджеров. Работа удалённая.</p>
       <div class="btns">
-        <a class="btn" href="#calculator">Калькулятор дохода</a>
+        <a class="btn" href="#vacancies">Смотреть вакансии</a>
         <a class="btn btn--line" href="#apply">Откликнуться</a>
       </div>
-      <p class="undercta">Самозанятые или ИП · Удалённо · Вся Россия. Для тех, кто продаёт B2B и уже знаком с нужными людьми.</p>
+      <p class="undercta">Удалённо · вся Россия · готовая база потенциальных клиентов и обучение продукту.</p>
     </div>
     <aside class="glance" aria-labelledby="glanceTitle">
-      <p class="glance__t" id="glanceTitle">Две открытые роли</p>
+      <p class="glance__t" id="glanceTitle">Две открытые вакансии</p>
+      {% for v in agents.vacancies %}
       <div class="glance__role">
-        <p class="glance__name"><a href="#role-agent">Независимый агент по продажам</a></p>
+        <p class="glance__name"><a href="#vac-{{ v.key }}">{{ v.title }}</a></p>
         <ul>
-          <li><b>{{ agentRate }}%</b> с каждой продажи</li>
-          <li><b>{{ renewRate }}%</b> с каждого продления</li>
-          <li><b>{{ T.agent.perGame | rub }}</b> за каждую проведённую вами игру</li>
+          {% for f in v.facts %}<li>{{ f[0] }}: <b>{{ f[1] }}</b></li>{% endfor %}
         </ul>
       </div>
-      <div class="glance__role">
-        <p class="glance__name"><a href="#role-ae">Первый менеджер по ключевым клиентам</a></p>
-        <ul>
-          <li><b>{{ T.ae.retainer | rub }}</b> ретейнер в месяц</li>
-          <li><b>{{ aeRate }}%</b> с каждого контракта</li>
-          <li>Ожидаемый доход <b>{{ T.ae.ote[0] | rub }}–{{ T.ae.ote[1] | rub }}</b> в год</li>
-        </ul>
-      </div>
+      {% endfor %}
     </aside>
   </div>
 </section>
 
-<section class="sect" id="roles" aria-labelledby="rolesTitle">
-  <div class="wrap">
-    <span class="eyebrow">Открытые роли</span>
-    <h2 id="rolesTitle">Два способа продавать Market Game</h2>
-    <p class="lede">Market Game — живой бизнес-симулятор: от 4 до 20 команд предпринимателей управляют конкурирующими компаниями на одном общем рынке — цена, реклама, мощности, банковские кредиты — и после каждого раунда видят, как меняется рейтинг. Палаты проводят игру как событие для своих членов, которое может приносить доход помимо взносов. Спонсоры оплачивают игру и получают свой бренд прямо внутри неё — перед залом, полным предпринимателей региона.</p>
-
-    <div class="roles">
-      <article class="role" id="role-agent">
-        <span class="card__tag">Вознаграждение от сделок</span>
-        <h3 class="role__name">Независимый агент по продажам</h3>
-        <p class="role__meta">Самозанятый или ИП · Агентский договор · Удалённо · Вся Россия, другие страны — тоже</p>
-        <dl class="role__terms">
-          <div><dt>Каждая продажа</dt><dd>{{ agentRate }}%</dd></div>
-          <div><dt>Каждое продление</dt><dd>{{ renewRate }}%</dd></div>
-          <div><dt>Каждая ваша игра</dt><dd>{{ T.agent.perGame | rub }}</dd></div>
-        </dl>
-        <p>Ищете ещё одно направление в портфель? Если вы уже работаете с торгово-промышленными палатами, бизнес-объединениями, региональными банками, страховыми или маркетинговыми агентствами — вот программа, которая им действительно нужна.</p>
-
-        <h4>Доход без потолка</h4>
-        <ul class="ticks">
-          <li>Разовая игра ({{ P.signature.price | rub }}) → {{ (P.signature.price * T.agent.rate) | rub }}</li>
-          <li>Годовая программа ({{ P.annual.price | rub }}) → {{ (P.annual.price * T.agent.renewalRate) | rub }} в год, пока она продлевается</li>
-          <li>Пять годовых клиентов — и у вас {{ (5 * P.annual.price * T.agent.renewalRate) | rub }} в год повторного дохода ещё до следующей продажи</li>
-        </ul>
-        <p class="role__fine">Это пример, а не гарантия.</p>
-
-        <h4>Проводите игры сами</h4>
-        <p>Мы платим {{ T.agent.perGame | rub }} за каждую игру, которую вы проведёте, и обучим вас. Экспертиза не нужна: расчёты делает игровой движок, а на разборе участники сами делятся своими стратегиями — вы ведёте процесс. Продайте разовую игру за {{ P.signature.price | rub }} и проведите её сами: {{ (P.signature.price * T.agent.rate) | rub }} + {{ T.agent.perGame | rub }} = {{ (P.signature.price * T.agent.rate + T.agent.perGame) | rub }} вам. Каждая игра — это ещё и зал, полный предпринимателей региона: новые клиенты для других ваших направлений и более тесные отношения с палатой.</p>
-
-        <h4>Что вы получаете</h4>
-        <ul class="ticks">
-          <li>Регистрация сделок: ваши клиенты и контакты закреплены за вами</li>
-          <li>Выплаты каждый месяц</li>
-          <li>Готовые продающие страницы, доступ к демо и основатель на ваших ключевых встречах</li>
-        </ul>
-        <p class="role__note">Это не стартовая позиция. Она для тех, у кого уже есть связи.</p>
-        <div class="btns">
-          <a class="btn" href="#apply" data-apply-role="agent">Откликнуться как агент</a>
-          <a class="btn btn--line" href="#calculator" data-calc-role="agent">Рассчитать доход</a>
-        </div>
-      </article>
-
-      <article class="role" id="role-ae">
-        <span class="card__tag">Ретейнер + процент</span>
-        <h3 class="role__name">Первый менеджер по ключевым клиентам</h3>
-        <p class="role__meta">Палаты, бизнес-объединения и банки России · Удалённо · В рабочие часы клиентов · Самозанятый или ИП</p>
-        <dl class="role__terms">
-          <div><dt>Ретейнер в месяц</dt><dd>{{ T.ae.retainer | rub }}</dd></div>
-          <div><dt>Каждый контракт</dt><dd>{{ aeRate }}%</dd></div>
-          <div><dt>Ожидаемый доход в год</dt><dd class="role__wide">{{ T.ae.ote[0] | rub }}–{{ T.ae.ote[1] | rub }}</dd></div>
-        </dl>
-        <p class="role__fine">Процент — с каждого закрытого вами контракта, нового и продления: без потолка, ставка одна во всех регионах.</p>
-        <p>Мы ищем первого менеджера по ключевым клиентам для российского рынка: опытного B2B-продавца, который уже работает с торгово-промышленными палатами, бизнес-объединениями, банками, страховыми или маркетинговыми агентствами. Это не стартовая позиция.</p>
-
-        <h4>Что вы будете делать</h4>
-        <ul class="ticks">
-          <li>Назначать бесплатные 60-минутные демо-игры палатам и их спонсорам</li>
-          <li>Отвечать на заявки на демо с marketgame.quest в течение рабочего дня</li>
-          <li>Закрывать пробные игры ({{ P.pilot.price | rub }}), разовые игры ({{ P.signature.price | rub }}) и годовые программы ({{ P.annual.price | rub }} в год)</li>
-          <li>Приводить банки, которые спонсируют сразу несколько палат ({{ B.volumePrice | rub }} за палату в год, от {{ B.volumeFrom }} палат)</li>
-          <li>Добиваться продлений и помогать строить плейбук для тех, кто придёт после вас</li>
-        </ul>
-
-        <h4>Что вы получаете</h4>
-        <ul class="ticks">
-          <li>Сайт, который продаёт, вместо презентации: страницы регионов, описание программы для правления, предложение для спонсора с названием палаты, калькулятор выручки от билетов</li>
-          <li>Игру, которая уже работает: открытые игры идут онлайн и офлайн</li>
-          <li>Основателя на ваших ключевых встречах</li>
-        </ul>
-
-        <h4>Кто вы</h4>
-        <ul class="ticks">
-          <li>От 3 лет закрываете B2B-сделки</li>
-          <li>Знакомы с палатами, бизнес-объединениями, банками или компаниями, которые их спонсируют</li>
-          <li>Уверенно выступаете перед правлением палаты или командой маркетинга банка</li>
-        </ul>
-
-        <h4>Почему сейчас</h4>
-        <p>За 2025 год в России открыли 1,3 млн компаний и ИП (Rusprofile, ТАСС) — это те люди, для которых сделан формат «{{ pricing.formats.start.name }}». А сама программа для палат в России новая: первая палата каждого региона становится палатой-основателем. Вы будете открывать регионы, а не принимать чужих клиентов.</p>
-        <div class="btns">
-          <a class="btn" href="#apply" data-apply-role="ae">Откликнуться как менеджер</a>
-          <a class="btn btn--line" href="#calculator" data-calc-role="ae">Рассчитать доход</a>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="sect sect--tint" id="vacancies" aria-labelledby="vacTitle">
+<section class="sect" id="vacancies" aria-labelledby="vacTitle">
   <div class="wrap">
     <span class="eyebrow">Вакансии</span>
-    <h2 id="vacTitle">Вакансии на hh.ru</h2>
-    <div class="news">
+    <h2 id="vacTitle">Открытые вакансии</h2>
+    <p class="lede">Бизнес Квест — живой бизнес-симулятор: от 4 до 20 команд предпринимателей управляют конкурирующими компаниями на одном общем рынке — цена, реклама, мощности, банковские кредиты — и после каждого раунда видят, как меняется рейтинг. Палаты проводят игру для своих членов, банки и компании региона её спонсируют. Первый контакт с клиентом — бесплатная демо-игра.</p>
+
+    <div class="roles">
       {% for v in agents.vacancies %}
-      <a class="newsitem" href="{{ v.url or ('#role-' + v.role) }}"{% if v.url %} target="_blank" rel="noopener"{% endif %}>
-        <span class="card__tag">{{ 'hh.ru' if v.url else 'Вакансия' }}</span>
-        <h3>{{ v.title }}</h3>
-        <p>{{ v.text }}</p>
-        <span class="more">{{ 'Открыть на hh.ru' if v.url else 'Подробнее о роли' }}</span>
-      </a>
+      <article class="role" id="vac-{{ v.key }}">
+        <span class="card__tag">{{ v.tag }}</span>
+        <h3 class="role__name">{{ v.title }}</h3>
+        <p class="role__meta">{{ v.meta }}</p>
+        <dl class="role__terms">
+          {% for f in v.facts %}<div><dt>{{ f[0] }}</dt><dd class="role__wide">{{ f[1] }}</dd></div>{% endfor %}
+        </dl>
+        {% for p in v.intro %}<p>{{ p }}</p>{% endfor %}
+
+        <details class="vac__more">
+          <summary>Обязанности, требования и условия</summary>
+          {% for s in v.sections %}
+          <h4>{{ s.t }}</h4>
+          {% for blk in s.blocks %}
+          {% if blk.ul %}<ul class="ticks">{% for li in blk.ul %}<li>{{ li }}</li>{% endfor %}</ul>
+          {% else %}<p>{{ blk.p }}</p>{% endif %}
+          {% endfor %}
+          {% endfor %}
+          <p class="role__note">{{ v.outro }}</p>
+        </details>
+
+        <div class="btns">
+          <a class="btn" href="#apply" data-apply-role="{{ v.key }}">Откликнуться</a>
+          {% if v.url %}<a class="btn btn--line" href="{{ v.url }}" target="_blank" rel="noopener">Открыть на hh.ru</a>{% endif %}
+        </div>
+      </article>
       {% endfor %}
-      {% if agents.employer.url %}
-      <a class="newsitem" href="{{ agents.employer.url }}" target="_blank" rel="noopener">
-        <span class="card__tag">hh.ru</span>
-        <h3>Все вакансии Market Game</h3>
-        <p>Страница компании на hh.ru: новые роли появляются там первыми.</p>
-        <span class="more">Открыть на hh.ru</span>
-      </a>
-      {% endif %}
-      {% if agents.founder.url %}
-      <a class="newsitem newsitem--founder" href="{{ agents.founder.url }}" target="_blank" rel="noopener">
-        <span class="card__tag">Основатель</span>
-        <h3>{{ agents.founder.name }}</h3>
-        <p>Напишите основателю в Telegram: вопросы о ролях и новости первых регионов.</p>
-        <span class="more">Написать в Telegram</span>
-      </a>
-      {% endif %}
     </div>
+    {% if agents.employer.url %}<p class="note"><a href="{{ agents.employer.url }}" target="_blank" rel="noopener">Все вакансии компании на hh.ru</a></p>{% endif %}
   </div>
 </section>
 
 <section class="sect sect--dark" id="calculator" aria-labelledby="calcTitle">
   <div class="wrap">
     <span class="eyebrow">Калькулятор дохода</span>
-    <h2 id="calcTitle">Сколько можно заработать за 90 дней продаж</h2>
-    <p class="lede">Выберите роль и введите продажи, которые ожидаете за 90 дней. Цены — те же, что на страницах программ.</p>
+    <h2 id="calcTitle">Сколько зарабатывает менеджер с опытом</h2>
+    <p class="lede">Оклад {{ T.salary | rub }} в месяц и {{ rate }}% с каждого контракта, нового и продления. Введите продажи, которые ожидаете за 90 дней. Цены — те же, что на страницах программ.</p>
 
-    <div class="calc ecalc" data-ecalc data-role="agent">
-      <div class="ecalc__roles" role="radiogroup" aria-label="Ваша роль">
-        <label class="ecalc__role"><input type="radio" name="calcRole" value="agent" checked>
-          <span><b>Независимый агент</b><small>{{ agentRate }}% с каждой продажи, {{ renewRate }}% с каждого продления и {{ T.agent.perGame | rub }} за каждую проведённую вами игру</small></span></label>
-        <label class="ecalc__role"><input type="radio" name="calcRole" value="ae">
-          <span><b>Первый менеджер</b><small>{{ T.ae.retainer | rub }} ретейнер в месяц и {{ aeRate }}% с каждого контракта, нового и продления</small></span></label>
-      </div>
-
+    <div class="calc ecalc" data-ecalc>
       <div class="calc__presets" role="group" aria-label="Пример">
         <span class="calc__presets-t">Пример:</span>
         <button type="button" class="pill" data-preset aria-pressed="true">10 продаж за 90 дней</button>
@@ -222,36 +122,33 @@ description: "Работа в продажах с вознаграждением
             <legend>Подробности</legend>
             <div class="ecalc__fields">
               <label class="calc__field">Палат в одной сделке с банком<input type="number" name="bankChambers" value="{{ D.bankChambers }}" min="{{ B.volumeFrom }}" max="200" step="1" inputmode="numeric"></label>
-              <label class="calc__field" data-only="agent">Игр, которые вы проведёте сами за 90 дней, по {{ T.agent.perGame | rub }}<input type="number" name="hosted" value="{{ D.hosted }}" min="0" max="999" step="1" inputmode="numeric"></label>
               <label class="calc__field">Годовые контракты, которые продлеваются, % (допущение)<input type="number" name="renew" value="{{ D.renew }}" min="0" max="100" step="5" inputmode="numeric"></label>
             </div>
-            <p class="calc__hint" data-only="agent" data-out="gamesHint"></p>
           </fieldset>
         </form>
 
         <div class="calc__out" aria-live="polite">
-          <p class="calc__lab">Доход от продаж за 90 дней</p>
+          <p class="calc__lab">Доход за 90 дней</p>
           <p class="calc__total plus" data-out="quarter">—</p>
           <p class="calc__verdict" data-out="verdict"></p>
           <dl class="calc__stats">
-            <div><dt>Процент с новых контрактов, <span data-out="rate">{{ agentRate }}%</span></dt><dd data-out="commission">—</dd></div>
-            <div data-only="agent"><dt>Проведённые вами игры</dt><dd data-out="hosting">—</dd></div>
-            <div data-only="ae"><dt>Ретейнер за 3 месяца</dt><dd data-out="retainer">—</dd></div>
+            <div><dt>Оклад за 3 месяца</dt><dd data-out="salary">—</dd></div>
+            <div><dt>{{ rate }}% с контрактов</dt><dd data-out="commission">—</dd></div>
           </dl>
           <div class="ecalc__more">
             <div>
-              <p class="calc__lab">Прогноз на 12 месяцев</p>
-              <p class="ecalc__num" data-out="year">—</p>
-              <p class="ecalc__sub">Те же продажи каждые 90 дней</p>
+              <p class="calc__lab">В среднем в месяц</p>
+              <p class="ecalc__num" data-out="month">—</p>
+              <p class="ecalc__sub">Ориентир вакансии — {{ T.income[0] | rub }}–{{ T.income[1] | rub }}</p>
             </div>
             <div>
-              <p class="calc__lab">Второй год от продлений</p>
+              <p class="calc__lab">Процент со второго года</p>
               <p class="ecalc__num" data-out="year2">—</p>
               <p class="ecalc__sub" data-out="year2note"></p>
             </div>
           </div>
           <p class="ecalc__warn">Это пример, а не гарантия дохода.</p>
-          <p class="calc__fine">Вознаграждение считается от суммы контракта и выплачивается помесячно, по мере оплаты клиентом. Второй год — продления годовых программ и спонсорства банков, проданных за первые 12 месяцев.</p>
+          <p class="calc__fine">Процент считается от суммы контракта и выплачивается по мере оплаты клиентом. Второй год — продления годовых программ и спонсорства банков, проданных за первые 12 месяцев, при тех же продажах каждые 90 дней.</p>
         </div>
       </div>
       <noscript><p class="calc__take">Включите JavaScript, чтобы пользоваться калькулятором.</p></noscript>
@@ -300,7 +197,7 @@ description: "Работа в продажах с вознаграждением
       <article class="card">
         <p class="path" aria-label="Пробная игра, потом разовая игра или годовая программа"><span>Пробная</span><i>→</i><span>Разовая</span><em>или</em><span>Годовая</span></p>
         <h3>Пробная игра растёт</h3>
-        <p>После пробной игры ({{ P.pilot.price | rub }}) предложите разовую игру ({{ P.signature.price | rub }}) или годовую программу ({{ P.annual.price | rub }} в год). Пробная игра засчитывается, если палата подпишет годовую программу в течение {{ pricing.pilotCreditDays }} дней, а вы получаете вознаграждение и со следующего контракта.</p>
+        <p>После пробной игры ({{ P.pilot.price | rub }}) предложите разовую игру ({{ P.signature.price | rub }}) или годовую программу ({{ P.annual.price | rub }} в год). Пробная игра засчитывается, если палата подпишет годовую программу в течение {{ pricing.pilotCreditDays }} дней, а вы получаете процент и со следующего контракта.</p>
       </article>
       <article class="card">
         <p class="path" aria-label="Палата, потом её банк-спонсор"><span>Палата</span><i>→</i><span>Её банк-спонсор</span></p>
@@ -308,9 +205,9 @@ description: "Работа в продажах с вознаграждением
         <p>У большинства палат среди спонсоров есть банк. Попросите познакомить и принесите <a href="/print/prospectus/">предложение для спонсора</a> с названием палаты. Банк, который спонсирует от {{ B.volumeFrom }} палат, платит {{ B.volumePrice | rub }} за палату в год.</p>
       </article>
       <article class="card">
-        <p class="path" aria-label="Проведённая игра, потом новые контакты"><span>Вы ведёте</span><i>→</i><span>{{ T.agent.perGame | rub }}</span><i>+</i><span>Новые контакты</span></p>
+        <p class="path" aria-label="Игра, потом новые контакты"><span>Игра</span><i>→</i><span>Новые контакты</span></p>
         <h3>Игра приводит следующего клиента</h3>
-        <p>Проведите игру сами: {{ T.agent.perGame | rub }} за игру для независимых агентов и два часа в зале, полном предпринимателей региона, — следующая палата, следующий спонсор, клиенты для других ваших направлений. И снова наверх карты.</p>
+        <p>Два часа в зале, полном предпринимателей региона, — следующая палата, следующий спонсор, новые знакомства. И снова наверх карты.</p>
       </article>
     </div>
   </div>
@@ -320,7 +217,7 @@ description: "Работа в продажах с вознаграждением
   <div class="wrap">
     <span class="eyebrow">Плейбук</span>
     <h2 id="pbTitle">С чего начать</h2>
-    <p class="lede">Не должностная инструкция, а первые шаги, которые работают из того места, где вы уже находитесь. Выберите профиль, ближе всего к вашему.</p>
+    <p class="lede">Не должностная инструкция, а первые шаги, которые работают из того опыта, который у вас уже есть. Выберите профиль, ближе всего к вашему.</p>
 
     <fieldset class="pb__pick">
       <legend class="sr">Ваш профиль</legend>
@@ -349,18 +246,19 @@ description: "Работа в продажах с вознаграждением
   <div class="wrap split">
     <div>
       <span class="eyebrow">Отклик</span>
-      <h2 id="applyTitle">Станьте агентом Market Game</h2>
-      <p class="lede">Несколько строк о вас: где вы живёте, что продаёте сейчас и с какими организациями работаете. Названия клиентов не нужны.</p>
-      <p class="note">Удобнее по почте? Пришлите резюме на <a href="mailto:{{ site.contact.email }}?subject=%D0%9C%D0%B5%D0%BD%D0%B5%D0%B4%D0%B6%D0%B5%D1%80%20%D0%BF%D0%BE%20%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%B2%D1%8B%D0%BC%20%D0%BA%D0%BB%D0%B8%D0%B5%D0%BD%D1%82%D0%B0%D0%BC">{{ site.contact.email }}</a> с темой «Менеджер по ключевым клиентам» — или откликнитесь на вакансию на hh.ru.</p>
+      <h2 id="applyTitle">Откликнуться на вакансию</h2>
+      <p class="lede">Несколько строк о вас: где вы живёте, что продавали и с какими организациями работали. Названия клиентов не нужны.</p>
+      <p class="note">Удобнее по почте? Пришлите резюме на <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a> и укажите в теме название вакансии.</p>
     </div>
 
     <div class="apply">
       <form class="apply__form" data-apply novalidate>
         <fieldset class="lf__row lf__type">
-          <legend>Роль</legend>
+          <legend>Вакансия</legend>
           <div class="seg seg--sm seg--two">
-            <label class="seg__opt"><input type="radio" name="role" value="agent"><span>Независимый агент</span></label>
-            <label class="seg__opt"><input type="radio" name="role" value="ae"><span>Первый менеджер</span></label>
+            {% for v in agents.vacancies %}
+            <label class="seg__opt"><input type="radio" name="role" value="{{ v.key }}" data-label="{{ v.title }}"><span>{{ v.tag }}</span></label>
+            {% endfor %}
           </div>
         </fieldset>
 
@@ -390,23 +288,24 @@ description: "Работа в продажах с вознаграждением
             <option value="other">За пределами России</option>
           </select>
         </div>
-        <div class="lf__row"><label for="apProfile">Ваш профиль</label>
+        <div class="lf__row"><label for="apProfile">Ваш опыт</label>
           <select id="apProfile" name="profile">
             <option value="">Выберите…</option>
             {% for p in agents.profiles %}<option value="{{ p.key }}">{{ p.label }}</option>{% endfor %}
+            <option value="none">Опыта в продажах нет</option>
             <option value="other">Другое</option>
           </select>
         </div>
-        <div class="lf__row"><label for="apSells">Что вы продаёте сейчас?</label><input id="apSells" name="sells" type="text" placeholder="например, бухгалтерские услуги, страхование бизнеса, организация мероприятий"></div>
+        <div class="lf__row"><label for="apSells">Что вы продавали?</label><input id="apSells" name="sells" type="text" placeholder="например, бухгалтерские услуги, страхование бизнеса, обучение"></div>
         <fieldset class="lf__row lf__checks">
-          <legend>С какими организациями вы работаете</legend>
+          <legend>С какими организациями вы работали</legend>
           <div class="lf__cols">
             <label class="check"><input type="checkbox" name="orgs" value="Торгово-промышленные палаты"><span>Торгово-промышленные палаты</span></label>
             <label class="check"><input type="checkbox" name="orgs" value="Бизнес-объединения"><span>Бизнес-объединения</span></label>
             <label class="check"><input type="checkbox" name="orgs" value="Банки"><span>Банки</span></label>
             <label class="check"><input type="checkbox" name="orgs" value="Центры «Мой бизнес»"><span>Центры «Мой бизнес»</span></label>
-            <label class="check"><input type="checkbox" name="orgs" value="Страховые агентства"><span>Страховые агентства</span></label>
-            <label class="check"><input type="checkbox" name="orgs" value="Маркетинговые агентства"><span>Маркетинговые агентства</span></label>
+            <label class="check"><input type="checkbox" name="orgs" value="Корпоративные клиенты"><span>Корпоративные клиенты</span></label>
+            <label class="check"><input type="checkbox" name="orgs" value="Образовательные продукты"><span>Образовательные продукты</span></label>
             <label class="check"><input type="checkbox" name="orgs" value="Малый бизнес"><span>Малый бизнес</span></label>
           </div>
           <span class="lf__hint">Только виды организаций — названия не нужны.</span>
@@ -423,7 +322,6 @@ description: "Работа в продажах с вознаграждением
           <select id="apSource" name="source">
             <option value="">Выберите…</option>
             <option>hh.ru</option>
-            <option>Telegram</option>
             <option>Поисковик</option>
             <option>Друг или коллега</option>
             <option>Торгово-промышленная палата</option>

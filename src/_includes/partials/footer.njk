@@ -1,10 +1,10 @@
 <footer class="foot">
   <div class="wrap foot__in">
     <div>
-      <a class="logo logo--sm" href="/">Market <em>Game</em></a>
+      <a class="logo logo--sm" href="/">Бизнес <em>Квест</em></a>
       <p class="foot__line">Программы деловых игр для торгово-промышленных палат, бизнес-объединений, банков и спонсоров в России и за её пределами.</p>
       {% if site.company.legalName %}
-      <p class="foot__line">{{ site.company.legalName }}{% if site.company.address %} · {{ site.company.address }}{% endif %}{% if site.company.registration %} · {{ site.company.registration }}{% endif %}</p>
+      <p class="foot__line">{{ site.company.legalName }}{% if site.company.inn %} · ИНН {{ site.company.inn }}{% endif %}{% if site.company.address %} · {{ site.company.address }}{% endif %}</p>
       {% endif %}
     </div>
     <nav class="foot__nav" aria-label="Меню в подвале">
@@ -13,7 +13,8 @@
       <a href="/international/">Международные</a>
       <a href="/banks/">Банкам и спонсорам</a>
       <a href="{{ site.game.url }}">Как устроена игра</a>
-      <a href="/agents/">Карьера · Стать агентом</a>
+      <a href="/agents/">Карьера · Вакансии</a>
+      <a href="/requisites/">Реквизиты</a>
       <a href="/privacy/">Конфиденциальность</a>
       {% if site.contact.email %}<a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>{% endif %}
     </nav>

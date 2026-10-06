@@ -3,7 +3,7 @@ layout: layouts/base.njk
 permalink: /banks/
 pageKind: banks
 hasPrograms: false
-title: "Market Game для банков и спонсоров — ваш банк в игре"
+title: "Бизнес Квест для банков и спонсоров — ваш банк в игре"
 ogTitle: "Ваш банк — в игре"
 description: "Спонсируйте ежемесячные деловые игры в торгово-промышленных палатах: ваш бренд на кредите внутри игры, ваш сертифицированный ведущий в зале, контакты предпринимателей, давших согласие. Эксклюзивные территории."
 ---
@@ -17,7 +17,7 @@ description: "Спонсируйте ежемесячные деловые иг�
     <div class="hero__text">
       <span class="eyebrow">Банкам и спонсорам</span>
       <h1>Ваш банк — <span>в игре</span></h1>
-      <p class="lede">Market Game каждый месяц собирает предпринимателей региона в их торгово-промышленной палате. Рано или поздно каждой команде нужен кредит — и выдать его может ваш банк: на экране и в зале.</p>
+      <p class="lede">Бизнес Квест каждый месяц собирает предпринимателей региона в их торгово-промышленной палате. Рано или поздно каждой команде нужен кредит — и выдать его может ваш банк: на экране и в зале.</p>
       <div class="btns">
         <button type="button" class="btn" data-lead="bank">Заказать демо для команды</button>
         <a class="btn btn--line" href="#availability">Свободные регионы</a>
@@ -91,7 +91,7 @@ description: "Спонсируйте ежемесячные деловые иг�
       <span class="eyebrow">Цены</span>
       <h2 id="pricingTitle">Одна цена за палату</h2>
       <p class="lede">Вы оплачиваете игры, палата даёт зал и приглашает своих членов. Цена та же, что и когда палата платит сама.</p>
-      <p class="pricebox__reach">При {{ B.participantsPerGame[0] }}–{{ B.participantsPerGame[1] }} участниках за игру {{ P.annual.price | rub }} — это {{ reachLo }}–{{ reachHi }} предпринимателей в год, около {{ (P.annual.price / reachHi) | round | rub }}–{{ (P.annual.price / reachLo) | round | rub }} за личный контакт.</p>
+      <p class="pricebox__reach">{{ site.vat }} При {{ B.participantsPerGame[0] }}–{{ B.participantsPerGame[1] }} участниках за игру {{ P.annual.price | rub }} — это {{ reachLo }}–{{ reachHi }} предпринимателей в год, около {{ (P.annual.price / reachHi) | round | rub }}–{{ (P.annual.price / reachLo) | round | rub }} за личный контакт.</p>
     </div>
     <div class="pricebox">
       <table class="ptable">

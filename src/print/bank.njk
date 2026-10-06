@@ -1,7 +1,7 @@
 ---
 layout: layouts/print.njk
 permalink: /print/bank/
-title: "Описание для банка — Market Game"
+title: "Описание для банка — Бизнес Квест"
 fields: '<label>Название банка <input type="text" data-input="sponsor" placeholder="Ваш банк"></label>'
 ---
 {% set P = pricing.packages %}
@@ -10,12 +10,12 @@ fields: '<label>Название банка <input type="text" data-input="spons
 {% set reachLo = B.participantsPerGame[0] * P.annual.games %}
 {% set reachHi = B.participantsPerGame[1] * P.annual.games %}
 <header class="doc__head">
-  <p class="doc__brand">Market <em>Game</em></p>
+  <p class="doc__brand">Бизнес <em>Квест</em></p>
   <p class="doc__kind">Описание для банка<span data-show-if="sponsor"> · <b data-fill="sponsor"></b></span></p>
 </header>
 
 <h1 class="doc__title">Ваш банк — в игре</h1>
-<p class="doc__lede">Market Game каждый месяц собирает предпринимателей региона в их торгово-промышленной палате на деловую игру-симулятор. Команды управляют конкурирующими компаниями на одном рынке, и рано или поздно каждой нужен кредит. Выдать его может ваш банк — на экране и в зале.</p>
+<p class="doc__lede">Бизнес Квест каждый месяц собирает предпринимателей региона в их торгово-промышленной палате на деловую игру-симулятор. Команды управляют конкурирующими компаниями на одном рынке, и рано или поздно каждой нужен кредит. Выдать его может ваш банк — на экране и в зале.</p>
 
 <div class="doc__cols">
   <section>
@@ -40,7 +40,7 @@ fields: '<label>Название банка <input type="text" data-input="spons
       <tr><th>Эксклюзив: город</th><td>от {{ B.exclusiveMetroFrom }} палат</td></tr>
       <tr><th>Эксклюзив: регион</th><td>от {{ B.exclusiveStateFrom }} палат</td></tr>
     </table>
-    <p>При {{ B.participantsPerGame[0] }}–{{ B.participantsPerGame[1] }} участниках за игру {{ P.annual.price | rub }} — это <b>{{ reachLo }}–{{ reachHi }} предпринимателей в год</b>, около {{ (P.annual.price / reachHi) | round | rub }}–{{ (P.annual.price / reachLo) | round | rub }} за личный контакт.</p>
+    <p>При {{ B.participantsPerGame[0] }}–{{ B.participantsPerGame[1] }} участниках за игру {{ P.annual.price | rub }} — это <b>{{ reachLo }}–{{ reachHi }} предпринимателей в год</b>, около {{ (P.annual.price / reachHi) | round | rub }}–{{ (P.annual.price / reachLo) | round | rub }} за личный контакт. {{ site.vat }}</p>
   </section>
 </div>
 

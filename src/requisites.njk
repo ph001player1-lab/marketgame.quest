@@ -1,0 +1,37 @@
+---
+layout: layouts/base.njk
+permalink: /requisites/
+pageKind: legal
+hasPrograms: false
+title: "Реквизиты — Бизнес Квест"
+description: "Реквизиты компании, которая проводит программы «Бизнес Квест»: для договоров и счетов."
+---
+{# Реквизиты — из src/_data/site.json → company. Поменяли там — поменялись
+   здесь, в подвале, в политике конфиденциальности и в согласии. #}
+{% set C = site.company %}
+<section class="sect">
+  <div class="wrap legal">
+    <span class="eyebrow">Компания</span>
+    <h1 class="legal__h1">Реквизиты</h1>
+    <p class="lede">Программы «Бизнес Квест» проводит {{ C.legalName }}. Для договора и счёта — реквизиты ниже; по вопросам сотрудничества пишите на <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a> или оставьте заявку на сайте.</p>
+
+    <table class="ptable reqs">
+      <tbody>
+        <tr><th scope="row">Наименование</th><td>{{ C.legalName }}</td></tr>
+        <tr><th scope="row">ИНН</th><td>{{ C.inn }}</td></tr>
+        <tr><th scope="row">КПП</th><td>{{ C.kpp }}</td></tr>
+        <tr><th scope="row">Юридический адрес</th><td>{{ C.address }}</td></tr>
+        <tr><th scope="row">Расчётный счёт</th><td>{{ C.bank.account }}</td></tr>
+        <tr><th scope="row">Банк</th><td>{{ C.bank.name }}</td></tr>
+        <tr><th scope="row">БИК</th><td>{{ C.bank.bik }}</td></tr>
+        <tr><th scope="row">Корреспондентский счёт</th><td>{{ C.bank.corrAccount }}</td></tr>
+        <tr><th scope="row">Город банка</th><td>{{ C.bank.city }}</td></tr>
+        <tr><th scope="row">Генеральный директор</th><td>{{ C.director }}</td></tr>
+        <tr><th scope="row">Email</th><td><a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></td></tr>
+      </tbody>
+    </table>
+    <p class="note">{{ site.vat }}</p>
+
+    <a class="backlink" href="/">На главную</a>
+  </div>
+</section>

@@ -319,6 +319,10 @@ button.badge:hover{background:var(--green);color:#fff;border-color:var(--green)}
 .ptable th,.ptable td{padding:10px 0;border-bottom:1px solid rgba(128,128,128,.25);vertical-align:top}
 .ptable th{text-align:left;font-weight:600;padding-right:14px}
 .ptable td{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
+/* реквизиты: значения слева, длинные номера счетов переносятся */
+.reqs{margin-top:clamp(18px,3vw,28px)}
+.reqs th{width:38%;color:var(--mute)}
+.reqs td{text-align:left;font-weight:700;overflow-wrap:anywhere}
 .pricebox__reach{font-size:15px;margin:0 0 18px}
 .sect--dark .pricebox__reach,.sect--ink .pricebox__reach{color:var(--dark-mute)}
 .banks__chamber{margin:clamp(24px,3.5vw,34px) 0 0;padding-top:18px;border-top:1px solid rgba(242,241,236,.16);font-size:16px;color:var(--dark-mute)}
@@ -468,6 +472,12 @@ button.badge:hover{background:var(--green);color:#fff;border-color:var(--green)}
 .role__fine{font-size:13.5px!important;color:var(--mute)!important}
 .role__note{font-weight:700;border-left:3px solid var(--red);padding-left:12px;margin-top:18px}
 .role .btns{margin-top:22px}
+/* полный текст вакансии — раскрывается по клику */
+.vac__more{margin-top:16px;border-top:1px solid var(--line)}
+.vac__more summary{cursor:pointer;list-style:none;padding:14px 0 4px;font-weight:800;font-size:15.5px;color:var(--red-ink)}
+.vac__more summary::-webkit-details-marker{display:none}
+.vac__more summary::after{content:" \2193"}
+.vac__more[open] summary::after{content:" \2191"}
 
 .news{display:grid;gap:14px;margin-top:clamp(24px,3.5vw,36px)}
 @media(min-width:720px){.news{grid-template-columns:repeat(2,minmax(0,1fr))}}

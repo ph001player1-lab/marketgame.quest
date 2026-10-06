@@ -1,7 +1,7 @@
 ---
 layout: layouts/print.njk
 permalink: /print/prospectus/
-title: "Предложение для спонсора — Market Game"
+title: "Предложение для спонсора — Бизнес Квест"
 fields: '<label>Название палаты <input type="text" data-input="chamber" placeholder="Ваша палата"></label><label>Спонсор <input type="text" data-input="sponsor" placeholder="например, банк «Пример»"></label><label>Контактное лицо <input type="text" data-input="person" placeholder="Ваше имя"></label><label>Email <input type="email" data-input="email" placeholder="you@tpp.ru"></label>'
 ---
 {% set P = pricing.packages %}
@@ -15,7 +15,7 @@ fields: '<label>Название палаты <input type="text" data-input="cha
 </header>
 
 <h1 class="doc__title"><span data-fill="sponsor" data-empty="Ваш банк"></span> представляет: ежемесячная деловая игра для предпринимателей</h1>
-<p class="doc__lede">Раз в месяц владельцев бизнеса региона на Market Game — деловую игру-симулятор — собирает <span data-fill="chamber" data-empty="наша палата"></span>. Команды управляют конкурирующими компаниями на одном общем рынке, и рано или поздно каждой нужен кредит. Выдаёт его генеральный спонсор — ваш банк.</p>
+<p class="doc__lede">Раз в месяц владельцев бизнеса региона на «Бизнес Квест» — деловую игру-симулятор — собирает <span data-fill="chamber" data-empty="наша палата"></span>. Команды управляют конкурирующими компаниями на одном общем рынке, и рано или поздно каждой нужен кредит. Выдаёт его генеральный спонсор — ваш банк.</p>
 
 <div class="doc__cols">
   <section>
@@ -36,7 +36,7 @@ fields: '<label>Название палаты <input type="text" data-input="cha
       <tr><th>Одна игра</th><td>{{ P.signature.price | rub }}</td></tr>
       <tr><th>Сертификация ведущего</th><td>{{ O.hostCertification | rub }} за человека</td></tr>
     </table>
-    <p class="doc__small">Условия кредита в игре — игровые; ничто на экране не является предложением финансовой услуги.</p>
+    <p class="doc__small">{{ site.vat }} Условия кредита в игре — игровые; ничто на экране не является предложением финансовой услуги.</p>
     <h2>Охват</h2>
     <p>При {{ B.participantsPerGame[0] }}–{{ B.participantsPerGame[1] }} участниках за игру двенадцать игр — это <b>{{ reachLo }}–{{ reachHi }} предпринимателей в год</b>, около {{ (P.annual.price / reachHi) | round | rub }}–{{ (P.annual.price / reachLo) | round | rub }} за личный контакт.</p>
   </section>
@@ -44,5 +44,5 @@ fields: '<label>Название палаты <input type="text" data-input="cha
 
 <footer class="doc__foot">
   <p data-show-if="person"><b>Контакт:</b> <span data-fill="person"></span><span data-show-if="email">, <span data-fill="email"></span></span></p>
-  <p>Программа Market Game · {{ site.url | replace("https://", "") }}</p>
+  <p>Программа «Бизнес Квест» · {{ site.url | replace("https://", "") }}</p>
 </footer>

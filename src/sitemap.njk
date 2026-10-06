@@ -11,6 +11,7 @@ eleventyExcludeFromCollections: true
   <url><loc>{{ site.url }}/agents/</loc></url>
   <url><loc>{{ site.url }}/privacy/</loc></url>
   <url><loc>{{ site.url }}/consent/</loc></url>
+  <url><loc>{{ site.url }}/requisites/</loc></url>
 {%- for s in regions %}{% if regionInfo[s.abbr].indexable %}
   <url><loc>{{ site.url }}/{{ s.slug }}/</loc></url>
 {%- endif %}{% endfor %}

@@ -1,5 +1,5 @@
 /**
- * Market Game (marketgame.quest) — приём заявок на демо-игру и откликов агентов.
+ * Бизнес Квест (marketgame.quest) — приём заявок на демо-игру и откликов на вакансии.
  *
  * Что делает:
  *   - принимает заявку с сайта, дописывает строку в Google-таблицу продаж
@@ -41,7 +41,7 @@ var SHEETS = {
   agent_application: 'Заявки — агенты'
 };
 
-var TYPE_LABEL = { chamber: 'Палата', bank: 'Банк', sponsor: 'Спонсор', agent_application: 'Агент' };
+var TYPE_LABEL = { chamber: 'Палата', bank: 'Банк', sponsor: 'Спонсор', agent_application: 'Отклик на вакансию' };
 
 // Колонки каждого листа: [заголовок, поле заявки]
 var COLUMNS = {
@@ -64,7 +64,7 @@ var COLUMNS = {
     ['Интерес', 'interest'], ['Пометка', 'note'], ['Сообщение', 'message'],
     ['Страница', 'page'], ['Источник', 'referrer'], ['UTM', 'utm'], ['Статус', 'status']
   ],
-  // Отклик агента со страницы /agents/
+  // Отклик на вакансию со страницы /agents/
   agent_application: [
     ['Дата', 'date'], ['Роль', 'role'], ['Имя', 'name'], ['Email', 'email'], ['Телефон', 'phone'],
     ['Город', 'city'], ['Регион или страна', 'region'], ['Часовой пояс', 'tz'], ['Профиль', 'profile'],
@@ -351,10 +351,10 @@ function notifyTelegram(row) {
   return sendToTelegram(lines.join('\n'));
 }
 
-/** Уведомление об отклике агента — свои поля, без «заявки на демо». */
+/** Уведомление об отклике на вакансию — свои поля, без «заявки на демо». */
 function notifyAgent(row) {
   var lines = [
-    '<b>marketgame.quest · отклик агента · ' + esc(row.role || 'роль не выбрана') + '</b>',
+    '<b>marketgame.quest · отклик на вакансию · ' + esc(row.role || 'вакансия не выбрана') + '</b>',
     '',
     esc(row.name),
     'Email: ' + esc(row.email),
