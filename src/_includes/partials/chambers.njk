@@ -1,26 +1,26 @@
-{# Все палаты региона со статусами. Список приходит из таблицы продаж
-   (src/_data/chambers.json, его пишет scripts/sync-sheet.mjs).
+{# Сообщества и компании региона со статусами. Список приходит из таблицы
+   продаж (src/_data/chambers.json, его пишет scripts/sync-sheet.mjs).
    Поиск по списку — assets/js/lists.js. #}
 {% set info = regionInfo[region.abbr] %}
-{% set claim = "Заявка на статус палаты-основателя — " + region.name %}
+{% set claim = "Заявка на эксклюзивные права — " + region.name %}
 <section class="sect" id="chambers" aria-labelledby="chTitle">
   <div class="wrap">
-    <span class="eyebrow">Палаты и бизнес-объединения {{ region.in }}</span>
+    <span class="eyebrow">Сообщества и компании {{ region.in }}</span>
     {% if info.founding.taken %}
-    <h2 id="chTitle">Присоединяйтесь к палатам, которые уже играют</h2>
-    <p class="lede">{% if info.founding.name %}{{ info.founding.name }} — палата-основатель региона. {% endif %}Найдите свою палату в списке и закажите демо-игру для правления.</p>
+    <h2 id="chTitle">Присоединяйтесь к тем, кто уже играет</h2>
+    <p class="lede">{% if info.founding.name %}{{ info.founding.name }} — эксклюзивный партнёр региона. {% endif %}Найдите своё сообщество в списке и закажите демо-игру.</p>
     {% else %}
-    <h2 id="chTitle">Место палаты-основателя {{ region.in }} свободно</h2>
-    <p class="lede">Первая палата {{ region.in }}, подписавшая договор, получает пробную игру за {{ pricing.foundingPilot | rub }} вместо {{ pricing.packages.pilot.price | rub }} и постоянное место на этой странице.</p>
+    <h2 id="chTitle">Эксклюзивные права {{ region.in }} свободны</h2>
+    <p class="lede">Первое сообщество или компания, подписавшие договор, получают эксклюзивное право проводить «Бизнес Квест» {{ region.in }}, пробную игру за {{ pricing.foundingPilot | rub }} вместо {{ pricing.packages.pilot.price | rub }} и постоянное место на этой странице.</p>
     {% endif %}
 
     {% if info.chambers.length %}
     <div class="chlist" data-chlist>
       <label class="chlist__search">
-        <span>Найдите свою палату</span>
-        <input type="search" placeholder="Название палаты или город" autocomplete="off" data-chlist-search>
+        <span>Найдите своё сообщество</span>
+        <input type="search" placeholder="Название или город" autocomplete="off" data-chlist-search>
       </label>
-      <p class="chlist__count" data-chlist-count>Палат в списке: {{ info.chambers.length }}</p>
+      <p class="chlist__count" data-chlist-count>В списке: {{ info.chambers.length }}</p>
       <ul class="chlist__items">
         {% for c in info.chambers %}
         <li class="ch" data-find="{{ c.name | lower }} {{ (c.city or '') | lower }}">
@@ -28,27 +28,27 @@
             <b>{% if c.url %}<a href="{{ c.url }}" rel="nofollow noopener">{{ c.name }}</a>{% else %}{{ c.name }}{% endif %}</b>
             {% if c.city %}<span>{{ c.city }}</span>{% endif %}
           </div>
-          {% if c.status == 'founding' %}<span class="badge badge--founding">Палата-основатель</span>
+          {% if c.status == 'founding' %}<span class="badge badge--founding">Эксклюзивный партнёр</span>
           {% elif c.status == 'active' %}<span class="badge badge--active">{% if c.sponsor %}При поддержке: {{ c.sponsor }}{% else %}Программа идёт{% endif %}</span>
-          {% elif c.status == 'private' %}{# договор есть, но палата не разрешила упоминать статус #}
-          {% else %}<button type="button" class="badge badge--open" data-lead="chamber" data-lead-org="{{ c.name }}" data-lead-note="{{ claim if not info.founding.taken else '' }}">{{ 'Стать палатой-основателем' if not info.founding.taken else 'Заказать демо' }}</button>{% endif %}
+          {% elif c.status == 'private' %}{# договор есть, но организация не разрешила упоминать статус #}
+          {% else %}<button type="button" class="badge badge--open" data-lead="chamber" data-lead-org="{{ c.name }}" data-lead-note="{{ claim if not info.founding.taken else '' }}">{{ 'Получить эксклюзив' if not info.founding.taken else 'Заказать демо' }}</button>{% endif %}
         </li>
         {% endfor %}
       </ul>
-      <p class="chlist__none" data-chlist-none hidden>Такой палаты нет в списке. <button type="button" class="link" data-lead="chamber" data-lead-note="Добавить мою палату в список — {{ region.name }}">Добавьте свою</button></p>
+      <p class="chlist__none" data-chlist-none hidden>Ничего не нашлось. <button type="button" class="link" data-lead="chamber" data-lead-note="Добавить в список — {{ region.name }}">Добавьте своё сообщество</button></p>
     </div>
     {% else %}
     <div class="empty">
-      <p>Мы собираем список палат и бизнес-объединений {{ region.in }}. Ждать его не обязательно: {% if info.founding.taken %}закажите демо-игру для правления уже сегодня.{% else %}займите место палаты-основателя уже сегодня — сначала мы проведём демо-игру для вашего правления.{% endif %}</p>
+      <p>Мы собираем список сообществ и компаний региона. Ждать не обязательно: {% if info.founding.taken %}закажите демо-игру уже сегодня.{% else %}оставьте заявку на эксклюзивные права — начнём с бесплатной демо-игры для вашей команды.{% endif %}</p>
       <div class="btns">
         {% if info.founding.taken %}
         <button type="button" class="btn" data-lead="chamber">Заказать демо-игру</button>
         {% else %}
-        <button type="button" class="btn" data-lead="chamber" data-lead-note="{{ claim }}">Стать палатой-основателем</button>
+        <button type="button" class="btn" data-lead="chamber" data-lead-note="{{ claim }}">Получить эксклюзивные права</button>
         {% endif %}
       </div>
     </div>
     {% endif %}
-    <p class="chlist__add">Вашей палаты нет в списке? <button type="button" class="link" data-lead="chamber" data-lead-note="Добавить мою палату в список — {{ region.name }}">Добавьте её</button></p>
+    <p class="chlist__add">Вашего сообщества нет в списке? <button type="button" class="link" data-lead="chamber" data-lead-note="Добавить в список — {{ region.name }}">Добавьте его</button></p>
   </div>
 </section>

@@ -1,11 +1,11 @@
 {# Карта регионов плиткой: каждая клетка — ссылка на страницу региона.
-   Цвет клетки берётся из базы палат при сборке; подсветку часового пояса
+   Цвет клетки берётся из базы при сборке; подсветку часового пояса
    посетителя добавляет selector.js. Место клетки — поле tile в regions.json. #}
 <section class="sect sect--tint" id="regions" aria-labelledby="regionsTitle">
   <div class="wrap">
-    <span class="eyebrow">Выберите регион</span>
-    <h2 id="regionsTitle">Станьте палатой-основателем своего региона</h2>
-    <p class="lede">Первая палата региона, подписавшая договор, становится его палатой-основателем: пробная игра за {{ pricing.foundingPilot | rub }} вместо {{ pricing.packages.pilot.price | rub }} и постоянное место на странице региона.</p>
+    <span class="eyebrow">Регионы</span>
+    <h2 id="regionsTitle">Получите эксклюзивные права на игру в своём регионе</h2>
+    <p class="lede">Первое сообщество или компания региона, подписавшие договор, получают эксклюзивное право проводить «Бизнес Квест» у себя в регионе, пробную игру за {{ pricing.foundingPilot | rub }} вместо {{ pricing.packages.pilot.price | rub }} и постоянное место на странице региона.</p>
 
     <div class="mapwrap">
     <div class="mapscroll">
@@ -14,7 +14,7 @@
       <a class="tile{% if i.active %} tile--active{% endif %}{% if i.founding.taken %} tile--founded{% endif %}{% if i.bank.status != 'open' %} tile--bank{% endif %}"
          href="/{{ s.slug }}/" style="grid-row:{{ s.tile[0] + 1 }};grid-column:{{ s.tile[1] + 1 }}"
          data-region="{{ s.abbr }}" data-group="{{ s.group }}"
-         aria-label="{{ s.name }}{% if i.active %}: программа идёт{% elif not i.founding.taken %}: место палаты-основателя свободно{% endif %}{% if i.bank.status != 'open' %}, банковский партнёр есть{% endif %}"
+         aria-label="{{ s.name }}{% if i.active %}: программа идёт{% elif not i.founding.taken %}: эксклюзивные права свободны{% endif %}{% if i.bank.status != 'open' %}, есть банк-партнёр{% endif %}"
          title="{{ s.name }}">{{ s.short }}</a>
       {% endfor %}
     </div>
@@ -24,14 +24,14 @@
     <div class="mapside">
     <p class="map__note" data-map-note hidden></p>
     <ul class="legend">
-      <li><i class="legend__sw"></i>Место палаты-основателя свободно</li>
+      <li><i class="legend__sw"></i>Эксклюзивные права свободны</li>
       <li><i class="legend__sw legend__sw--active"></i>Программа идёт</li>
-      <li><i class="legend__sw legend__sw--bank"></i>Есть банковский партнёр</li>
+      <li><i class="legend__sw legend__sw--bank"></i>Есть банк-партнёр</li>
       <li data-legend-zone hidden><i class="legend__sw legend__sw--zone"></i>Ваш часовой пояс</li>
     </ul>
 
     <div class="beyond">
-      <p class="beyond__t">Участники работают не в одном регионе?</p>
+      <p class="beyond__t">Ваши участники работают в разных регионах?</p>
       <div class="btns">
         <a class="btn btn--line" href="/nationwide/" data-scope-link="us">По всей России</a>
         <a class="btn btn--line" href="/international/" data-scope-link="intl">За рубежом</a>

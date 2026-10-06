@@ -1,4 +1,4 @@
-{# Калькулятор окупаемости для палаты. Считает assets/js/calc.js;
+{# Калькулятор окупаемости для организатора. Считает assets/js/calc.js;
    значения по умолчанию здесь совпадают с примером «Год игр». #}
 {% set F = pricing.formats %}
 {% set P = pricing.packages %}
@@ -6,13 +6,13 @@
 <section class="sect sect--dark" id="calculator" aria-labelledby="calcTitle">
   <div class="wrap">
     <span class="eyebrow">Окупится ли программа?</span>
-    <h2 id="calcTitle">Билеты остаются палате</h2>
-    <p class="lede">Рекомендуемые цены — как на наших открытых играх: {{ F.start.ticket | rub }} за команду в формате «{{ F.start.name }}», {{ F.growth.ticket | rub }} в «{{ F.growth.name }}» и {{ F.elite.ticket | rub }} в «{{ F.elite.name }}» — команды «{{ F.elite.name }}» обычно оплачивает работодатель. Для членов палаты действуют ваши обычные скидки. Каждый рубль от билетов — ваш.</p>
+    <h2 id="calcTitle">Выручка от билетов — ваша</h2>
+    <p class="lede">Рекомендуемые цены — как на наших открытых играх: {{ F.start.ticket | rub }} за команду в формате «{{ F.start.name }}», {{ F.growth.ticket | rub }} — в формате «{{ F.growth.name }}» и {{ F.elite.ticket | rub }} — в формате «{{ F.elite.name }}» (такие команды обычно оплачивает работодатель). Для своих участников можно делать скидки. Вся выручка от билетов остаётся у вас.</p>
 
     <div class="calc" data-calc data-mode="annual">
       <div class="calc__presets" role="group" aria-label="Примеры">
         <span class="calc__presets-t">Примеры:</span>
-        <button type="button" class="pill" data-preset="owners">Игра для владельцев</button>
+        <button type="button" class="pill" data-preset="owners">Игра для владельцев бизнеса</button>
         <button type="button" class="pill" data-preset="elite">Одна игра «{{ F.elite.name }}»</button>
         <button type="button" class="pill" data-preset="beginners">Игра для начинающих</button>
         <button type="button" class="pill" data-preset="year">Год игр</button>
@@ -26,7 +26,7 @@
             <label class="calc__radio"><input type="radio" name="pkg" value="pilot"> <span>{{ P.pilot.name }}</span> <b>{{ P.pilot.price | rub }}</b></label>
             <label class="calc__radio"><input type="radio" name="pkg" value="signature"> <span>{{ P.signature.name }}</span> <b>{{ P.signature.price | rub }}</b></label>
             <label class="calc__radio"><input type="radio" name="pkg" value="annual" checked> <span>{{ P.annual.name }}, {{ P.annual.games | plural('игра', 'игры', 'игр') }}</span> <b>{{ P.annual.price | rub }}</b></label>
-            <label class="calc__radio calc__founding"><input type="checkbox" name="founding"> <span>Цена для палаты-основателя</span> <b>{{ pricing.foundingPilot | rub }}</b></label>
+            <label class="calc__radio calc__founding"><input type="checkbox" name="founding"> <span>Цена для эксклюзивного партнёра региона</span> <b>{{ pricing.foundingPilot | rub }}</b></label>
           </fieldset>
 
           <fieldset class="calc__set">
@@ -58,21 +58,21 @@
           </fieldset>
 
           <fieldset class="calc__set calc__set--row">
-            <legend>Члены палаты и спонсор</legend>
-            <label class="calc__field">Команды членов палаты, %<input type="number" name="memberShare" value="60" min="0" max="100" step="5" inputmode="numeric"></label>
-            <label class="calc__field">Скидка членам палаты, %<input type="number" name="memberDiscount" value="20" min="0" max="100" step="5" inputmode="numeric"></label>
+            <legend>Участники и спонсор</legend>
+            <label class="calc__field">Команды из вашего сообщества, %<input type="number" name="memberShare" value="60" min="0" max="100" step="5" inputmode="numeric"></label>
+            <label class="calc__field">Скидка для них, %<input type="number" name="memberDiscount" value="20" min="0" max="100" step="5" inputmode="numeric"></label>
             <label class="calc__field"><span data-sponsor-label>Платит спонсор, ₽ в год</span><input type="number" name="sponsor" value="0" min="0" step="10000" inputmode="numeric"></label>
           </fieldset>
 
           <fieldset class="calc__set calc__set--row">
             <legend>Опции</legend>
             <label class="calc__field">Игры на английском<input type="number" name="english" value="0" min="0" max="24" inputmode="numeric"></label>
-            <label class="calc__field">Игры с очным ведущим<input type="number" name="inPerson" value="0" min="0" max="24" inputmode="numeric"></label>
+            <label class="calc__field">Игры с ведущим на месте<input type="number" name="inPerson" value="0" min="0" max="24" inputmode="numeric"></label>
           </fieldset>
         </form>
 
         <div class="calc__out" aria-live="polite">
-          <p class="calc__lab">Результат для палаты</p>
+          <p class="calc__lab">Итог для вас</p>
           <p class="calc__total" data-out="result">—</p>
           <p class="calc__verdict" data-out="verdict"></p>
           <dl class="calc__stats">
@@ -82,10 +82,10 @@
           </dl>
           <p class="calc__breakdown" data-out="breakdown"></p>
           <p class="calc__be" data-out="breakeven"></p>
-          <p class="calc__fine">Дорога очного ведущего оплачивается по факту и в расчёт не входит. Цены пакетов указаны без НДС. Цены билетов — рекомендуемые; палата назначает свои.</p>
+          <p class="calc__fine">Дорога ведущего оплачивается отдельно, по факту. Цены пакетов указаны без НДС. Цены билетов — рекомендуемые: вы назначаете свои.</p>
         </div>
       </div>
-      <p class="calc__take"><b>«{{ F.elite.name }}» окупает «{{ F.start.name }}».</b> А если игры оплачивает спонсор, каждый рубль от билетов — чистый доход палаты.</p>
+      <p class="calc__take"><b>«{{ F.elite.name }}» окупает «{{ F.start.name }}».</b> А если игры оплачивает спонсор, вся выручка от билетов — ваш чистый доход.</p>
       <noscript><p class="calc__take">Включите JavaScript, чтобы пользоваться калькулятором.</p></noscript>
     </div>
   </div>

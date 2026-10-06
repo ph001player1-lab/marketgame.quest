@@ -58,6 +58,9 @@ export default function (cfg) {
   // 2.5 → «2,5 часа», 2 → «2 часа», 5 → «5 часов»
   cfg.addFilter('hours', hours);
 
+  // «Московское время (МСК)» → «московское время (МСК)»: только первая буква
+  cfg.addFilter('lcfirst', (t) => String(t || '').charAt(0).toLowerCase() + String(t || '').slice(1));
+
   // {{ 12 | plural('игра', 'игры', 'игр') }} → «12 игр»
   cfg.addFilter('plural', (n, one, few, many) => `${n} ${form(n, one, few, many)}`);
 }

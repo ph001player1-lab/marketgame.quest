@@ -2,7 +2,7 @@
 layout: layouts/print.njk
 permalink: /print/prospectus/
 title: "Предложение для спонсора — Бизнес Квест"
-fields: '<label>Название палаты <input type="text" data-input="chamber" placeholder="Ваша палата"></label><label>Спонсор <input type="text" data-input="sponsor" placeholder="например, банк «Пример»"></label><label>Контактное лицо <input type="text" data-input="person" placeholder="Ваше имя"></label><label>Email <input type="email" data-input="email" placeholder="you@tpp.ru"></label>'
+fields: '<label>Сообщество или компания <input type="text" data-input="chamber" placeholder="Ваше название"></label><label>Спонсор <input type="text" data-input="sponsor" placeholder="например, банк «Пример»"></label><label>Контактное лицо <input type="text" data-input="person" placeholder="Ваше имя"></label><label>Email <input type="email" data-input="email" placeholder="you@example.ru"></label>'
 ---
 {% set P = pricing.packages %}
 {% set O = pricing.options %}
@@ -10,35 +10,35 @@ fields: '<label>Название палаты <input type="text" data-input="cha
 {% set reachLo = B.participantsPerGame[0] * P.annual.games %}
 {% set reachHi = B.participantsPerGame[1] * P.annual.games %}
 <header class="doc__head">
-  <p class="doc__brand" data-fill="chamber" data-empty="Наша палата"></p>
-  <p class="doc__kind">Предложение о спонсорстве<span data-show-if="region"> · <span data-fill="regionName"></span></span></p>
+  <p class="doc__brand" data-fill="chamber" data-empty="Наше сообщество"></p>
+  <p class="doc__kind">Спонсорское предложение<span data-show-if="region"> · <span data-fill="regionName"></span></span></p>
 </header>
 
 <h1 class="doc__title"><span data-fill="sponsor" data-empty="Ваш банк"></span> представляет: ежемесячная деловая игра для предпринимателей</h1>
-<p class="doc__lede">Раз в месяц владельцев бизнеса региона на «Бизнес Квест» — деловую игру-симулятор — собирает <span data-fill="chamber" data-empty="наша палата"></span>. Команды управляют конкурирующими компаниями на одном общем рынке, и рано или поздно каждой нужен кредит. Выдаёт его генеральный спонсор — ваш банк.</p>
+<p class="doc__lede">Раз в месяц <span data-fill="chamber" data-empty="наше сообщество"></span> собирает предпринимателей на «Бизнес Квест» — деловую игру-симулятор. Команды управляют компаниями на одном рынке, и рано или поздно каждой нужен кредит. Выдаёт его генеральный спонсор — ваш банк.</p>
 
 <div class="doc__cols">
   <section>
     <h2>Что получает спонсор</h2>
     <ul>
-      <li><b>Ваш бренд на кредите внутри игры</b> и ваше имя на экранах всю игру.</li>
-      <li><b>Свой ведущий.</b> После сертификации ваш представитель ведёт игру очно — два часа с предпринимателями региона.</li>
+      <li><b>Ваш бренд на кредите внутри игры</b> и ваше название на экранах всю игру.</li>
+      <li><b>Свой ведущий.</b> После сертификации ваш сотрудник ведёт игру на месте — два часа с предпринимателями региона.</li>
       <li><b>«При поддержке»</b> в наших приглашениях, на странице регистрации и в сертификатах участников.</li>
-      <li><b>Контакты участников</b>, которые согласились получать от вас сообщения.</li>
+      <li><b>Контакты участников</b>, которые согласились на связь с вами.</li>
       <li><b>Отчёт после каждой игры:</b> кто играл и какие компании участвовали.</li>
-      <li><b>Программы банка.</b> Обучение предпринимателей с участием ваших сотрудников может войти в программы финансовой грамотности и поддержки МСП; решает сам банк.</li>
+      <li><b>Программы банка.</b> Обучение предпринимателей с участием ваших сотрудников можно включить в программы финансовой грамотности и поддержки МСП — решение за банком.</li>
     </ul>
   </section>
   <section>
-    <h2>Вложения</h2>
+    <h2>Стоимость</h2>
     <table class="doc__table doc__table--price">
       <tr><th>{{ P.annual.games | plural('игра', 'игры', 'игр') }}, раз в месяц</th><td>{{ P.annual.price | rub }} в год</td></tr>
       <tr><th>Одна игра</th><td>{{ P.signature.price | rub }}</td></tr>
       <tr><th>Сертификация ведущего</th><td>{{ O.hostCertification | rub }} за человека</td></tr>
     </table>
-    <p class="doc__small">{{ site.vat }} Условия кредита в игре — игровые; ничто на экране не является предложением финансовой услуги.</p>
+    <p class="doc__small">{{ site.vat }} Условия кредита в игре — игровые: на экране нет предложения финансовых услуг.</p>
     <h2>Охват</h2>
-    <p>При {{ B.participantsPerGame[0] }}–{{ B.participantsPerGame[1] }} участниках за игру двенадцать игр — это <b>{{ reachLo }}–{{ reachHi }} предпринимателей в год</b>, около {{ (P.annual.price / reachHi) | round | rub }}–{{ (P.annual.price / reachLo) | round | rub }} за личный контакт.</p>
+    <p>При {{ B.participantsPerGame[0] }}–{{ B.participantsPerGame[1] }} участниках на игре двенадцать игр — это <b>{{ reachLo }}–{{ reachHi }} предпринимателей в год</b>, примерно {{ (P.annual.price / reachHi) | round | rub }}–{{ (P.annual.price / reachLo) | round | rub }} за личный контакт.</p>
   </section>
 </div>
 

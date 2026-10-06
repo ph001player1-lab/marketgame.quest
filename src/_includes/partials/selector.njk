@@ -2,12 +2,12 @@
    Логика — в assets/js/selector.js: запоминает выбор и ведёт на страницу
    региона, «По всей России» или «Международные». #}
 <form class="pick" id="start" data-selector novalidate>
-  <p class="pick__t">Подберём программу под вас</p>
+  <p class="pick__t">Подберём программу</p>
 
   <fieldset class="pick__set">
     <legend class="pick__legend">Я представляю</legend>
     <div class="seg" role="radiogroup">
-      <label class="seg__opt"><input type="radio" name="who" value="chamber" checked><span>Палату или бизнес-объединение</span></label>
+      <label class="seg__opt"><input type="radio" name="who" value="chamber" checked><span>Сообщество или компанию</span></label>
       <label class="seg__opt"><input type="radio" name="who" value="bank"><span>Банк</span></label>
       <label class="seg__opt"><input type="radio" name="who" value="sponsor"><span>Другого спонсора</span></label>
     </div>
@@ -15,7 +15,7 @@
 
   <fieldset class="pick__set">
     <legend class="pick__legend" data-where-label>Где работают ваши участники?</legend>
-    <p class="pick__hint">Можно выбрать один, два или все три варианта.</p>
+    <p class="pick__hint">Можно отметить несколько вариантов.</p>
     <div class="pick__scope">
       <label class="check"><input type="checkbox" name="scope" value="state"><span>В нашем регионе</span></label>
       <select class="pick__state" name="region" aria-label="Ваш регион">
@@ -25,11 +25,11 @@
       </select>
     </div>
     <label class="check"><input type="checkbox" name="scope" value="us"><span>По всей России <small>в нескольких регионах</small></span></label>
-    <label class="check"><input type="checkbox" name="scope" value="intl"><span>За рубежом <small>внешние рынки</small></span></label>
+    <label class="check"><input type="checkbox" name="scope" value="intl"><span>За рубежом <small>на внешних рынках</small></span></label>
   </fieldset>
 
   <p class="pick__note" data-detect-note hidden></p>
   <p class="pick__err" role="alert" data-pick-err hidden></p>
-  <button type="submit" class="btn pick__go">Показать мою программу</button>
+  <button type="submit" class="btn pick__go">Показать программу</button>
   <noscript><p class="pick__hint">Выберите регион на карте ниже.</p></noscript>
 </form>

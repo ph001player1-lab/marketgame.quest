@@ -1,14 +1,14 @@
 /* Заявка на демо-игру — главная цель сайта.
 
-   Одна форма на три случая: палата, банк, спонсор. Поля у них разные,
+   Одна форма на три случая: сообщество или компания, банк, спонсор. Поля у них разные,
    переключатель типа стоит вверху формы. Тип по умолчанию — то, что
    посетитель выбрал на первом экране.
 
    Форму открывает любая кнопка с атрибутом data-lead:
-     data-lead=""          — тип из выбора посетителя (или «палата»);
+     data-lead=""          — тип из выбора посетителя (или «сообщество»);
      data-lead="bank"      — сразу форма банка;
      data-lead-org="…"     — подставить название организации;
-     data-lead-note="…"    — пометка для менеджера («Заявка на статус палаты-основателя — …»);
+     data-lead-note="…"    — пометка для менеджера («Заявка на эксклюзивные права — …»);
      data-lead-states="…"  — регионы для банка или спонсора.
 
    Отправка — как на marketgame.club: POST в Google Apps Script
@@ -28,7 +28,7 @@
   var SUBMIT = 'Заказать демо-игру';
 
   var TYPES = {
-    chamber: { label: 'Палату или объединение', org: 'Палата или объединение', orgPh: 'ТПП Ярославской области' },
+    chamber: { label: 'Сообщество или компанию', org: 'Сообщество или компания', orgPh: 'например, клуб предпринимателей «Пример»' },
     bank:    { label: 'Банк', org: 'Банк', orgPh: 'Название банка' },
     sponsor: { label: 'Другого спонсора', org: 'Организация', orgPh: 'Ваша компания' }
   };
@@ -58,7 +58,7 @@
       '<div class="lf__in">' +
         '<button type="button" class="lf__x" aria-label="Закрыть">&times;</button>' +
         '<h2 class="lf__t" id="lfTitle">Заказать демо-игру</h2>' +
-        '<p class="lf__sub">Бесплатно, 60 минут, онлайн. Менеджер свяжется с вами в течение рабочего дня, чтобы согласовать время.</p>' +
+        '<p class="lf__sub">Бесплатно, 60 минут, онлайн. Менеджер свяжется с вами в течение рабочего дня и согласует время.</p>' +
         '<p class="lf__note" data-lf-note hidden></p>' +
         '<form class="lf__form" novalidate>' +
           '<fieldset class="lf__type"><legend>Я представляю</legend><div class="seg seg--sm">' + typeRadios + '</div></fieldset>' +
@@ -66,7 +66,7 @@
             row('lfName', 'Имя и фамилия', '<input id="lfName" name="name" type="text" autocomplete="name" required>') +
             row('lfTitle2', 'Должность', '<input id="lfTitle2" name="title" type="text" autocomplete="organization-title">') +
           '</div>' +
-          row('lfOrg', '<span data-org-label>Палата или объединение</span>', '<input id="lfOrg" name="org" type="text" autocomplete="organization" required>') +
+          row('lfOrg', '<span data-org-label>Сообщество или компания</span>', '<input id="lfOrg" name="org" type="text" autocomplete="organization" required>') +
           '<div class="lf__two">' +
             row('lfEmail', 'Рабочий email', '<input id="lfEmail" name="email" type="email" autocomplete="email" required>') +
             row('lfPhone', 'Телефон', '<input id="lfPhone" name="phone" type="tel" autocomplete="tel" placeholder="+7 900 000-00-00">') +
@@ -75,10 +75,10 @@
           '<div data-for="chamber">' +
             '<div class="lf__two">' +
               row('lfRegion', 'Регион', '<select id="lfRegion" name="region">' + regionOptions() + '</select>') +
-              row('lfMembers', 'Членов', '<select id="lfMembers" name="members"><option value="">—</option><option>Меньше 100</option><option>100–299</option><option>300–999</option><option>1000 и больше</option></select>') +
+              row('lfMembers', 'Участников', '<select id="lfMembers" name="members"><option value="">—</option><option>Меньше 100</option><option>100–299</option><option>300–999</option><option>1000 и больше</option></select>') +
             '</div>' +
-            row('lfPayer', 'Кто будет платить за игры?', '<select id="lfPayer" name="payer"><option value="">Пока не знаем</option><option>Наша палата</option><option>Ищем спонсора</option><option>Спонсор уже есть</option></select>') +
-            '<fieldset class="lf__row lf__checks"><legend>Наши участники работают</legend>' +
+            row('lfPayer', 'Кто будет оплачивать игры?', '<select id="lfPayer" name="payer"><option value="">Пока не знаем</option><option>Мы сами</option><option>Ищем спонсора</option><option>Спонсор уже есть</option></select>') +
+            '<fieldset class="lf__row lf__checks"><legend>Где работают ваши участники</legend>' +
               '<label class="check"><input type="checkbox" name="scopes" value="state"><span>В нашем регионе</span></label>' +
               '<label class="check"><input type="checkbox" name="scopes" value="us"><span>По всей России</span></label>' +
               '<label class="check"><input type="checkbox" name="scopes" value="intl"><span>За рубежом</span></label>' +
@@ -86,13 +86,13 @@
           '</div>' +
 
           '<div data-for="bank sponsor">' +
-            row('lfRegions', 'Регионы', '<input id="lfRegions" name="regions" type="text" placeholder="например, Татарстан, Самарская область">', 'Где вы хотите встречаться с предпринимателями.') +
+            row('lfRegions', 'Регионы', '<input id="lfRegions" name="regions" type="text" placeholder="например, Татарстан, Самарская область">', 'Где вы работаете с бизнесом.') +
             '<div data-for="sponsor">' + row('lfIndustry', 'Отрасль', '<input id="lfIndustry" name="industry" type="text">') + '</div>' +
-            row('lfInterest', 'Что интересует', '<select id="lfInterest" name="interest"><option value="">Пока не знаем</option><option>Одна палата</option><option>Несколько палат</option><option data-for="bank">Эксклюзивная территория</option></select>') +
+            row('lfInterest', 'Что интересует', '<select id="lfInterest" name="interest"><option value="">Пока не знаем</option><option>Одно сообщество</option><option>Несколько сообществ</option><option data-for="bank">Эксклюзивная территория</option></select>') +
             '<label class="check lf__row" data-for="bank"><input type="checkbox" name="hosts"><span>Хотим, чтобы игры вели наши сотрудники</span></label>' +
           '</div>' +
 
-          row('lfMsg', 'Что нам стоит знать?', '<textarea id="lfMsg" name="message" rows="3"></textarea>') +
+          row('lfMsg', 'Комментарий', '<textarea id="lfMsg" name="message" rows="3"></textarea>') +
 
           // ловушка для роботов: человек её не видит и не заполняет
           '<div class="lf__trap" aria-hidden="true"><label for="lfWebsite">Сайт</label>' +
@@ -274,7 +274,7 @@
     var box = doc.createElement('div');
     box.className = 'lf__done';
     box.innerHTML = '<h3>Заявка принята</h3>' +
-      '<p>Менеджер свяжется с вами в течение рабочего дня, чтобы согласовать время демо-игры.</p>' +
+      '<p>Менеджер свяжется с вами в течение рабочего дня и согласует время демо-игры.</p>' +
       '<button type="button" class="btn">Закрыть</button>';
     box.querySelector('button').addEventListener('click', close);
     form.parentNode.insertBefore(box, form.nextSibling);

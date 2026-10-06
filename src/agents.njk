@@ -23,7 +23,7 @@ description: "Удалённая работа в отделе продаж: B2B-
   <div class="wrap hero__in">
     <div class="hero__text">
       <span class="eyebrow">Карьера · Отдел продаж</span>
-      <h1>Продавайте Бизнес Квест палатам, <span>объединениям и банкам</span></h1>
+      <h1>Продавайте «Бизнес Квест» <span>сообществам, компаниям и банкам</span></h1>
       <p class="lede">Мы разрабатываем цифровые бизнес-симуляторы для бизнеса и расширяем команду отдела продаж. Две открытые вакансии: для тех, кто хочет освоить B2B-продажи с нуля, и для опытных B2B-менеджеров. Работа удалённая.</p>
       <div class="btns">
         <a class="btn" href="#vacancies">Смотреть вакансии</a>
@@ -49,7 +49,7 @@ description: "Удалённая работа в отделе продаж: B2B-
   <div class="wrap">
     <span class="eyebrow">Вакансии</span>
     <h2 id="vacTitle">Открытые вакансии</h2>
-    <p class="lede">Бизнес Квест — живой бизнес-симулятор: от 4 до 20 команд предпринимателей управляют конкурирующими компаниями на одном общем рынке — цена, реклама, мощности, банковские кредиты — и после каждого раунда видят, как меняется рейтинг. Палаты проводят игру для своих членов, банки и компании региона её спонсируют. Первый контакт с клиентом — бесплатная демо-игра.</p>
+    <p class="lede">«Бизнес Квест» — живой бизнес-симулятор: от 4 до 20 команд управляют конкурирующими компаниями на одном рынке — цена, реклама, производство, кредиты — и после каждого хода видят, как меняется рейтинг. Бизнес-сообщества и компании проводят игру для своих участников, банки её спонсируют. Знакомство с клиентом начинается с бесплатной демо-игры.</p>
 
     <div class="roles">
       {% for v in agents.vacancies %}
@@ -112,7 +112,7 @@ description: "Удалённая работа в отделе продаж: B2B-
                   <td><input type="number" name="signature" value="{{ D.signature }}" min="0" max="999" step="1" inputmode="numeric" aria-label="{{ P.signature.name }}: продаж за 90 дней"></td></tr>
                 <tr><th scope="row">{{ P.annual.name }}</th><td class="calc__ticket">{{ P.annual.price | rub }} в год</td>
                   <td><input type="number" name="annual" value="{{ D.annual }}" min="0" max="999" step="1" inputmode="numeric" aria-label="{{ P.annual.name }}: продаж за 90 дней"></td></tr>
-                <tr><th scope="row">Спонсорство банка</th><td class="calc__ticket">{{ B.volumePrice | rub }} за палату в год, от {{ B.volumeFrom }} палат</td>
+                <tr><th scope="row">Спонсорство банка</th><td class="calc__ticket">{{ B.volumePrice | rub }} за сообщество в год, от {{ B.volumeFrom }} сообществ</td>
                   <td><input type="number" name="bank" value="{{ D.bank }}" min="0" max="99" step="1" inputmode="numeric" aria-label="Сделок со спонсорством банка за 90 дней"></td></tr>
               </tbody>
             </table>
@@ -121,7 +121,7 @@ description: "Удалённая работа в отделе продаж: B2B-
           <fieldset class="calc__set">
             <legend>Подробности</legend>
             <div class="ecalc__fields">
-              <label class="calc__field">Палат в одной сделке с банком<input type="number" name="bankChambers" value="{{ D.bankChambers }}" min="{{ B.volumeFrom }}" max="200" step="1" inputmode="numeric"></label>
+              <label class="calc__field">Сообществ в одной сделке с банком<input type="number" name="bankChambers" value="{{ D.bankChambers }}" min="{{ B.volumeFrom }}" max="200" step="1" inputmode="numeric"></label>
               <label class="calc__field">Годовые контракты, которые продлеваются, % (допущение)<input type="number" name="renew" value="{{ D.renew }}" min="0" max="100" step="5" inputmode="numeric"></label>
             </div>
           </fieldset>
@@ -166,7 +166,7 @@ description: "Удалённая работа в отделе продаж: B2B-
       <ol class="funnel">
         <li class="funnel__stage">
           <span class="funnel__n" data-f="contacts">{{ FN.contacts }}</span>
-          <span class="funnel__txt"><b>Контакты</b><span>Палаты, банки и спонсоры, до которых вы дошли · <span data-f="contactsWeek">около {{ (FN.contacts / FN.days * 7) | round }} в неделю</span></span></span>
+          <span class="funnel__txt"><b>Контакты</b><span>Сообщества, компании и банки, с которыми вы связались · <span data-f="contactsWeek">около {{ (FN.contacts / FN.days * 7) | round }} в неделю</span></span></span>
           <span class="funnel__bar" aria-hidden="true"><i style="width:100%"></i></span>
         </li>
         <li class="funnel__step" aria-hidden="true"><span data-f="toDemo">{{ FN.toDemo }}</span>% доходят до демо-игры</li>
@@ -197,17 +197,17 @@ description: "Удалённая работа в отделе продаж: B2B-
       <article class="card">
         <p class="path" aria-label="Пробная игра, потом разовая игра или годовая программа"><span>Пробная</span><i>→</i><span>Разовая</span><em>или</em><span>Годовая</span></p>
         <h3>Пробная игра растёт</h3>
-        <p>После пробной игры ({{ P.pilot.price | rub }}) предложите разовую игру ({{ P.signature.price | rub }}) или годовую программу ({{ P.annual.price | rub }} в год). Пробная игра засчитывается, если палата подпишет годовую программу в течение {{ pricing.pilotCreditDays }} дней, а вы получаете процент и со следующего контракта.</p>
+        <p>После пробной игры ({{ P.pilot.price | rub }}) предложите разовую игру ({{ P.signature.price | rub }}) или годовую программу ({{ P.annual.price | rub }} в год). Если клиент перейдёт на годовую программу в течение {{ pricing.pilotCreditDays }} дней, стоимость пробной игры засчитывается, а вы получаете процент и со следующего контракта.</p>
       </article>
       <article class="card">
-        <p class="path" aria-label="Палата, потом её банк-спонсор"><span>Палата</span><i>→</i><span>Её банк-спонсор</span></p>
-        <h3>Палата открывает свой банк</h3>
-        <p>У большинства палат среди спонсоров есть банк. Попросите познакомить и принесите <a href="/print/prospectus/">предложение для спонсора</a> с названием палаты. Банк, который спонсирует от {{ B.volumeFrom }} палат, платит {{ B.volumePrice | rub }} за палату в год.</p>
+        <p class="path" aria-label="Сообщество, потом его банк-партнёр"><span>Сообщество</span><i>→</i><span>Его банк-партнёр</span></p>
+        <h3>Сообщество знакомит со своим банком</h3>
+        <p>У многих сообществ среди партнёров уже есть банк. Попросите познакомить и принесите <a href="/print/prospectus/">предложение для спонсора</a> с названием сообщества. Банк, который спонсирует {{ B.volumeFrom }} сообществ и больше, платит {{ B.volumePrice | rub }} за каждое в год.</p>
       </article>
       <article class="card">
         <p class="path" aria-label="Игра, потом новые контакты"><span>Игра</span><i>→</i><span>Новые контакты</span></p>
         <h3>Игра приводит следующего клиента</h3>
-        <p>Два часа в зале, полном предпринимателей региона, — следующая палата, следующий спонсор, новые знакомства. И снова наверх карты.</p>
+        <p>Два часа в зале, полном предпринимателей региона, — это следующее сообщество, следующий спонсор и новые знакомства. И снова в начало карты.</p>
       </article>
     </div>
   </div>
@@ -217,7 +217,7 @@ description: "Удалённая работа в отделе продаж: B2B-
   <div class="wrap">
     <span class="eyebrow">Плейбук</span>
     <h2 id="pbTitle">С чего начать</h2>
-    <p class="lede">Не должностная инструкция, а первые шаги, которые работают из того опыта, который у вас уже есть. Выберите профиль, ближе всего к вашему.</p>
+    <p class="lede">Не должностная инструкция, а первые шаги, которые помогут использовать опыт, который у вас уже есть. Выберите профиль, близкий к вашему.</p>
 
     <fieldset class="pb__pick">
       <legend class="sr">Ваш профиль</legend>
@@ -300,8 +300,8 @@ description: "Удалённая работа в отделе продаж: B2B-
         <fieldset class="lf__row lf__checks">
           <legend>С какими организациями вы работали</legend>
           <div class="lf__cols">
-            <label class="check"><input type="checkbox" name="orgs" value="Торгово-промышленные палаты"><span>Торгово-промышленные палаты</span></label>
-            <label class="check"><input type="checkbox" name="orgs" value="Бизнес-объединения"><span>Бизнес-объединения</span></label>
+            <label class="check"><input type="checkbox" name="orgs" value="Бизнес-сообщества и клубы"><span>Бизнес-сообщества и клубы</span></label>
+            <label class="check"><input type="checkbox" name="orgs" value="Ассоциации и объединения"><span>Ассоциации и объединения</span></label>
             <label class="check"><input type="checkbox" name="orgs" value="Банки"><span>Банки</span></label>
             <label class="check"><input type="checkbox" name="orgs" value="Центры «Мой бизнес»"><span>Центры «Мой бизнес»</span></label>
             <label class="check"><input type="checkbox" name="orgs" value="Корпоративные клиенты"><span>Корпоративные клиенты</span></label>
@@ -311,7 +311,7 @@ description: "Удалённая работа в отделе продаж: B2B-
           <span class="lf__hint">Только виды организаций — названия не нужны.</span>
         </fieldset>
         <fieldset class="lf__row lf__type">
-          <legend>Вы член торгово-промышленной палаты или бизнес-объединения?</legend>
+          <legend>Вы участник бизнес-сообщества или клуба?</legend>
           <div class="seg seg--sm seg--two">
             <label class="seg__opt"><input type="radio" name="member" value="yes"><span>Да</span></label>
             <label class="seg__opt"><input type="radio" name="member" value="no"><span>Нет</span></label>
@@ -324,7 +324,7 @@ description: "Удалённая работа в отделе продаж: B2B-
             <option>hh.ru</option>
             <option>Поисковик</option>
             <option>Друг или коллега</option>
-            <option>Торгово-промышленная палата</option>
+            <option>Бизнес-сообщество</option>
             <option>Другое</option>
           </select>
         </div>

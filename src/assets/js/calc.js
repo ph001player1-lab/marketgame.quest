@@ -1,9 +1,9 @@
-/* Калькулятор окупаемости для палаты.
+/* Калькулятор окупаемости для организатора программы.
 
    Считает: выручку от билетов (цены за команду — из pricing.json → formats,
-   со скидкой для членов палаты), взнос спонсора и стоимость программы
-   (пакет, доплата за «Элиту», игры сверх пакета, опции). Итог — что остаётся
-   палате. Цены берутся из той же таблицы, что и карточки на странице. */
+   со скидкой для участников сообщества), взнос спонсора и стоимость
+   программы (пакет, доплата за «Элиту», игры сверх пакета, опции). Итог —
+   что остаётся организатору. Цены берутся из той же таблицы, что и карточки на странице. */
 
 (function () {
   'use strict';
@@ -81,7 +81,7 @@
     root.setAttribute('data-mode', single ? 'single' : 'annual');
     root.classList.toggle('calc--pilot', pkg === 'pilot');
 
-    // Скидка действует только на команды членов палаты
+    // Скидка действует только на команды из сообщества организатора
     var mult = 1 - (num('memberShare', 0, 100) / 100) * (num('memberDiscount', 0, 100) / 100);
     var revenue = 0, cost = 0, games = 0, eliteGames = 0;
     var parts = [];
@@ -101,7 +101,7 @@
         ? (field('founding').checked ? P.foundingPilot : P.packages.pilot.price)
         : P.packages.signature.price;
       cost = base;
-      parts.push(P.packages[pkg].name + (pkg === 'pilot' && field('founding').checked ? ' (палата-основатель)' : '') + ' ' + money(base));
+      parts.push(P.packages[pkg].name + (pkg === 'pilot' && field('founding').checked ? ' (эксклюзивный партнёр)' : '') + ' ' + money(base));
       if (hint) hint.textContent = 'Одна игра в формате ' + q(P.formats[pick].name) + '.';
     } else {
       FORMATS.forEach(function (f) {
@@ -157,11 +157,11 @@
     out.breakdown.textContent = 'Стоимость: ' + parts.join(' · ');
 
     if (result >= 0 && sponsor >= cost) {
-      out.verdict.textContent = 'Спонсор покрывает программу — каждый рубль от билетов становится вашим доходом.';
+      out.verdict.textContent = 'Спонсор оплачивает программу — вся выручка от билетов остаётся вам.';
     } else if (result >= 0) {
       out.verdict.textContent = 'Программа окупается.';
     } else {
-      out.verdict.textContent = 'Не хватает ' + money(-result) + ' — разницу покрывает спонсор или бюджет программы.';
+      out.verdict.textContent = 'Не хватает ' + money(-result) + ' — разницу покроет спонсор или ваш бюджет.';
     }
 
     // Сколько команд нужно, чтобы окупить программу без спонсора.

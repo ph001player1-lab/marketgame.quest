@@ -31,7 +31,7 @@ export default function client() {
       tz: s.tz,
       group: s.group,
       game: s.game,
-      // f — место палаты-основателя занято, b — статус банковского партнёра
+      // f — эксклюзивные права в регионе заняты, b — статус банковского партнёра
       f: info[s.abbr].founding.taken ? 1 : 0,
       b: info[s.abbr].bank.status,
       bn: info[s.abbr].bank.name,

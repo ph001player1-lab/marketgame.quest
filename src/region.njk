@@ -8,9 +8,9 @@ permalink: "/{{ region.slug }}/"
 pageKind: region
 hasPrograms: true
 eleventyComputed:
-  title: "Бизнес Квест {{ region.in }} — ежемесячная деловая игра для палат и бизнес-объединений"
-  ogTitle: "Для палат и бизнес-объединений {{ region.in }}"
-  description: "Деловая игра-симулятор для торгово-промышленных палат и бизнес-объединений {{ region.in }}: предприниматели каждый месяц соревнуются на одном общем рынке. Платит палата или спонсор. Бесплатная демо-игра на 60 минут."
+  title: "Бизнес Квест {{ region.in }} — деловая игра для бизнес-сообществ и компаний"
+  ogTitle: "Бизнес Квест {{ region.in }}"
+  description: "Ежемесячная деловая игра для бизнес-сообществ и компаний {{ region.in }}: команды предпринимателей управляют компаниями на одном рынке. Платит организатор или спонсор. Бесплатная демо-игра — 60 минут."
 ---
 {# Страница региона. Одна на все 83: данные региона — из regions.json,
    статусы — из chambers.json и banks.json. #}
@@ -19,21 +19,21 @@ eleventyComputed:
   <div class="wrap hero__in">
     <div class="hero__text">
       <span class="eyebrow">Бизнес Квест {{ region.in }}</span>
-      <h1>Для палат <span>{{ region.in }}</span></h1>
-      <p class="lede">Деловая игра для ваших участников — каждый месяц, в вашем зале. Предприниматели региона управляют конкурирующими компаниями на одном общем рынке и видят, как цена, реклама, мощности и деньги решают, кто победит. Платит палата — или спонсор.</p>
+      <h1>Деловая игра <span>{{ region.in }}</span></h1>
+      <p class="lede">Регулярная деловая игра для вашего сообщества или компании — каждый месяц, в вашем зале. Команды предпринимателей управляют компаниями на одном рынке и на практике видят, как цена, реклама, производство и деньги решают, кто выиграет. Платит организатор или спонсор.</p>
 
       <dl class="facts">
         <div><dt>Часовой пояс</dt><dd>{{ info.zone }}</dd></div>
-        <div><dt>Палата-основатель</dt><dd>{% if info.founding.taken %}{{ info.founding.name or 'Есть' }}{% else %}<span class="badge badge--open">Свободно</span>{% endif %}</dd></div>
-        <div><dt>Банковский партнёр</dt><dd>{% if info.bank.status == 'open' %}<span class="badge badge--open">Свободно</span>{% else %}{{ info.bank.name or 'Есть' }}{% endif %}</dd></div>
-        <div><dt>Программ идёт</dt><dd>{{ info.active }}</dd></div>
+        <div><dt>Эксклюзивные права</dt><dd>{% if info.founding.taken %}{{ info.founding.name or 'Заняты' }}{% else %}<span class="badge badge--open">Свободны</span>{% endif %}</dd></div>
+        <div><dt>Банк-партнёр</dt><dd>{% if info.bank.status == 'open' %}<span class="badge badge--open">Свободно</span>{% else %}{{ info.bank.name or 'Есть' }}{% endif %}</dd></div>
+        <div><dt>Действующих программ</dt><dd>{{ info.active }}</dd></div>
       </dl>
 
       <div class="btns">
         {% if info.founding.taken %}
         <button type="button" class="btn" data-lead="chamber">Заказать демо-игру</button>
         {% else %}
-        <button type="button" class="btn" data-lead="chamber" data-lead-note="Заявка на статус палаты-основателя — {{ region.name }}">Стать палатой-основателем</button>
+        <button type="button" class="btn" data-lead="chamber" data-lead-note="Заявка на эксклюзивные права — {{ region.name }}">Получить эксклюзивные права</button>
         {% endif %}
         <button type="button" class="btn btn--line" data-lead="bank">Я представляю банк</button>
       </div>

@@ -127,6 +127,8 @@ p{margin:0 0 1.05em}
 .hero__text{container-type:inline-size}
 @media(min-width:960px){.hero__in{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)}}
 .hero h1{margin-bottom:22px}
+/* на странице региона в заголовке длинные слова («Калининградской»): шрифт меньше, чтобы слово не рвалось */
+.hero--state h1{font-size:clamp(22px,6.3cqw,60px)}
 /* На телефоне главный вопрос сайта должен быть на первом экране: форма
    выбора встаёт сразу после заголовка, а описание и кнопки — после неё */
 @media(max-width:959px){
@@ -142,7 +144,8 @@ p{margin:0 0 1.05em}
 .hero .lede{color:var(--ink-2);margin-bottom:26px}
 
 .facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:0 0 26px}
-@media(min-width:620px){.facts{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* по-русски подписи длиннее: две колонки, а на телефоне одна — иначе «Екатеринбургское время» не помещается */
+@media(max-width:479px){.facts{grid-template-columns:1fr}}
 .facts div{background:var(--paper);padding:13px 14px}
 .facts dt{font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--mute);margin-bottom:5px}
 .facts dd{margin:0;font-weight:700;font-size:15px;line-height:1.35}
@@ -202,7 +205,9 @@ p{margin:0 0 1.05em}
 /* --- карточки --- */
 .cards{display:grid;gap:14px;margin-top:clamp(26px,4vw,40px)}
 @media(min-width:720px){.cards--3,.cards--4{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(min-width:1000px){.cards--3{grid-template-columns:repeat(3,minmax(0,1fr))}.cards--4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:1000px){.cards--3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* четыре карточки в ряд — только на широком экране: «Франчайзинговые» не влезает в узкую */
+@media(min-width:1180px){.cards--4{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .card{border:2px solid var(--ink);padding:24px;background:var(--paper)}
 .sect--tint .card{background:var(--paper-2)}
 .card__tag{display:block;font-size:11.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--red-ink);margin-bottom:12px}
@@ -224,7 +229,9 @@ p{margin:0 0 1.05em}
 .plan--hot{border-color:var(--red);box-shadow:6px 6px 0 var(--red)}
 .plan__tag{display:block;font-size:11.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--red-ink);margin-bottom:10px}
 .plan__name{font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.02em;margin:0 0 6px;line-height:1.2}
-.plan__price{font-family:var(--disp);font-weight:700;font-size:clamp(30px,3.6vw,38px);letter-spacing:-.03em;line-height:1;margin:8px 0 4px}
+.plan__price{font-family:var(--disp);font-weight:700;font-size:clamp(24px,5.4vw,32px);letter-spacing:-.03em;line-height:1.1;margin:8px 0 4px;white-space:nowrap}
+/* четыре карточки в ряд: суммы в рублях длиннее долларовых — шрифт меньше */
+@media(min-width:1100px){.plan__price{font-size:clamp(22px,2vw,27px)}}
 .plan__per{font-size:13.5px;font-weight:700;color:var(--mute);margin:0 0 16px}
 .plan__who{font-size:15.5px;color:var(--mute)}
 .plan .btn{margin-top:auto}
@@ -359,7 +366,7 @@ button.badge:hover{background:var(--green);color:#fff;border-color:var(--green)}
 .foot__nav{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14.5px}
 .foot__nav a{color:var(--ink);font-weight:600}
 
-/* --- страница региона: цифры, палаты, игры, модули --- */
+/* --- страница региона: цифры, сообщества, игры, модули --- */
 .specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:clamp(22px,3vw,32px) 0 0}
 @media(min-width:860px){.specs{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .specs>div{background:var(--paper-2);padding:20px}
@@ -434,7 +441,7 @@ button.badge:hover{background:var(--green);color:#fff;border-color:var(--green)}
 
 /* --- юридические страницы --- */
 .legal{max-width:74ch}
-.legal__h1{font-family:var(--disp);font-size:clamp(28px,4.4vw,44px);text-transform:uppercase;letter-spacing:-.03em;margin-bottom:12px}
+.legal__h1{font-family:var(--disp);font-size:clamp(19px,3vw,30px);text-transform:uppercase;letter-spacing:-.03em;margin-bottom:12px}
 .legal h2{font-size:clamp(21px,2.6vw,26px);margin:clamp(28px,4vw,40px) 0 .6em}
 .legal p,.legal li{font-size:16.5px;color:var(--ink-2)}
 .legal ul{padding-left:20px;margin:0 0 1.05em}

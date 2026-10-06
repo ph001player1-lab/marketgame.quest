@@ -1,5 +1,5 @@
 {# Блок для банков и спонсоров. Стоит на каждой странице и виден всем:
-   палата узнаёт из него, что программа может быть бесплатной,
+   организатор узнаёт из него, что программа может быть бесплатной,
    банк — что он получает. #}
 {% set B = pricing.bank %}
 {% set P = pricing.packages %}
@@ -11,40 +11,40 @@
     <h2 id="banksTitle">Ваш банк — в игре</h2>
     <div class="split split--even">
       <div>
-        <p class="lede">Рано или поздно каждой команде в игре нужен кредит. В игре «Бизнес Квест» этот кредит носит имя вашего банка, а ваш представитель может вести игру прямо в зале.</p>
+        <p class="lede">Рано или поздно каждой команде в игре нужен кредит. В «Бизнес Квесте» этот кредит выдаёт ваш банк, а ваш сотрудник может вести игру прямо в зале.</p>
         {% if region %}{% set bi = regionInfo[region.abbr].bank %}
-        <p class="status">Банковский партнёр {{ region.in }}:
+        <p class="status">Банк-партнёр {{ region.in }}:
           <b class="badge {{ 'badge--open' if bi.status == 'open' else 'badge--taken' }}">{% if bi.status == 'open' %}свободно{% elif bi.name %}{{ bi.name }}{% else %}есть{% endif %}</b>
         </p>
         {% endif %}
         <ul class="ticks">
-          <li>Ваш бренд на кредите внутри игры и ваше имя на экранах</li>
-          <li>Ваш сертифицированный представитель ведёт игры очно — личный контакт с предпринимателями региона</li>
-          <li>«При поддержке» в приглашениях палаты и в сертификатах участников</li>
-          <li>Контакты участников, которые сами дали согласие</li>
+          <li>Ваш бренд на кредите внутри игры и ваше название на экранах</li>
+          <li>Ваш сотрудник после сертификации ведёт игры сам — личное знакомство с предпринимателями региона</li>
+          <li>«При поддержке» в приглашениях и сертификатах участников</li>
+          <li>Контакты участников, которые согласились их передать</li>
           <li>Отчёт после каждой игры</li>
-          <li>Может войти в программы банка по финансовой грамотности и поддержке МСП — решает сам банк</li>
+          <li>Игры можно включить в программы банка по финансовой грамотности и поддержке МСП — решение за банком</li>
         </ul>
       </div>
       <div class="pricebox">
         <table class="ptable">
           <tbody>
-            <tr><th scope="row">Демо-игра для вашей команды</th><td>Бесплатно</td></tr>
+            <tr><th scope="row">Демо-игра для команды банка</th><td>Бесплатно</td></tr>
             <tr><th scope="row">Одна игра при поддержке банка</th><td>{{ P.signature.price | rub }}</td></tr>
-            <tr><th scope="row">{{ P.annual.games | plural('игра', 'игры', 'игр') }} в одной палате</th><td>{{ P.annual.price | rub }} в год</td></tr>
-            <tr><th scope="row">От {{ B.volumeFrom }} палат</th><td>{{ B.volumePrice | rub }} за палату в год</td></tr>
-            <tr><th scope="row">Эксклюзив: город</th><td>от {{ B.exclusiveMetroFrom }} палат</td></tr>
-            <tr><th scope="row">Эксклюзив: регион</th><td>от {{ B.exclusiveStateFrom }} палат</td></tr>
+            <tr><th scope="row">{{ P.annual.games | plural('игра', 'игры', 'игр') }} в одном сообществе</th><td>{{ P.annual.price | rub }} в год</td></tr>
+            <tr><th scope="row">От {{ B.volumeFrom }} сообществ</th><td>{{ B.volumePrice | rub }} за каждое в год</td></tr>
+            <tr><th scope="row">Эксклюзив в городе</th><td>от {{ B.exclusiveMetroFrom }} сообществ</td></tr>
+            <tr><th scope="row">Эксклюзив в регионе</th><td>от {{ B.exclusiveStateFrom }} сообществ</td></tr>
             <tr><th scope="row">Сертификация ведущего</th><td>{{ pricing.options.hostCertification | rub }} за человека</td></tr>
           </tbody>
         </table>
-        <p class="pricebox__reach">При {{ B.participantsPerGame[0] }}–{{ B.participantsPerGame[1] }} участниках за игру {{ P.annual.price | rub }} — это {{ reachLo }}–{{ reachHi }} предпринимателей в год, около {{ (P.annual.price / reachHi) | round | rub }}–{{ (P.annual.price / reachLo) | round | rub }} за личный контакт. {{ site.vat }}</p>
+        <p class="pricebox__reach">При {{ B.participantsPerGame[0] }}–{{ B.participantsPerGame[1] }} участниках на игре {{ P.annual.price | rub }} в год — это {{ reachLo }}–{{ reachHi }} предпринимателей, примерно {{ (P.annual.price / reachHi) | round | rub }}–{{ (P.annual.price / reachLo) | round | rub }} за личный контакт. {{ site.vat }}</p>
         <div class="btns">
           <button type="button" class="btn" data-lead="bank">Заказать демо для команды</button>
-          <a class="btn btn--line" href="/banks/">Подробно для банков</a>
+          <a class="btn btn--line" href="/banks/">Подробнее для банков</a>
         </div>
       </div>
     </div>
-    <p class="banks__chamber"><b>Палата ищет спонсора?</b> Отправьте своему банку готовое предложение для спонсора с названием вашей палаты. <a href="/print/prospectus/{% if region %}?region={{ region.abbr }}{% endif %}">Создать предложение (PDF)</a></p>
+    <p class="banks__chamber"><b>Ищете спонсора?</b> Отправьте своему банку готовое спонсорское предложение с названием вашего сообщества или компании. <a href="/print/prospectus/{% if region %}?region={{ region.abbr }}{% endif %}">Создать предложение (PDF)</a></p>
   </div>
 </section>

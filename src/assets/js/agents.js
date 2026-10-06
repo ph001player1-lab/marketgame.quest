@@ -107,7 +107,7 @@
   if (calc) {
     cform.addEventListener('input', render);
     cform.addEventListener('submit', function (e) { e.preventDefault(); });
-    // Поле «палат на банк» не может быть меньше минимума программы банка
+    // Поле «сообществ на банк» не может быть меньше минимума программы банка
     cform.elements.bankChambers.addEventListener('change', function () {
       this.value = values().bankChambers;
       render();

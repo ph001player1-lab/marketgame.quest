@@ -1,6 +1,6 @@
 /* Списки на страницах.
 
-   - Страница региона: поиск по списку палат (data-chlist).
+   - Страница региона: поиск по списку сообществ (data-chlist).
    - Страница для банков: выбор регионов присутствия банка (data-avail).
      Выбранные регионы уходят в форму заявки через data-lead-states. */
 
@@ -25,7 +25,7 @@
         li.hidden = !hit;
         if (hit) shown++;
       });
-      if (count) count.textContent = q ? 'Найдено: ' + shown + ' из ' + total : 'Палат в списке: ' + total;
+      if (count) count.textContent = q ? 'Найдено: ' + shown + ' из ' + total : 'В списке: ' + total;
       if (none) none.hidden = shown !== 0;
     });
   });
@@ -47,7 +47,7 @@
       var open = chosen.filter(function (b) { return b.getAttribute('data-open') === '1'; }).length;
       if (sum) {
         sum.textContent = chosen.length
-          ? 'Выбрано: ' + plural(chosen.length, 'регион', 'региона', 'регионов') + ' · место банковского партнёра свободно в ' + open
+          ? 'Выбрано: ' + plural(chosen.length, 'регион', 'региона', 'регионов') + ' · банк-партнёр свободен в ' + open
           : 'Регионы не выбраны.';
       }
       if (go) {

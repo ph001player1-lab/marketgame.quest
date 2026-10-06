@@ -1,4 +1,5 @@
-// Сводка по каждому региону для шаблонов: палаты, палата-основатель,
+// Сводка по каждому региону для шаблонов: сообщества и компании,
+// эксклюзивный партнёр региона (в коде — founding),
 // банковский партнёр, часовой пояс словами и можно ли индексировать страницу.
 // chambers.json и banks.json пишет scripts/sync-sheet.mjs из таблицы продаж.
 
@@ -21,7 +22,7 @@ export default function regionInfo() {
 
     info[s.abbr] = {
       chambers: list,
-      // private — договор подписан, но палата не разрешила называть себя
+      // private — договор подписан, но организация не разрешила называть себя
       active: list.filter((x) => ['active', 'founding', 'private'].includes(x.status)).length,
       founding: c.founding || { taken: false, name: null },
       bank: {
@@ -30,7 +31,7 @@ export default function regionInfo() {
         metros: Array.isArray(b.metros) ? b.metros : []
       },
       zone: zones[s.group],
-      // Пока у региона нет ни статистики, ни списка палат, его страница почти
+      // Пока у региона нет ни статистики, ни списка сообществ, его страница почти
       // не отличается от соседних. Такие страницы закрываем от индексации,
       // чтобы поисковики не сочли их дорвеями; с данными они откроются сами.
       indexable: Boolean(s.stats) || list.length > 0
