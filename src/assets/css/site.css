@@ -108,17 +108,20 @@ p{margin:0 0 1.05em}
 .logo{font-family:var(--disp);font-weight:800;font-size:16px;letter-spacing:-.02em;text-transform:uppercase;line-height:1.1;color:var(--ink);text-decoration:none;white-space:nowrap}
 .logo em{font-style:normal;color:var(--red)}
 .logo--sm{font-size:14px}
-.nav{display:flex;gap:18px;order:3;width:100%;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.nav::-webkit-scrollbar{display:none}
+/* На узком экране меню — отдельной строкой под логотипом и переносится,
+   чтобы все пункты были видны без прокрутки. На широком — в одну строку
+   с логотипом; если в шапке есть плашка региона, места на всё не хватает,
+   и меню снова уходит отдельной строкой. */
+.nav{display:flex;flex-wrap:wrap;gap:6px 16px;order:3;width:100%}
 .nav a{font-size:14.5px;font-weight:700;color:var(--ink);text-decoration:none;padding:2px 0;border-bottom:2px solid transparent;white-space:nowrap}
 .nav a:hover{border-bottom-color:var(--red)}
-@media(min-width:960px){.nav{order:0;width:auto}}
+@media(min-width:1100px){.nav{order:0;width:auto;flex-wrap:nowrap;gap:18px}.bar__in:has(.chip:not([hidden])) .nav{order:3;width:100%}}
 .bar__right{display:flex;align-items:center;gap:10px}
 .chip{font-size:13.5px;font-weight:800;color:var(--ink);text-decoration:none;padding:6px 10px;border:2px solid var(--ink);border-radius:3px;white-space:nowrap;max-width:44vw;overflow:hidden;text-overflow:ellipsis}
 .chip::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:7px;vertical-align:1px}
 .chip:hover{background:var(--ink);color:var(--paper)}
-/* Длинные названия регионов не должны переносить шапку на вторую строку */
-@media(min-width:960px){.chip{max-width:150px}}
+/* Длинное название региона обрезается многоточием */
+@media(min-width:960px){.chip{max-width:240px}}
 
 /* --- первый экран --- */
 .hero{padding-top:clamp(32px,5vw,64px);padding-bottom:clamp(44px,6vw,72px)}
@@ -224,7 +227,7 @@ p{margin:0 0 1.05em}
 /* --- пакеты --- */
 .plans{display:grid;gap:14px;margin-top:clamp(26px,4vw,40px)}
 @media(min-width:720px){.plans{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(min-width:1100px){.plans{grid-template-columns:repeat(4,minmax(0,1fr))}.plan__name{min-height:2.4em}}
+@media(min-width:1100px){.plans{grid-template-columns:repeat(4,minmax(0,1fr))}.plan__name{min-height:2.4em}.plans--3{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .plan{display:flex;flex-direction:column;border:2px solid var(--ink);padding:24px 22px;background:var(--paper)}
 .plan--hot{border-color:var(--red);box-shadow:6px 6px 0 var(--red)}
 .plan__tag{display:block;font-size:11.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--red-ink);margin-bottom:10px}

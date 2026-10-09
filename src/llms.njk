@@ -2,7 +2,7 @@
 permalink: /llms.txt
 eleventyExcludeFromCollections: true
 ---
-{% set P = pricing.packages %}{% set O = pricing.options %}{% set B = pricing.bank %}{% set F = pricing.formats -%}
+{% set P = pricing.packages %}{% set AI = ai.packages %}{% set O = pricing.options %}{% set B = pricing.bank %}{% set F = pricing.formats -%}
 # Бизнес Квест
 
 > Ежемесячная деловая игра-симулятор для бизнес-сообществ и компаний
@@ -49,12 +49,22 @@ eleventyExcludeFromCollections: true
 Эксклюзивный банк-партнёр: от {{ B.exclusiveMetroFrom }} сообществ в городе
 или от {{ B.exclusiveStateFrom }} в регионе.
 
+## Обучение ИИ для компаний
+
+Корпоративное обучение работе с нейросетями для команд, которые ещё не
+начали: группы до {{ ai.groupMax }} человек, онлайн или в офисе заказчика. {{ site.vat }}
+
+- {{ AI.trial.name }} — {{ AI.trial.price | rub }}, {{ AI.trial.per }}. Стоимость засчитывается, если курс заказан в течение {{ AI.trial.creditDays }} дней.
+- {{ AI.course.name }} — {{ AI.course.price | rub }}, {{ AI.course.per }}.
+- {{ AI.support.name }} — от {{ AI.support.price | rub }} {{ AI.support.per }}.
+
 ## Страницы
 
 - {{ site.url }}/ — главная, выбор региона
 - {{ site.url }}/nationwide/ — программы для тех, кто работает в нескольких регионах
 - {{ site.url }}/international/ — программы для тех, кто работает с другими странами
 - {{ site.url }}/banks/ — банкам и спонсорам
+- {{ site.url }}/ai/ — обучение ИИ для компаний
 - {{ site.url }}/agents/ — карьера: вакансии B2B-менеджеров по продажам
 - {{ site.url }}/requisites/ — реквизиты компании
 - {{ site.url }}/privacy/ — политика конфиденциальности

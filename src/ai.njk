@@ -1,0 +1,261 @@
+---
+layout: layouts/base.njk
+permalink: /ai/
+pageKind: ai
+hasPrograms: false
+title: "Обучение ИИ для компаний — корпоративные курсы по нейросетям | Бизнес Квест"
+ogTitle: "Нейросети в работе вашей команды"
+description: "Корпоративное обучение искусственному интеллекту для команд, которые ещё не начали: пробный интенсив на 4 часа, курс на 4 недели и сопровождение внедрения ИИ в бизнес-процессы. Группы до 20 человек, онлайн или в вашем офисе."
+---
+{# Страница корпоративного обучения ИИ. Цены — src/_data/ai.json.
+   Заявку отправляет assets/js/ai.js тем же обработчиком, что и остальные
+   формы (apps-script/Code.gs), с типом ai_training. #}
+{% set A = ai.packages %}
+<section class="hero">
+  <div class="wrap hero__in">
+    <div class="hero__text">
+      <span class="eyebrow">Обучение ИИ для компаний</span>
+      <h1>Нейросети в работе <span>вашей команды</span></h1>
+      <p class="lede">Корпоративное обучение искусственному интеллекту для тех, кто ещё не начал. Сотрудники учатся на своих задачах — письма, документы, таблицы, отчёты, встречи — и уходят с готовыми приёмами, которые экономят часы каждую неделю. Без программирования и лишней теории.</p>
+      <div class="btns">
+        <a class="btn" href="#ai-request" data-ai-plan="trial">Заказать пробный интенсив</a>
+        <a class="btn btn--line" href="#ai-plans">Тарифы</a>
+      </div>
+      <p class="undercta">Онлайн или в вашем офисе · группы до {{ ai.groupMax }} человек · {{ site.vat | lower | replace('ндс', 'НДС') }}</p>
+    </div>
+    <aside class="glance" aria-labelledby="aiGlance">
+      <p class="glance__t" id="aiGlance">Три формата</p>
+      <div class="glance__role">
+        <p class="glance__name"><a href="#ai-plans">{{ A.trial.name }}</a></p>
+        <ul><li><b>{{ A.trial.price | rub }}</b></li><li>{{ A.trial.per }}</li></ul>
+      </div>
+      <div class="glance__role">
+        <p class="glance__name"><a href="#ai-plans">{{ A.course.name }}</a></p>
+        <ul><li><b>{{ A.course.price | rub }}</b></li><li>{{ A.course.per }}</li></ul>
+      </div>
+      <div class="glance__role">
+        <p class="glance__name"><a href="#ai-plans">{{ A.support.name }}</a></p>
+        <ul><li><b>от {{ A.support.price | rub }}</b> в месяц</li><li>минимум {{ A.support.minMonths }} месяца</li></ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="sect" id="ai-who" aria-labelledby="aiWhoTitle">
+  <div class="wrap">
+    <span class="eyebrow">Для кого</span>
+    <h2 id="aiWhoTitle">Для компаний, которые хотят наверстать</h2>
+    <div class="cards cards--4">
+      <article class="card">
+        <span class="card__tag">С нуля</span>
+        <h3>Команды, которые ещё не пользуются ИИ</h3>
+        <p>Объясняем простым языком, что умеют нейросети, а что нет, и сразу переходим к практике.</p>
+      </article>
+      <article class="card">
+        <span class="card__tag">Руководители</span>
+        <h3>Руководители и собственники</h3>
+        <p>Где ИИ даст эффект в вашей компании, сколько это стоит и как не потерять данные.</p>
+      </article>
+      <article class="card">
+        <span class="card__tag">Отделы</span>
+        <h3>Продажи, маркетинг, HR, финансы</h3>
+        <p>Задания строим на реальных задачах отдела: письма клиентам, отчёты, вакансии, сверки.</p>
+      </article>
+      <article class="card">
+        <span class="card__tag">Внедрение</span>
+        <h3>Компании, готовые менять процессы</h3>
+        <p>После обучения помогаем встроить ИИ в работу: ассистенты, агенты, интеграции с CRM и документами.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sect sect--tint" id="ai-program" aria-labelledby="aiProgTitle">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Программа</span>
+      <h2 id="aiProgTitle">Чему научатся сотрудники</h2>
+    </div>
+    <div class="prose">
+      <p class="lede">Каждое занятие — практика на задачах вашей компании. Программу собираем после короткого созвона с руководителем.</p>
+      <ul class="ticks">
+        <li>Как устроены нейросети, где они ошибаются и как проверять ответы</li>
+        <li>Как ставить задачу нейросети, чтобы получить нужный результат с первого раза</li>
+        <li>Тексты и документы: письма, коммерческие предложения, договоры, регламенты</li>
+        <li>Таблицы и аналитика: разбор данных, сводные отчёты, формулы</li>
+        <li>Встречи и знания: протоколы, краткие итоги, база знаний компании</li>
+        <li>Презентации, изображения и материалы для соцсетей</li>
+        <li>Автоматизация рутины: ассистенты, агенты и небольшие программы без программистов — например, в Cursor</li>
+        <li>Безопасность: какие данные можно доверить нейросети, а какие нельзя</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sect" id="ai-tools" aria-labelledby="aiToolsTitle">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Инструменты</span>
+      <h2 id="aiToolsTitle">Работаем с тем, что доступно вашей компании</h2>
+    </div>
+    <div class="prose">
+      <p class="lede">Российские нейросети — GigaChat и YandexGPT, зарубежные — ChatGPT, Claude, Perplexity, а для автоматизации — Cursor и no-code-сервисы. Набор инструментов подбираем под требования безопасности и задачи вашей компании.</p>
+      <p>Подписки на нейросети оплачиваются отдельно — подскажем, какие тарифы действительно нужны.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sect sect--tint" id="ai-plans" aria-labelledby="aiPlansTitle">
+  <div class="wrap">
+    <span class="eyebrow">Тарифы</span>
+    <h2 id="aiPlansTitle">От пробного занятия до внедрения</h2>
+    <p class="lede">Начните с интенсива: за полдня команда увидит, что нейросети умеют в вашей работе. Дальше — полный курс и, если нужно, сопровождение внедрения. {{ site.vat }}</p>
+
+    <div class="plans plans--3">
+      <article class="plan">
+        <span class="plan__tag">Попробовать</span>
+        <h3 class="plan__name">{{ A.trial.name }}</h3>
+        <p class="plan__price">{{ A.trial.price | rub }}</p>
+        <p class="plan__per">{{ A.trial.per }}</p>
+        <ul class="plan__facts">
+          <li>Онлайн или в вашем офисе</li>
+          <li>Основы, постановка задач нейросети и 3–4 практических кейса из работы вашей команды</li>
+          <li>Каждый участник уходит с готовыми шаблонами запросов</li>
+          <li>Стоимость засчитывается, если в течение {{ A.trial.creditDays }} дней вы закажете курс</li>
+        </ul>
+        <a class="btn btn--line" href="#ai-request" data-ai-plan="trial">Заказать интенсив</a>
+      </article>
+
+      <article class="plan plan--hot">
+        <span class="plan__tag">Полный курс</span>
+        <h3 class="plan__name">{{ A.course.name }}</h3>
+        <p class="plan__price">{{ A.course.price | rub }}</p>
+        <p class="plan__per">{{ A.course.per }}</p>
+        <ul class="plan__facts">
+          <li>16 часов практики на задачах ваших отделов</li>
+          <li>Домашние задания с разбором</li>
+          <li>Чат с тренером на всё время курса</li>
+          <li>Итоговый проект: каждый автоматизирует одну свою рутинную задачу</li>
+          <li>Сертификаты участникам и отчёт для руководства</li>
+        </ul>
+        <a class="btn" href="#ai-request" data-ai-plan="course">Заказать курс</a>
+      </article>
+
+      <article class="plan">
+        <span class="plan__tag">Внедрение</span>
+        <h3 class="plan__name">{{ A.support.name }}</h3>
+        <p class="plan__price">от {{ A.support.price | rub }}</p>
+        <p class="plan__per">{{ A.support.per }}</p>
+        <ul class="plan__facts">
+          <li>Аудит процессов и карта мест, где ИИ даст эффект</li>
+          <li>Запуск 2–3 пилотных сценариев: ассистенты, агенты, связка с CRM и документами</li>
+          <li>Правила работы с данными и регламенты для сотрудников</li>
+          <li>Еженедельные встречи с командой и отчёт о результатах</li>
+          <li>Обучение сотрудников новым сценариям</li>
+        </ul>
+        <a class="btn btn--line" href="#ai-request" data-ai-plan="support">Обсудить внедрение</a>
+      </article>
+    </div>
+    <p class="note">Если сотрудников больше {{ ai.groupMax }}, делим их на потоки — стоимость рассчитаем отдельно. Подписки на нейросети и доработки сторонних систем в стоимость не входят.</p>
+  </div>
+</section>
+
+<section class="sect" id="ai-how" aria-labelledby="aiHowTitle">
+  <div class="wrap">
+    <span class="eyebrow">Как мы работаем</span>
+    <h2 id="aiHowTitle">Пять шагов от заявки до результата</h2>
+    <div class="steps">
+      <article><h3>Заявка</h3><p>Расскажите о компании и о том, сколько сотрудников нужно обучить.</p></article>
+      <article><h3>Короткий созвон</h3><p>Выясняем, какие задачи команда решает каждый день и где теряет больше всего времени.</p></article>
+      <article><h3>Пробный интенсив</h3><p>4 часа практики: команда видит результат на своих задачах.</p></article>
+      <article><h3>Курс</h3><p>4 недели занятий и домашних заданий, итоговый проект у каждого участника.</p></article>
+      <article><h3>Внедрение</h3><p>Встраиваем ИИ в процессы и сопровождаем, пока новые сценарии не станут привычкой.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="sect sect--tint" id="ai-faq" aria-labelledby="aiFaqTitle">
+  <div class="wrap">
+    <span class="eyebrow">Вопросы и ответы</span>
+    <h2 id="aiFaqTitle">Коротко о главном</h2>
+    <div class="faq">
+      <details>
+        <summary>Нужны ли знания программирования?</summary>
+        <p class="faq__a">Нет. Курс рассчитан на тех, кто никогда не работал с нейросетями. Небольшие автоматизации участники делают без программирования — или вместе с ИИ в Cursor.</p>
+      </details>
+      <details>
+        <summary>С какими нейросетями работаем?</summary>
+        <p class="faq__a">С российскими — GigaChat и YandexGPT — и с зарубежными: ChatGPT, Claude, Perplexity, Cursor. Набор подбираем под требования безопасности вашей компании.</p>
+      </details>
+      <details>
+        <summary>Это безопасно для данных компании?</summary>
+        <p class="faq__a">Отдельный блок программы посвящён тому, какие данные можно передавать нейросетям, а какие нельзя. При сопровождении внедрения мы готовим правила работы с данными для сотрудников.</p>
+      </details>
+      <details>
+        <summary>Онлайн или очно?</summary>
+        <p class="faq__a">Как удобнее: онлайн или в вашем офисе. Для очных занятий за пределами Москвы дорога тренера оплачивается отдельно, по факту.</p>
+      </details>
+      <details>
+        <summary>А если сотрудников больше 20?</summary>
+        <p class="faq__a">Делим на потоки до {{ ai.groupMax }} человек: так у тренера хватает времени на практику каждого. Стоимость нескольких потоков рассчитаем отдельно.</p>
+      </details>
+      <details>
+        <summary>Как оплатить?</summary>
+        <p class="faq__a">По счёту от {{ site.company.legalName }}, в рублях; цены указаны без НДС. Стоимость пробного интенсива засчитывается, если в течение {{ A.trial.creditDays }} дней вы закажете курс.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="sect" id="ai-request" aria-labelledby="aiReqTitle">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Заявка</span>
+      <h2 id="aiReqTitle">Обсудим обучение вашей команды</h2>
+      <p class="lede">Оставьте заявку — менеджер свяжется с вами в течение рабочего дня, уточнит задачи и предложит программу.</p>
+      <p class="note">Удобнее по почте? Пишите на <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>.</p>
+    </div>
+
+    <div class="apply">
+      <form class="apply__form" data-ai-form novalidate>
+        <fieldset class="lf__row lf__type">
+          <legend>Что интересует</legend>
+          <div class="seg seg--sm">
+            <label class="seg__opt"><input type="radio" name="plan" value="trial" data-label="{{ A.trial.name }}" checked><span>Интенсив</span></label>
+            <label class="seg__opt"><input type="radio" name="plan" value="course" data-label="{{ A.course.name }}"><span>Курс</span></label>
+            <label class="seg__opt"><input type="radio" name="plan" value="support" data-label="{{ A.support.name }}"><span>Внедрение</span></label>
+          </div>
+        </fieldset>
+        <div class="lf__two">
+          <div class="lf__row"><label for="aiName">Имя и фамилия</label><input id="aiName" name="name" type="text" autocomplete="name" required></div>
+          <div class="lf__row"><label for="aiTitle">Должность</label><input id="aiTitle" name="title" type="text" autocomplete="organization-title"></div>
+        </div>
+        <div class="lf__row"><label for="aiOrg">Компания</label><input id="aiOrg" name="org" type="text" autocomplete="organization" required></div>
+        <div class="lf__two">
+          <div class="lf__row"><label for="aiEmail">Рабочий email</label><input id="aiEmail" name="email" type="email" autocomplete="email" required></div>
+          <div class="lf__row"><label for="aiPhone">Телефон</label><input id="aiPhone" name="phone" type="tel" autocomplete="tel" placeholder="+7 900 000-00-00"></div>
+        </div>
+        <div class="lf__row"><label for="aiPeople">Сколько сотрудников обучить</label>
+          <select id="aiPeople" name="people">
+            <option value="">Пока не знаем</option>
+            <option>До 10</option>
+            <option>10–20</option>
+            <option>20–50</option>
+            <option>Больше 50</option>
+          </select>
+        </div>
+        <div class="lf__row"><label for="aiMsg">Какие задачи хотите решить с помощью ИИ?</label><textarea id="aiMsg" name="message" rows="3"></textarea></div>
+
+        {# ловушка для роботов: человек её не видит и не заполняет #}
+        <div class="lf__trap" aria-hidden="true"><label for="aiWebsite">Сайт</label><input type="text" id="aiWebsite" name="website" tabindex="-1" autocomplete="off"></div>
+
+        <div class="lf__check"><input type="checkbox" id="aiConsent" name="consent">
+          <label for="aiConsent" class="lf__consent">Даю <a href="/consent/" target="_blank" rel="noopener">согласие на обработку персональных данных</a> для ответа на мой запрос. С <a href="/privacy/" target="_blank" rel="noopener">политикой конфиденциальности</a> ознакомлен(а).</label></div>
+
+        <div class="lf__actions"><button type="submit" class="btn">Отправить заявку</button></div>
+        <p class="lf__status" role="status" aria-live="polite"></p>
+      </form>
+      <noscript><p>Включите JavaScript, чтобы отправить форму, или напишите нам на <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>.</p></noscript>
+    </div>
+  </div>
+</section>

@@ -1,11 +1,12 @@
 /**
- * Бизнес Квест (marketgame.quest) — приём заявок на демо-игру и откликов на вакансии.
+ * Бизнес Квест (marketgame.quest) — приём заявок на демо-игру, на обучение ИИ
+ * и откликов на вакансии.
  *
  * Что делает:
  *   - принимает заявку с сайта, дописывает строку в Google-таблицу продаж
- *     (свой лист для сообществ и компаний, банков, спонсоров и откликов на
- *     вакансии) и присылает
- *     уведомление в закрытую группу Telegram;
+ *     (свой лист для сообществ и компаний, банков, спонсоров, заявок на
+ *     обучение ИИ и откликов на вакансии) и присылает уведомление
+ *     в закрытую группу Telegram;
  *   - это отдельный скрипт для российского сайта. Ставьте его в ОТДЕЛЬНУЮ
  *     таблицу продаж по России: у таблицы marketgame.biz уже есть свой
  *     скрипт с такими же именами листов;
@@ -39,10 +40,11 @@ var SHEETS = {
   chamber: 'Заявки — сообщества и компании',
   bank: 'Заявки — банки',
   sponsor: 'Заявки — спонсоры',
-  agent_application: 'Заявки — агенты'
+  agent_application: 'Заявки — агенты',
+  ai_training: 'Заявки — обучение ИИ'
 };
 
-var TYPE_LABEL = { chamber: 'Сообщество или компания', bank: 'Банк', sponsor: 'Спонсор', agent_application: 'Отклик на вакансию' };
+var TYPE_LABEL = { chamber: 'Сообщество или компания', bank: 'Банк', sponsor: 'Спонсор', agent_application: 'Отклик на вакансию', ai_training: 'Обучение ИИ' };
 
 // Колонки каждого листа: [заголовок, поле заявки]
 var COLUMNS = {
@@ -71,6 +73,12 @@ var COLUMNS = {
     ['Город', 'city'], ['Регион или страна', 'region'], ['Часовой пояс', 'tz'], ['Профиль', 'profile'],
     ['Что продаёт', 'sells'], ['С какими организациями работает', 'orgs'], ['Сообщества', 'chambers'],
     ['Резюме (hh.ru)', 'resume'], ['Откуда узнал', 'source'], ['Комментарий', 'message'],
+    ['Страница', 'page'], ['Источник', 'referrer'], ['UTM', 'utm'], ['Статус', 'status']
+  ],
+  // Заявка на обучение ИИ со страницы /ai/
+  ai_training: [
+    ['Дата', 'date'], ['Тариф', 'plan'], ['Имя', 'name'], ['Должность', 'title'], ['Компания', 'org'],
+    ['Email', 'email'], ['Телефон', 'phone'], ['Сотрудников', 'people'], ['Сообщение', 'message'],
     ['Страница', 'page'], ['Источник', 'referrer'], ['UTM', 'utm'], ['Статус', 'status']
   ]
 };
@@ -166,6 +174,8 @@ function doPost(e) {
       chambers: clean(data.chambers, 300),
       resume: clean(data.resume, 300),
       source: clean(data.source, 80),
+      plan: clean(data.plan, 80),
+      people: clean(data.people, 40),
       note: clean(data.note, 200),
       message: clean(data.message, 2000),
       page: clean(data.page, 300),
@@ -330,6 +340,7 @@ function sendToTelegram(text) {
 
 function notifyTelegram(row) {
   if (row.type === 'agent_application') return notifyAgent(row);
+  if (row.type === 'ai_training') return notifyAi(row);
   var lines = [
     '<b>marketgame.quest · заявка на демо · ' + TYPE_LABEL[row.type] + '</b>',
     row.note ? '<b>' + esc(row.note) + '</b>' : '',
@@ -346,6 +357,22 @@ function notifyTelegram(row) {
     row.interest ? 'Интерес: ' + esc(row.interest) : '',
     row.hosts ? 'Хотят своих ведущих' : '',
     row.industry ? 'Отрасль: ' + esc(row.industry) : '',
+    row.message ? '\n' + esc(row.message) : '',
+    row.utm ? '\nМетки: ' + esc(row.utm) : ''
+  ].filter(function (l) { return l !== ''; });
+  return sendToTelegram(lines.join('\n'));
+}
+
+/** Уведомление о заявке на обучение ИИ. */
+function notifyAi(row) {
+  var lines = [
+    '<b>marketgame.quest · обучение ИИ · ' + esc(row.plan || 'тариф не выбран') + '</b>',
+    '',
+    esc(row.name) + (row.title ? ', ' + esc(row.title) : ''),
+    esc(row.org),
+    'Email: ' + esc(row.email),
+    row.phone ? 'Телефон: ' + esc(row.phone) : '',
+    row.people ? 'Сотрудников: ' + esc(row.people) : '',
     row.message ? '\n' + esc(row.message) : '',
     row.utm ? '\nМетки: ' + esc(row.utm) : ''
   ].filter(function (l) { return l !== ''; });
