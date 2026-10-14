@@ -7,44 +7,56 @@ eleventyExcludeFromCollections: true
 User-agent: *
 Allow: /
 Disallow: /print/
+Disallow: /crm/
 
 # Яндекс читает только свою группу, поэтому правила повторены здесь.
 # Clean-param: метки кампаний не создают для Яндекса новых страниц.
 User-agent: Yandex
 Allow: /
 Disallow: /print/
+Disallow: /crm/
 Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term
 
 # Поисковые и ИИ-краулеры ассистентов — добро пожаловать: мы хотим, чтобы
 # ChatGPT, Claude, Perplexity и Gemini читали сайт и ссылались на него.
 User-agent: GPTBot
 Allow: /
+Disallow: /crm/
 
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /crm/
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /crm/
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /crm/
 
 User-agent: Claude-SearchBot
 Allow: /
+Disallow: /crm/
 
 User-agent: Claude-User
 Allow: /
+Disallow: /crm/
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /crm/
 
 User-agent: Perplexity-User
 Allow: /
+Disallow: /crm/
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /crm/
 
 User-agent: Applebot-Extended
 Allow: /
+Disallow: /crm/
 
 Sitemap: {{ site.url }}/sitemap.xml
