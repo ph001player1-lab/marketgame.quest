@@ -1,11 +1,11 @@
 /**
- * Бизнес Квест (marketgame.quest) — приём заявок на демо-игру, на обучение ИИ
+ * Бизнес Квест (marketgame.quest) — приём заявок на демо-игру, на AI-сотрудников
  * и откликов на вакансии, а также CRM команды продаж (страница /crm/).
  *
  * Что делает:
  *   - принимает заявку с сайта, дописывает строку в Google-таблицу продаж
  *     (свой лист для сообществ и компаний, банков, спонсоров, заявок на
- *     обучение ИИ и откликов на вакансии) и присылает уведомление
+ *     AI-сотрудников и откликов на вакансии) и присылает уведомление
  *     в закрытую группу Telegram;
  *   - это отдельный скрипт для российского сайта. Ставьте его в ОТДЕЛЬНУЮ
  *     таблицу продаж по России: у таблицы marketgame.biz уже есть свой
@@ -46,10 +46,10 @@ var SHEETS = {
   bank: 'Заявки — банки',
   sponsor: 'Заявки — спонсоры',
   agent_application: 'Заявки — агенты',
-  ai_training: 'Заявки — обучение ИИ'
+  ai_training: 'Заявки — AI-сотрудники'
 };
 
-var TYPE_LABEL = { chamber: 'Сообщество или компания', bank: 'Банк', sponsor: 'Спонсор', agent_application: 'Отклик на вакансию', ai_training: 'Обучение ИИ' };
+var TYPE_LABEL = { chamber: 'Сообщество или компания', bank: 'Банк', sponsor: 'Спонсор', agent_application: 'Отклик на вакансию', ai_training: 'AI-сотрудник' };
 
 // Колонки каждого листа: [заголовок, поле заявки]
 var COLUMNS = {
@@ -80,9 +80,9 @@ var COLUMNS = {
     ['Резюме (hh.ru)', 'resume'], ['Откуда узнал', 'source'], ['Комментарий', 'message'],
     ['Страница', 'page'], ['Источник', 'referrer'], ['UTM', 'utm'], ['Статус', 'status']
   ],
-  // Заявка на обучение ИИ со страницы /ai/
+  // Заявка «Нанять AI-сотрудника» со страницы /ai/ (тип остался прежним — ai_training)
   ai_training: [
-    ['Дата', 'date'], ['Тариф', 'plan'], ['Имя', 'name'], ['Должность', 'title'], ['Компания', 'org'],
+    ['Дата', 'date'], ['Сотрудник', 'plan'], ['Имя', 'name'], ['Должность', 'title'], ['Компания', 'org'],
     ['Email', 'email'], ['Телефон', 'phone'], ['Сотрудников', 'people'], ['Сообщение', 'message'],
     ['Страница', 'page'], ['Источник', 'referrer'], ['UTM', 'utm'], ['Статус', 'status']
   ]
@@ -298,7 +298,11 @@ function appendLead(row) {
   lock.waitLock(20000);
   try {
     var sheet = getSheet(row.type);
-    sheet.appendRow(COLUMNS[row.type].map(function (c) { return row[c[1]] || ''; }));
+    // Текст пишем как есть: телефон «+7…» не станет формулой, а «=…» не выполнится
+    sheet.appendRow(COLUMNS[row.type].map(function (c) {
+      var v = row[c[1]];
+      return v instanceof Date ? v : crmLiteral(v === undefined || v === null ? '' : v);
+    }));
   } finally {
     lock.releaseLock();
   }
@@ -372,10 +376,10 @@ function notifyTelegram(row) {
   return sendToTelegram(lines.join('\n'));
 }
 
-/** Уведомление о заявке на обучение ИИ. */
+/** Уведомление о заявке на AI-сотрудника. */
 function notifyAi(row) {
   var lines = [
-    '<b>marketgame.quest · обучение ИИ · ' + esc(row.plan || 'тариф не выбран') + '</b>',
+    '<b>marketgame.quest · AI-сотрудник · ' + esc(row.plan || 'не выбран') + '</b>',
     '',
     esc(row.name) + (row.title ? ', ' + esc(row.title) : ''),
     esc(row.org),

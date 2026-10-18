@@ -115,7 +115,13 @@ p{margin:0 0 1.05em}
 .nav{display:flex;flex-wrap:wrap;gap:6px 16px;order:3;width:100%}
 .nav a{font-size:14.5px;font-weight:700;color:var(--ink);text-decoration:none;padding:2px 0;border-bottom:2px solid transparent;white-space:nowrap}
 .nav a:hover{border-bottom-color:var(--red)}
-@media(min-width:1100px){.nav{order:0;width:auto;flex-wrap:nowrap;gap:18px}.bar__in:has(.chip:not([hidden])) .nav{order:3;width:100%}}
+/* «AI-сотрудник» — отдельный продукт со своим бело-голубым дизайном: ссылка-таблетка выделяется в шапке */
+.nav a.nav__ai{display:inline-flex;align-items:center;gap:7px;padding:3px 12px 3px 9px;border:0;border-radius:999px;background:#2F9BF0;color:#fff;box-shadow:0 4px 14px -6px rgba(47,155,240,.9)}
+.nav a.nav__ai::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 6px #fff}
+.nav a.nav__ai:hover{background:#1170BD;border-bottom-color:transparent}
+@media(min-width:1180px){.nav{order:0;width:auto;flex-wrap:nowrap;gap:18px}.bar__in:has(.chip:not([hidden])) .nav{order:3;width:100%}}
+@media(max-width:1179px){.nav{gap:6px 14px}.nav a{font-size:14px}.nav a.nav__ai{padding:3px 11px}.nav a.nav__ai::before{display:none}}
+@media(max-width:420px){.nav{gap:6px 11px}.nav a.nav__ai{padding:3px 10px}}
 .bar__right{display:flex;align-items:center;gap:10px}
 .chip{font-size:13.5px;font-weight:800;color:var(--ink);text-decoration:none;padding:6px 10px;border:2px solid var(--ink);border-radius:3px;white-space:nowrap;max-width:44vw;overflow:hidden;text-overflow:ellipsis}
 .chip::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:7px;vertical-align:1px}

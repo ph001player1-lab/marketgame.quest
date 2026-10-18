@@ -1,261 +1,129 @@
 ---
-layout: layouts/base.njk
 permalink: /ai/
-pageKind: ai
-hasPrograms: false
-title: "Обучение ИИ для компаний — корпоративные курсы по нейросетям | Бизнес Квест"
-ogTitle: "Нейросети в работе вашей команды"
-description: "Корпоративное обучение искусственному интеллекту для команд, которые ещё не начали: пробный интенсив на 4 часа, курс на 4 недели и сопровождение внедрения ИИ в бизнес-процессы. Группы до 20 человек, онлайн или в вашем офисе."
+eleventyExcludeFromCollections: true
 ---
-{# Страница корпоративного обучения ИИ. Цены — src/_data/ai.json.
-   Заявку отправляет assets/js/ai.js тем же обработчиком, что и остальные
-   формы (apps-script/Code.gs), с типом ai_training. #}
-{% set A = ai.packages %}
-<section class="hero">
-  <div class="wrap hero__in">
-    <div class="hero__text">
-      <span class="eyebrow">Обучение ИИ для компаний</span>
-      <h1>Нейросети в работе <span>вашей команды</span></h1>
-      <p class="lede">Корпоративное обучение искусственному интеллекту для тех, кто ещё не начал. Сотрудники учатся на своих задачах — письма, документы, таблицы, отчёты, встречи — и уходят с готовыми приёмами, которые экономят часы каждую неделю. Без программирования и лишней теории.</p>
-      <div class="btns">
-        <a class="btn" href="#ai-request" data-ai-plan="trial">Заказать пробный интенсив</a>
-        <a class="btn btn--line" href="#ai-plans">Тарифы</a>
-      </div>
-      <p class="undercta">Онлайн или в вашем офисе · группы до {{ ai.groupMax }} человек · {{ site.vat | lower | replace('ндс', 'НДС') }}</p>
-    </div>
-    <aside class="glance" aria-labelledby="aiGlance">
-      <p class="glance__t" id="aiGlance">Три формата</p>
-      <div class="glance__role">
-        <p class="glance__name"><a href="#ai-plans">{{ A.trial.name }}</a></p>
-        <ul><li><b>{{ A.trial.price | rub }}</b></li><li>{{ A.trial.per }}</li></ul>
-      </div>
-      <div class="glance__role">
-        <p class="glance__name"><a href="#ai-plans">{{ A.course.name }}</a></p>
-        <ul><li><b>{{ A.course.price | rub }}</b></li><li>{{ A.course.per }}</li></ul>
-      </div>
-      <div class="glance__role">
-        <p class="glance__name"><a href="#ai-plans">{{ A.support.name }}</a></p>
-        <ul><li><b>от {{ A.support.price | rub }}</b> в месяц</li><li>минимум {{ A.support.minMonths }} месяца</li></ul>
-      </div>
-    </aside>
-  </div>
-</section>
+{#- «AI-сотрудник» — каталог цифровых сотрудников для бизнеса: поиск по
+    профессиям и задачам, карточка сотрудника, калькулятор экономии, мастер
+    настройки, демо HR-рекрутера и заявка на настройку. Своя страница со своим
+    дизайном (assets/css/ai.css), без шапки и подвала основного сайта.
+    Профессии, цены и сценарии — в assets/js/ai.js (массив P). Заявка уходит
+    в Apps Script с типом ai_training (лист «Заявки — AI-сотрудники»). -#}
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AI-сотрудник — наём цифровых сотрудников для бизнеса | {{ site.brand }}</title>
+<meta name="description" content="Наймите AI-сотрудника вместо рутины: SMM, продажи, поддержка, бухгалтерия, рекрутинг, юрист, аудит и ещё 16 профессий. Узнайте, что он будет делать, сколько стоит по сравнению с человеком и как быстро выйдет на работу.">
+<link rel="canonical" href="{{ site.url }}/ai/">
+<meta name="theme-color" content="#F3F4F6">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.brand }}">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="AI-сотрудник: какого сотрудника вы хотите нанять?">
+<meta property="og:description" content="Цифровые сотрудники для бизнеса: что делают, сколько стоят и как быстро выходят на работу.">
+<meta property="og:url" content="{{ site.url }}/ai/">
+<meta name="twitter:card" content="summary">
+<link rel="preload" href="/assets/fonts/Geologica-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/ai.css">
+<script type="application/ld+json">
+{{ {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "AI-сотрудник",
+  "serviceType": "Настройка и внедрение AI-сотрудников для бизнеса",
+  "provider": { "@type": "Organization", "name": site.company.legalName, "url": site.url },
+  "areaServed": "RU",
+  "url": site.url + "/ai/"
+} | jsonScript | safe }}
+</script>
+</head>
+<body>
 
-<section class="sect" id="ai-who" aria-labelledby="aiWhoTitle">
-  <div class="wrap">
-    <span class="eyebrow">Для кого</span>
-    <h2 id="aiWhoTitle">Для компаний, которые хотят наверстать</h2>
-    <div class="cards cards--4">
-      <article class="card">
-        <span class="card__tag">С нуля</span>
-        <h3>Команды, которые ещё не пользуются ИИ</h3>
-        <p>Объясняем простым языком, что умеют нейросети, а что нет, и сразу переходим к практике.</p>
-      </article>
-      <article class="card">
-        <span class="card__tag">Руководители</span>
-        <h3>Руководители и собственники</h3>
-        <p>Где ИИ даст эффект в вашей компании, сколько это стоит и как не потерять данные.</p>
-      </article>
-      <article class="card">
-        <span class="card__tag">Отделы</span>
-        <h3>Продажи, маркетинг, HR, финансы</h3>
-        <p>Задания строим на реальных задачах отдела: письма клиентам, отчёты, вакансии, сверки.</p>
-      </article>
-      <article class="card">
-        <span class="card__tag">Внедрение</span>
-        <h3>Компании, готовые менять процессы</h3>
-        <p>После обучения помогаем встроить ИИ в работу: ассистенты, агенты, интеграции с CRM и документами.</p>
-      </article>
-    </div>
+<a class="skip" href="#catalog">Перейти к каталогу</a>
+<header class="top">
+  <div class="wrap top__in">
+    <button class="logo" data-go="top" aria-label="AI-сотрудник — наверх"><span class="egg egg--live" style="--s:24px"></span>AI-сотрудник <small>· наём цифровых сотрудников для бизнеса</small></button>
+    <nav class="nav" aria-label="Разделы">
+      <button data-go="catalog">Каталог</button>
+      <button data-go="calc">Посчитать экономию</button>
+      <button data-go="how">Как это работает</button>
+      <a class="navlink" href="/">Деловые игры</a>
+    </nav>
+    <button class="btn btn--glow" data-hire="">Нанять<span class="hide-s">&nbsp;AI-сотрудника</span></button>
   </div>
-</section>
+</header>
 
-<section class="sect sect--tint" id="ai-program" aria-labelledby="aiProgTitle">
-  <div class="wrap split">
+<main class="wrap" id="top">
+  <section class="hero">
     <div>
-      <span class="eyebrow">Программа</span>
-      <h2 id="aiProgTitle">Чему научатся сотрудники</h2>
+      <span class="slogan">Не учитесь работать с ИИ — наймите ИИ, который работает за вас</span>
+      <h1>Какого сотрудника вы хотите нанять?</h1>
+      <p>Выберите профессию. Узнайте, что цифровой сотрудник сможет делать за вас, сколько это стоит и как быстро он выйдет на работу.</p>
+      <label class="search" for="q">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span class="sr" hidden>Поиск</span>
+        <input id="q" type="search" placeholder="Профессия или задача: «отвечать клиентам», «вести бухгалтерию»…" autocomplete="off">
+      </label>
+      <div class="hints" id="hints"></div>
+      <div class="ctas"><button class="btn btn--glow" data-hire="">Нанять AI-сотрудника</button><button class="btn btn--line" data-go="calc">Посчитать свою экономию</button></div>
     </div>
-    <div class="prose">
-      <p class="lede">Каждое занятие — практика на задачах вашей компании. Программу собираем после короткого созвона с руководителем.</p>
-      <ul class="ticks">
-        <li>Как устроены нейросети, где они ошибаются и как проверять ответы</li>
-        <li>Как ставить задачу нейросети, чтобы получить нужный результат с первого раза</li>
-        <li>Тексты и документы: письма, коммерческие предложения, договоры, регламенты</li>
-        <li>Таблицы и аналитика: разбор данных, сводные отчёты, формулы</li>
-        <li>Встречи и знания: протоколы, краткие итоги, база знаний компании</li>
-        <li>Презентации, изображения и материалы для соцсетей</li>
-        <li>Автоматизация рутины: ассистенты, агенты и небольшие программы без программистов — например, в Cursor</li>
-        <li>Безопасность: какие данные можно доверить нейросети, а какие нельзя</li>
-      </ul>
+    <div class="hero__egg">
+      <span class="egg egg--live" style="--s:170px"><b>AI</b></span>
+      <p>Внутри капсулы — сотрудник, обученный на ваших регламентах и примерах работы. Работает в границах, которые задаёте вы.</p>
     </div>
+  </section>
+
+  <div id="catalog">
+    <div class="bar">
+      <div class="filters" id="filters" role="group" aria-label="Направление"></div>
+      <span class="found" id="found" aria-live="polite"></span>
+    </div>
+    <div class="cards" id="cards"></div>
+    <p class="note" style="margin-top:12px">Цены ориентировочные: точную стоимость считаем после знакомства с вашей задачей. Стоимость человека — зарплата со взносами, без премий. {{ site.vat }}</p>
   </div>
-</section>
 
-<section class="sect" id="ai-tools" aria-labelledby="aiToolsTitle">
-  <div class="wrap split">
-    <div>
-      <span class="eyebrow">Инструменты</span>
-      <h2 id="aiToolsTitle">Работаем с тем, что доступно вашей компании</h2>
+  <section class="sect" id="calc">
+    <div class="sect__h">
+      <div><h2>Посчитайте свою экономию в деньгах</h2><p>Сравните расходы на сотрудника-человека и AI-сотрудника. Меняйте параметры — расчёт обновляется сразу. Начальные значения примерные — подставьте свои.</p></div>
+      <button class="btn btn--glow" data-hire-calc="home">Нанять AI-сотрудника</button>
     </div>
-    <div class="prose">
-      <p class="lede">Российские нейросети — GigaChat и YandexGPT, зарубежные — ChatGPT, Claude, Perplexity, а для автоматизации — Cursor и no-code-сервисы. Набор инструментов подбираем под требования безопасности и задачи вашей компании.</p>
-      <p>Подписки на нейросети оплачиваются отдельно — подскажем, какие тарифы действительно нужны.</p>
+    <div class="panel" id="calcHome"></div>
+  </section>
+
+  <section class="sect" id="how">
+    <div class="sect__h"><div><h2>Как устроен цифровой сотрудник</h2><p>Капсула — это агент с инструкциями, памятью о вашей компании и выданными доступами. От найма до первого рабочего дня — около недели.</p></div></div>
+    <div class="how">
+      <div class="step"><span class="step__n">01 · опыт</span><h3>Переносим опыт</h3><p>Ваши регламенты, прайс, примеры писем и ответы лучших сотрудников становятся инструкцией агента.</p></div>
+      <div class="step"><span class="step__n">02 · капсула</span><h3>Собираем сотрудника</h3><p>Модель, инструменты, память о компании и подключения к вашим сервисам — в одной конфигурации.</p></div>
+      <div class="step"><span class="step__n">03 · границы</span><h3>Задаём полномочия</h3><p>Что делает сам, что только готовит, где нужно ваше подтверждение и какой бюджет можно тратить.</p></div>
+      <div class="step"><span class="step__n">04 · смена</span><h3>Выходит на работу</h3><p>Неделя пробной работы под присмотром, затем — ежедневные отчёты и разбор ошибок.</p></div>
     </div>
-  </div>
-</section>
+    <div class="offer"><span class="egg egg--live" style="--s:54px"><b>AI</b></span><div><b>Настроим и подключим AI-сотрудника под ваши задачи</b><p>Знакомство, настройка, интеграции и неделя пробной работы — около недели от заявки.</p></div><button class="btn btn--glow" data-hire="">Нанять AI-сотрудника</button></div>
+  </section>
 
-<section class="sect sect--tint" id="ai-plans" aria-labelledby="aiPlansTitle">
-  <div class="wrap">
-    <span class="eyebrow">Тарифы</span>
-    <h2 id="aiPlansTitle">От пробного занятия до внедрения</h2>
-    <p class="lede">Начните с интенсива: за полдня команда увидит, что нейросети умеют в вашей работе. Дальше — полный курс и, если нужно, сопровождение внедрения. {{ site.vat }}</p>
+</main>
 
-    <div class="plans plans--3">
-      <article class="plan">
-        <span class="plan__tag">Попробовать</span>
-        <h3 class="plan__name">{{ A.trial.name }}</h3>
-        <p class="plan__price">{{ A.trial.price | rub }}</p>
-        <p class="plan__per">{{ A.trial.per }}</p>
-        <ul class="plan__facts">
-          <li>Онлайн или в вашем офисе</li>
-          <li>Основы, постановка задач нейросети и 3–4 практических кейса из работы вашей команды</li>
-          <li>Каждый участник уходит с готовыми шаблонами запросов</li>
-          <li>Стоимость засчитывается, если в течение {{ A.trial.creditDays }} дней вы закажете курс</li>
-        </ul>
-        <a class="btn btn--line" href="#ai-request" data-ai-plan="trial">Заказать интенсив</a>
-      </article>
+<footer class="wrap site-foot">
+  <nav aria-label="Меню в подвале">
+    <a href="/">Деловые игры «Бизнес Квест»</a>
+    <a href="/agents/">Карьера · Вакансии</a>
+    <a href="/requisites/">Реквизиты</a>
+    <a href="/privacy/">Конфиденциальность</a>
+    <a href="/consent/">Согласие на обработку данных</a>
+    {% if site.contact.email %}<a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>{% endif %}
+  </nav>
+  <p>{{ site.company.legalName }}{% if site.company.inn %} · ИНН {{ site.company.inn }}{% endif %}{% if site.company.address %} · {{ site.company.address }}{% endif %}</p>
+  <p>Демонстрации на странице работают на синтетических данных: интеграции подключаются после настройки, пароли и платёжные данные здесь не запрашиваются.</p>
+</footer>
 
-      <article class="plan plan--hot">
-        <span class="plan__tag">Полный курс</span>
-        <h3 class="plan__name">{{ A.course.name }}</h3>
-        <p class="plan__price">{{ A.course.price | rub }}</p>
-        <p class="plan__per">{{ A.course.per }}</p>
-        <ul class="plan__facts">
-          <li>16 часов практики на задачах ваших отделов</li>
-          <li>Домашние задания с разбором</li>
-          <li>Чат с тренером на всё время курса</li>
-          <li>Итоговый проект: каждый автоматизирует одну свою рутинную задачу</li>
-          <li>Сертификаты участникам и отчёт для руководства</li>
-        </ul>
-        <a class="btn" href="#ai-request" data-ai-plan="course">Заказать курс</a>
-      </article>
+<div id="layer"></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-      <article class="plan">
-        <span class="plan__tag">Внедрение</span>
-        <h3 class="plan__name">{{ A.support.name }}</h3>
-        <p class="plan__price">от {{ A.support.price | rub }}</p>
-        <p class="plan__per">{{ A.support.per }}</p>
-        <ul class="plan__facts">
-          <li>Аудит процессов и карта мест, где ИИ даст эффект</li>
-          <li>Запуск 2–3 пилотных сценариев: ассистенты, агенты, связка с CRM и документами</li>
-          <li>Правила работы с данными и регламенты для сотрудников</li>
-          <li>Еженедельные встречи с командой и отчёт о результатах</li>
-          <li>Обучение сотрудников новым сценариям</li>
-        </ul>
-        <a class="btn btn--line" href="#ai-request" data-ai-plan="support">Обсудить внедрение</a>
-      </article>
-    </div>
-    <p class="note">Если сотрудников больше {{ ai.groupMax }}, делим их на потоки — стоимость рассчитаем отдельно. Подписки на нейросети и доработки сторонних систем в стоимость не входят.</p>
-  </div>
-</section>
 
-<section class="sect" id="ai-how" aria-labelledby="aiHowTitle">
-  <div class="wrap">
-    <span class="eyebrow">Как мы работаем</span>
-    <h2 id="aiHowTitle">Пять шагов от заявки до результата</h2>
-    <div class="steps">
-      <article><h3>Заявка</h3><p>Расскажите о компании и о том, сколько сотрудников нужно обучить.</p></article>
-      <article><h3>Короткий созвон</h3><p>Выясняем, какие задачи команда решает каждый день и где теряет больше всего времени.</p></article>
-      <article><h3>Пробный интенсив</h3><p>4 часа практики: команда видит результат на своих задачах.</p></article>
-      <article><h3>Курс</h3><p>4 недели занятий и домашних заданий, итоговый проект у каждого участника.</p></article>
-      <article><h3>Внедрение</h3><p>Встраиваем ИИ в процессы и сопровождаем, пока новые сценарии не станут привычкой.</p></article>
-    </div>
-  </div>
-</section>
-
-<section class="sect sect--tint" id="ai-faq" aria-labelledby="aiFaqTitle">
-  <div class="wrap">
-    <span class="eyebrow">Вопросы и ответы</span>
-    <h2 id="aiFaqTitle">Коротко о главном</h2>
-    <div class="faq">
-      <details>
-        <summary>Нужны ли знания программирования?</summary>
-        <p class="faq__a">Нет. Курс рассчитан на тех, кто никогда не работал с нейросетями. Небольшие автоматизации участники делают без программирования — или вместе с ИИ в Cursor.</p>
-      </details>
-      <details>
-        <summary>С какими нейросетями работаем?</summary>
-        <p class="faq__a">С российскими — GigaChat и YandexGPT — и с зарубежными: ChatGPT, Claude, Perplexity, Cursor. Набор подбираем под требования безопасности вашей компании.</p>
-      </details>
-      <details>
-        <summary>Это безопасно для данных компании?</summary>
-        <p class="faq__a">Отдельный блок программы посвящён тому, какие данные можно передавать нейросетям, а какие нельзя. При сопровождении внедрения мы готовим правила работы с данными для сотрудников.</p>
-      </details>
-      <details>
-        <summary>Онлайн или очно?</summary>
-        <p class="faq__a">Как удобнее: онлайн или в вашем офисе. Для очных занятий за пределами Москвы дорога тренера оплачивается отдельно, по факту.</p>
-      </details>
-      <details>
-        <summary>А если сотрудников больше 20?</summary>
-        <p class="faq__a">Делим на потоки до {{ ai.groupMax }} человек: так у тренера хватает времени на практику каждого. Стоимость нескольких потоков рассчитаем отдельно.</p>
-      </details>
-      <details>
-        <summary>Как оплатить?</summary>
-        <p class="faq__a">По счёту от {{ site.company.legalName }}, в рублях; цены указаны без НДС. Стоимость пробного интенсива засчитывается, если в течение {{ A.trial.creditDays }} дней вы закажете курс.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<section class="sect" id="ai-request" aria-labelledby="aiReqTitle">
-  <div class="wrap split">
-    <div>
-      <span class="eyebrow">Заявка</span>
-      <h2 id="aiReqTitle">Обсудим обучение вашей команды</h2>
-      <p class="lede">Оставьте заявку — менеджер свяжется с вами в течение рабочего дня, уточнит задачи и предложит программу.</p>
-      <p class="note">Удобнее по почте? Пишите на <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>.</p>
-    </div>
-
-    <div class="apply">
-      <form class="apply__form" data-ai-form novalidate>
-        <fieldset class="lf__row lf__type">
-          <legend>Что интересует</legend>
-          <div class="seg seg--sm">
-            <label class="seg__opt"><input type="radio" name="plan" value="trial" data-label="{{ A.trial.name }}" checked><span>Интенсив</span></label>
-            <label class="seg__opt"><input type="radio" name="plan" value="course" data-label="{{ A.course.name }}"><span>Курс</span></label>
-            <label class="seg__opt"><input type="radio" name="plan" value="support" data-label="{{ A.support.name }}"><span>Внедрение</span></label>
-          </div>
-        </fieldset>
-        <div class="lf__two">
-          <div class="lf__row"><label for="aiName">Имя и фамилия</label><input id="aiName" name="name" type="text" autocomplete="name" required></div>
-          <div class="lf__row"><label for="aiTitle">Должность</label><input id="aiTitle" name="title" type="text" autocomplete="organization-title"></div>
-        </div>
-        <div class="lf__row"><label for="aiOrg">Компания</label><input id="aiOrg" name="org" type="text" autocomplete="organization" required></div>
-        <div class="lf__two">
-          <div class="lf__row"><label for="aiEmail">Рабочий email</label><input id="aiEmail" name="email" type="email" autocomplete="email" required></div>
-          <div class="lf__row"><label for="aiPhone">Телефон</label><input id="aiPhone" name="phone" type="tel" autocomplete="tel" placeholder="+7 900 000-00-00"></div>
-        </div>
-        <div class="lf__row"><label for="aiPeople">Сколько сотрудников обучить</label>
-          <select id="aiPeople" name="people">
-            <option value="">Пока не знаем</option>
-            <option>До 10</option>
-            <option>10–20</option>
-            <option>20–50</option>
-            <option>Больше 50</option>
-          </select>
-        </div>
-        <div class="lf__row"><label for="aiMsg">Какие задачи хотите решить с помощью ИИ?</label><textarea id="aiMsg" name="message" rows="3"></textarea></div>
-
-        {# ловушка для роботов: человек её не видит и не заполняет #}
-        <div class="lf__trap" aria-hidden="true"><label for="aiWebsite">Сайт</label><input type="text" id="aiWebsite" name="website" tabindex="-1" autocomplete="off"></div>
-
-        <div class="lf__check"><input type="checkbox" id="aiConsent" name="consent">
-          <label for="aiConsent" class="lf__consent">Даю <a href="/consent/" target="_blank" rel="noopener">согласие на обработку персональных данных</a> для ответа на мой запрос. С <a href="/privacy/" target="_blank" rel="noopener">политикой конфиденциальности</a> ознакомлен(а).</label></div>
-
-        <div class="lf__actions"><button type="submit" class="btn">Отправить заявку</button></div>
-        <p class="lf__status" role="status" aria-live="polite"></p>
-      </form>
-      <noscript><p>Включите JavaScript, чтобы отправить форму, или напишите нам на <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>.</p></noscript>
-    </div>
-  </div>
-</section>
+<noscript><p class="wrap" style="padding:20px 0">Каталог работает с включённым JavaScript. Оставить заявку можно письмом на <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>.</p></noscript>
+<script id="ai-data" type="application/json">{{ { "endpoint": site.formEndpoint, "email": site.contact.email } | jsonScript | safe }}</script>
+<script src="/assets/js/ai.js" defer></script>
+</body>
+</html>
