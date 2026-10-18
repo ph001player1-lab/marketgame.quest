@@ -14,7 +14,7 @@ eleventyExcludeFromCollections: true
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>AI-сотрудник — наём цифровых сотрудников для бизнеса | {{ site.brand }}</title>
-<meta name="description" content="Наймите AI-сотрудника вместо рутины: SMM, продажи, поддержка, бухгалтерия, рекрутинг, юрист, аудит и ещё 16 профессий. Узнайте, что он будет делать, сколько стоит по сравнению с человеком и как быстро выйдет на работу.">
+<meta name="description" content="Первый AI-сотрудник за 3 дня — 15 000 ₽. Наймите AI-сотрудника вместо рутины: SMM, продажи, поддержка, бухгалтерия, рекрутинг, юрист, аудит и ещё 16 профессий. Узнайте, что он будет делать, сколько стоит по сравнению с человеком и как быстро выйдет на работу.">
 <link rel="canonical" href="{{ site.url }}/ai/">
 <meta name="theme-color" content="#F3F4F6">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -47,8 +47,9 @@ eleventyExcludeFromCollections: true
     <button class="logo" data-go="top" aria-label="AI-сотрудник — наверх"><span class="egg egg--live" style="--s:24px"></span>AI-сотрудник <small>· наём цифровых сотрудников для бизнеса</small></button>
     <nav class="nav" aria-label="Разделы">
       <button data-go="catalog">Каталог</button>
-      <button data-go="calc">Посчитать экономию</button>
-      <button data-go="how">Как это работает</button>
+      <button data-go="trial">3 дня за {{ aiOffer.price | rub }}</button>
+      <button data-go="calc">Экономия</button>
+      <button data-go="how">Как работает</button>
       <a class="navlink" href="/">Деловые игры</a>
     </nav>
     <button class="btn btn--glow" data-hire="">Нанять<span class="hide-s">&nbsp;AI-сотрудника</span></button>
@@ -67,7 +68,12 @@ eleventyExcludeFromCollections: true
         <input id="q" type="search" placeholder="Профессия или задача: «отвечать клиентам», «вести бухгалтерию»…" autocomplete="off">
       </label>
       <div class="hints" id="hints"></div>
-      <div class="ctas"><button class="btn btn--glow" data-hire="">Нанять AI-сотрудника</button><button class="btn btn--line" data-go="calc">Посчитать свою экономию</button></div>
+      <div class="ctas"><button class="btn btn--glow" data-hire="">Попробовать за {{ aiOffer.price | rub }}</button><button class="btn btn--line" data-go="calc">Посчитать свою экономию</button></div>
+      <button class="deal" data-go="trial">
+        <span class="deal__tag">Спецпредложение</span>
+        <span class="deal__t"><b>Первый AI-сотрудник за {{ aiOffer.days }} дня — {{ aiOffer.price | rub }}</b><small>На рынке настройка ИИ-агента стоит {{ (aiOffer.market.from / 1000) | round }}–{{ (aiOffer.market.to / 1000) | round }} тыс. ₽ и занимает {{ aiOffer.market.days }}</small></span>
+        <span class="deal__go" aria-hidden="true">→</span>
+      </button>
     </div>
     <div class="hero__egg">
       <span class="egg egg--live" style="--s:170px"><b>AI</b></span>
@@ -84,10 +90,35 @@ eleventyExcludeFromCollections: true
     <p class="note" style="margin-top:12px">Цены — среднерыночные ориентиры на осень 2026 года. Человек: медиана предлагаемых зарплат по России (hh.ru и обзоры зарплат) плюс страховые взносы 30%, без премий. AI-сотрудник: средние цены настройки ИИ-агентов и их работы. Точную стоимость считаем после знакомства с задачей. {{ site.vat }}</p>
   </div>
 
+  <section class="sect" id="trial" aria-labelledby="trialTitle">
+    <div class="trial">
+      <div class="trial__h">
+        <span class="deal__tag">Спецпредложение</span>
+        <h2 id="trialTitle">Первый AI-сотрудник за {{ aiOffer.days }} дня — {{ aiOffer.price | rub }}</h2>
+        <p>Возьмите любого сотрудника, который работает у вас за компьютером, и передайте агенту часть его задач. Агент работает в браузере: открывает нужные сайты и сервисы, ищет, заполняет, пишет — как человек за компьютером. Через три дня вы увидите результат на своих задачах и решите, кого автоматизировать дальше.</p>
+      </div>
+      <div class="days">
+        <div class="day1"><span class="step__n">День 1 · настройка</span><h3>Знакомимся и настраиваем</h3><p>Выбираем сотрудника и 2–3 его задачи, настраиваем агента в вашем браузере, первые задачи делаем вместе.</p></div>
+        <div class="day1"><span class="step__n">День 2 · работа</span><h3>Агент работает, вы проверяете</h3><p>Агент выполняет задачи, вы смотрите результат и даёте обратную связь — мы на связи и правим инструкции.</p></div>
+        <div class="day1"><span class="step__n">День 3 · итоги</span><h3>Считаем эффект</h3><p>Что агент делает хорошо, сколько часов экономит, хватает ли базового лимита подписки и кого подключать следующим.</p></div>
+      </div>
+      <div class="cmp">
+        <div><small>На рынке</small><b>{{ (aiOffer.market.from / 1000) | round }}–{{ (aiOffer.market.to / 1000) | round }} тыс. ₽</b><span>настройка ИИ-агента, запуск {{ aiOffer.market.days }}</span></div>
+        <div><small>Полная настройка у нас</small><b>от {{ (aiOffer.fullFrom / 1000) | round }} тыс. ₽</b><span>с интеграциями в CRM, почту, 1С — одна-две недели</span></div>
+        <div class="cmp--hot"><small>Пробный запуск</small><b>{{ aiOffer.price | rub }}</b><span>{{ aiOffer.days }} дня, агент в вашем браузере</span></div>
+      </div>
+      <div class="incl">
+        <div><h3>Входит</h3><ul><li>Настройка одного агента под 2–3 задачи вашего сотрудника</li><li>Работа в браузере на вашем компьютере, без сложных интеграций</li><li>Три дня поддержки и правок по вашей обратной связи</li><li>Итоговый разбор: эффект в часах и план следующих шагов</li></ul></div>
+        <div><h3>Оплачивается отдельно</h3><ul><li>Подписка на нейросеть — от {{ aiOffer.subFrom | rub }} в месяц: на пробе станет понятно, хватает ли базового лимита</li><li>Интеграции с CRM, 1С и другими системами — это полная настройка</li></ul></div>
+      </div>
+      <div class="ctas" style="margin-top:4px"><button class="btn btn--glow" data-hire="">Попробовать за {{ aiOffer.price | rub }}</button><button class="btn btn--line" data-go="catalog">Выбрать сотрудника</button></div>
+    </div>
+  </section>
+
   <section class="sect" id="calc">
     <div class="sect__h">
       <div><h2>Посчитайте свою экономию в деньгах</h2><p>Сравните расходы на сотрудника-человека и AI-сотрудника. Меняйте параметры — расчёт обновляется сразу. Начальные значения примерные — подставьте свои.</p></div>
-      <button class="btn btn--glow" data-hire-calc="home">Нанять AI-сотрудника</button>
+      <button class="btn btn--glow" data-hire-calc="home">Попробовать за {{ aiOffer.price | rub }}</button>
     </div>
     <div class="panel" id="calcHome"></div>
   </section>
@@ -100,7 +131,7 @@ eleventyExcludeFromCollections: true
       <div class="step"><span class="step__n">03 · границы</span><h3>Задаём полномочия</h3><p>Что делает сам, что только готовит, где нужно ваше подтверждение и какой бюджет можно тратить.</p></div>
       <div class="step"><span class="step__n">04 · смена</span><h3>Выходит на работу</h3><p>Неделя пробной работы под присмотром, затем — ежедневные отчёты и разбор ошибок.</p></div>
     </div>
-    <div class="offer"><span class="egg egg--live" style="--s:54px"><b>AI</b></span><div><b>Настроим и подключим AI-сотрудника под ваши задачи</b><p>Знакомство, настройка, интеграции и пробная работа — одна-две недели от заявки.</p></div><button class="btn btn--glow" data-hire="">Нанять AI-сотрудника</button></div>
+    <div class="offer"><span class="egg egg--live" style="--s:54px"><b>AI</b></span><div><b>Первый AI-сотрудник за {{ aiOffer.days }} дня — {{ aiOffer.price | rub }}</b><p>День настройки, два дня работы на ваших задачах и разбор итогов. Полная настройка с интеграциями — от {{ (aiOffer.fullFrom / 1000) | round }} тыс. ₽.</p></div><button class="btn btn--glow" data-hire="">Попробовать</button></div>
   </section>
 
 </main>
@@ -123,7 +154,7 @@ eleventyExcludeFromCollections: true
 
 
 <noscript><p class="wrap" style="padding:20px 0">Каталог работает с включённым JavaScript. Оставить заявку можно письмом на <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a>.</p></noscript>
-<script id="ai-data" type="application/json">{{ { "endpoint": site.formEndpoint, "email": site.contact.email } | jsonScript | safe }}</script>
+<script id="ai-data" type="application/json">{{ { "endpoint": site.formEndpoint, "email": site.contact.email, "offer": aiOffer } | jsonScript | safe }}</script>
 <script src="/assets/js/ai.js" defer></script>
 </body>
 </html>

@@ -11,6 +11,8 @@
 
   var CFG = {};
   try { CFG = JSON.parse(document.getElementById('ai-data').textContent); } catch (e) { /* без адреса заявка покажет почту */ }
+  // Спецпредложение «первый AI-сотрудник за 3 дня» — src/_data/aiOffer.json
+  var OFFER = CFG.offer || { price: 15000, days: 3, fullFrom: 60000, subFrom: 2000, market: { from: 50000, to: 250000, days: '2–3 недели' } };
 
   // ---------- данные ------------------------------------------------------------
   // Цены — среднерыночные ориентиры (осень 2026), их можно править здесь:
@@ -221,8 +223,9 @@
         '<p>' + hl(p.result) + '</p>' +
         '<div class="chips">' + hitTasks.slice(0, 4).map(function (t) { return '<span class="chip">' + hl(t) + '</span>'; }).join('') + '</div>' +
         '<div class="prices"><div class="price price--ai"><small>AI-сотрудник · в месяц</small><b>' + krub(aiMonthly(p)) + '</b></div><div class="price price--h"><small>Человек · в месяц</small><b>' + krub(humanMonthly(p)) + '</b></div></div>' +
-        '<div class="card__f"><span>Запуск: <b style="color:var(--ink)">' + p.ai.days + '</b> · настройка от ' + krub(p.ai.setup) + '</span>' + lvl(p.level) + '</div>' +
-        '<div class="card__btns"><button class="btn btn--line btn--sm" data-open="' + p.id + '">Посмотреть</button><button class="btn btn--glow btn--sm" data-hire="' + p.id + '">Нанять</button></div></article>';
+        '<div class="card__f"><span>Полная настройка от ' + krub(p.ai.setup) + ' · ' + p.ai.days + '</span>' + lvl(p.level) + '</div>' +
+        '<div class="trialbar">Пробный запуск: ' + OFFER.days + ' дня за ' + rub(OFFER.price) + '</div>' +
+        '<div class="card__btns"><button class="btn btn--line btn--sm" data-open="' + p.id + '">Подробнее</button><button class="btn btn--glow btn--sm" data-hire="' + p.id + '">Попробовать</button></div></article>';
     }).join('') : '<div class="empty">По запросу «' + esc(S.q) + '» ничего не нашлось. Попробуйте «отчёты», «клиенты» или выберите направление выше.</div>';
   }
   $('#hints').innerHTML = HINTS.map(function (h) { return '<button class="hint" data-hint="' + esc(h) + '">' + esc(h) + '</button>'; }).join('');
@@ -326,7 +329,7 @@
       ' Качество и объём зависят от задач: ' + esc(p.limits.slice(1).join('; ').toLowerCase()) + '.</div>';
     var saveBox = '<div class="save' + (r.saveY > 0 ? '' : ' save--bad') + '"><div><small>' + (r.saveY > 0 ? 'Ваша экономия за год с учётом запуска' : 'AI-сотрудник выйдет дороже за год на') + '</small><b>' + rub(Math.abs(r.saveY)) + '</b>' +
       '<small>' + (r.saveM > 0 ? '≈ ' + rub(r.saveM) + ' в месяц · за ' + s.period + ' мес: ' + rub(r.hPeriod - r.aPeriod) : 'Попробуйте изменить параметры: долю работы AI или стоимость контроля') + '</small></div>' +
-      '<button class="btn btn--glow" data-hire-calc="' + key + '">Нанять AI-сотрудника</button></div>';
+      '<button class="btn btn--glow" data-hire-calc="' + key + '">Попробовать за ' + rub(OFFER.price) + '</button></div>';
     $('#res' + key).innerHTML = saveBox + '<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between">' + periodSeg + focusSeg + '</div>' + kpis + chart(s, r) + '<p class="note" style="margin:0">' + focusList + '</p>' + table + warn;
   }
   function mountCalc(el, key, pid, withSelect) { if (!CS[key] || CS[key].pid !== pid) calcState(key, pid); el.innerHTML = calcHTML(key, withSelect); renderResults(key); }
@@ -376,7 +379,7 @@
       '<div class="tabs" role="tablist">' + [['caps', 'Возможности'], ['start', 'Как начать'], ['calc', 'Калькулятор']].map(function (t) { return '<button role="tab" data-tab="' + t[0] + '" aria-selected="' + (D.tab === t[0]) + '">' + t[1] + '</button>'; }).join('') + '</div>' +
       '<div class="drawer__b">' + drawerBody(p) + '</div>' +
       '<div class="drawer__f">' + (p.demo ? '<button class="btn btn--line" data-hrdemo>Демо: запустить рекрутинг</button>' : '<button class="btn btn--line" data-quickdemo="' + p.id + '">Посмотреть демо-прогон</button>') +
-      '<button class="btn btn--line" data-wizard="' + p.id + '">Собрать конфигурацию</button><button class="btn btn--glow" data-hire="' + p.id + '">Нанять AI-сотрудника</button></div></aside></div>';
+      '<button class="btn btn--line" data-wizard="' + p.id + '">Собрать конфигурацию</button><button class="btn btn--glow" data-hire="' + p.id + '">Попробовать за ' + rub(OFFER.price) + '</button></div></aside></div>';
     if (D.tab === 'calc') mountCalc($('#calcDrawer'), 'd', p.id, false);
   }
   function openDrawer(id, tab) { lastFocus = document.activeElement; clearTimeout(simTimer); D = { id: id, tab: tab || 'caps' }; W = null; Sim = null; O = null; renderDrawer(); var x = $('.drawer .x'); if (x) x.focus(); }
@@ -441,7 +444,7 @@
       '<p class="note" style="margin:8px 0 0">' + (W.step === 0 ? 'Выбор профессии' : 'Шаг ' + cur + ' из ' + total) + '</p></div>' +
       '<div class="wiz__b">' + wizStep() + '</div>' +
       '<div class="wiz__f"><button class="btn btn--line" data-w-back' + (W.step === 0 ? ' disabled' : '') + '>Назад</button>' +
-      (last ? '<span style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end"><button class="btn btn--line" data-w-run>Запустить демонстрацию</button><button class="btn btn--glow" data-hire="' + W.pid + '">Заказать настройку</button></span>' : '<button class="btn" data-w-next' + (canNext ? '' : ' disabled') + '>' + (W.step === 5 ? 'Собрать конфигурацию' : 'Далее') + '</button>') + '</div></div></div>';
+      (last ? '<span style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end"><button class="btn btn--line" data-w-run>Запустить демонстрацию</button><button class="btn btn--glow" data-hire-full="' + W.pid + '">Заказать настройку</button></span>' : '<button class="btn" data-w-next' + (canNext ? '' : ' disabled') + '>' + (W.step === 5 ? 'Собрать конфигурацию' : 'Далее') + '</button>') + '</div></div></div>';
     var f = $('.wiz textarea, .wiz input'); if (f) f.focus(); else { var b = $('.wiz .x'); if (b) b.focus(); }
   }
   document.addEventListener('input', function (e) {
@@ -597,35 +600,40 @@
   // ---------- заявка «Нанять AI-сотрудника» ------------------------------------------------
   var O = null;
   function blankForm() { return { name: '', company: '', email: '', contact: '', note: '', consent: false, website: '' }; }
-  function openOrder(pid) {
+  function openOrder(pid, pack) {
     lastFocus = document.activeElement;
     clearTimeout(simTimer); D = null; W = null; Sim = null;
-    O = { pid: pid || '', sent: false, busy: false, err: '', opened: Date.now(), f: blankForm() };
+    O = { pid: pid || '', pack: pack || 'trial', sent: false, busy: false, err: '', opened: Date.now(), f: blankForm() };
     renderOrder();
   }
   function mailLink() { return CFG.email ? '<a href="mailto:' + esc(CFG.email) + '">' + esc(CFG.email) + '</a>' : ''; }
   function renderOrder() {
     var p = O.pid ? byId(O.pid) : null;
     var head = '<div class="wiz__h"><div style="display:flex;align-items:center;gap:10px">' + (p ? egg(p, 30, true) : '<span class="egg egg--live" style="--s:30px"></span>') +
-      '<h2 id="oTitle">Нанять AI-сотрудника</h2><button class="x" data-close aria-label="Закрыть"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>' +
-      '<p class="note" style="margin:8px 0 0">Заказ настройки и интеграции под ваши задачи. Менеджер свяжется с вами в течение рабочего дня.</p></div>';
+      '<h2 id="oTitle">' + (O.pack === 'trial' ? 'Пробный запуск AI-сотрудника' : 'Нанять AI-сотрудника') + '</h2><button class="x" data-close aria-label="Закрыть"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>' +
+      '<p class="note" style="margin:8px 0 0">' + (O.pack === 'trial' ? OFFER.days + ' дня, ' + rub(OFFER.price) + ': настроим агента под задачи вашего сотрудника. ' : 'Настройка и интеграция под ваши задачи. ') + 'Менеджер свяжется с вами в течение рабочего дня.</p></div>';
     var body, foot;
     if (O.sent) {
       body = '<div class="done">' + (p ? egg(p, 90, true) : '<span class="egg egg--live" style="--s:90px"><b>AI</b></span>') + '<p class="q">Заявка отправлена</p>' +
-        '<p class="qsub" style="max-width:44ch">' + (p ? 'AI ' + esc(p.name) + ': ' : '') + 'менеджер свяжется с вами, уточнит задачи и назначит день знакомства. Настройка и пробная неделя — около ' + (p ? p.ai.days : '7 дней') + '.</p></div>';
+        '<p class="qsub" style="max-width:44ch">' + (p ? 'AI ' + esc(p.name) + ': ' : '') + 'менеджер свяжется с вами, уточнит задачи и назначит день ' + (O.pack === 'trial' ? 'настройки. Через ' + OFFER.days + ' дня вы увидите агента в работе на своих задачах.' : 'знакомства. Настройка и пробная работа — ' + (p ? p.ai.days : 'одна-две недели') + '.') + '</p></div>';
       foot = '<span></span><span style="display:flex;gap:8px;flex-wrap:wrap">' + (p ? '<button class="btn btn--line" data-open="' + p.id + '">Посмотреть сотрудника</button>' : '') + '<button class="btn" data-close>Готово</button></span>';
     } else {
       var F = O.f;
-      var price = p ? '<div class="sum__b" style="margin-bottom:14px"><h3>Сколько стоит · ориентировочно</h3><ul><li>Настройка и интеграция, разово: от ' + rub(p.ai.setup) + '</li><li>Работа в месяц: ≈ ' + rub(aiMonthly(p)) + ' — подписки, инструменты, ' + p.ai.ctrl + ' ч контроля</li><li>Сотрудник-человек на эту роль: ≈ ' + rub(humanMonthly(p)) + ' в месяц</li><li>Запуск: ' + p.ai.days + '</li></ul></div>' : '';
+      var packs = '<div class="packs" role="radiogroup" aria-label="Что заказываете">' +
+        '<button class="opt" role="radio" data-o-pack="trial" aria-checked="' + (O.pack === 'trial') + '"><span><b>Пробный запуск · <span class="mono">' + rub(OFFER.price) + '</span></b><small>' + OFFER.days + ' дня, один агент в вашем браузере под 2–3 задачи</small></span></button>' +
+        '<button class="opt" role="radio" data-o-pack="full" aria-checked="' + (O.pack === 'full') + '"><span><b>Полная настройка · <span class="mono">от ' + rub(p ? p.ai.setup : OFFER.fullFrom) + '</span></b><small>с интеграциями в CRM, почту, 1С — ' + (p ? p.ai.days : 'одна-две недели') + '</small></span></button></div>';
+      var price = O.pack === 'trial'
+        ? '<div class="sum__b" style="margin:12px 0 14px"><h3>Пробный запуск · ' + OFFER.days + ' дня · ' + rub(OFFER.price) + '</h3><ul><li>День 1: настраиваем агента в вашем браузере и делаем первые задачи вместе</li><li>День 2: агент работает, вы проверяете, мы правим инструкции</li><li>День 3: итоги — эффект в часах и кого подключать следующим</li><li>Подписка на нейросеть — отдельно, от ' + rub(OFFER.subFrom) + ' в месяц</li><li class="mute">На рынке настройка ИИ-агента — ' + Math.round(OFFER.market.from / 1000) + '–' + Math.round(OFFER.market.to / 1000) + ' тыс. ₽ и ' + OFFER.market.days + '</li></ul></div>'
+        : (p ? '<div class="sum__b" style="margin:12px 0 14px"><h3>Сколько стоит · ориентировочно</h3><ul><li>Настройка и интеграция, разово: от ' + rub(p.ai.setup) + '</li><li>Работа в месяц: ≈ ' + rub(aiMonthly(p)) + ' — подписки, инструменты, поддержка, ' + p.ai.ctrl + ' ч контроля</li><li>Сотрудник-человек на эту роль: ≈ ' + rub(humanMonthly(p)) + ' в месяц</li><li>Запуск: ' + p.ai.days + '</li></ul></div>' : '<div style="height:12px"></div>');
       body = '<div class="form">' +
-        '<label class="lbl">Какого сотрудника нанимаете<select class="inp" data-o="pid"><option value="">Пока не знаю — помогите выбрать</option>' + P.map(function (x) { return '<option value="' + x.id + '"' + (x.id === O.pid ? ' selected' : '') + '>' + esc(x.name) + '</option>'; }).join('') + '</select></label>' + price +
+        '<label class="lbl">Какого сотрудника нанимаете<select class="inp" data-o="pid"><option value="">Пока не знаю — помогите выбрать</option>' + P.map(function (x) { return '<option value="' + x.id + '"' + (x.id === O.pid ? ' selected' : '') + '>' + esc(x.name) + '</option>'; }).join('') + '</select></label>' + packs + price +
         '<div class="labelrow"><label class="lbl">Ваше имя *<input class="inp" data-o="name" autocomplete="name" value="' + esc(F.name) + '"></label><label class="lbl">Компания *<input class="inp" data-o="company" autocomplete="organization" value="' + esc(F.company) + '"></label></div>' +
         '<div class="labelrow"><label class="lbl">Рабочая почта *<input class="inp" type="email" data-o="email" autocomplete="email" value="' + esc(F.email) + '"></label><label class="lbl">Телефон или Telegram<input class="inp" data-o="contact" autocomplete="tel" placeholder="+7 900 000-00-00 или @username" value="' + esc(F.contact) + '"></label></div>' +
         '<label class="lbl">Какие задачи хотите отдать<textarea data-o="note" style="min-height:80px" placeholder="' + (p ? esc(p.tasks.join(', ')) : 'Например: отвечать клиентам в Telegram и вести CRM') + '">' + esc(F.note) + '</textarea></label>' +
         '<div class="sr" aria-hidden="true"><label>Сайт<input tabindex="-1" autocomplete="off" data-o="website" value="' + esc(F.website) + '"></label></div>' +
         '<label class="check" style="font-size:13.5px"><input type="checkbox" data-o="consent"' + (F.consent ? ' checked' : '') + '><span>Даю <a href="/consent/" target="_blank" rel="noopener">согласие на обработку персональных данных</a> для ответа на заявку. С <a href="/privacy/" target="_blank" rel="noopener">политикой конфиденциальности</a> ознакомлен(а).</span></label>' +
         '<p style="margin:0;color:var(--bad);font-size:13.5px;font-weight:500" role="alert">' + O.err + '</p></div>';
-      foot = '<button class="btn btn--line" data-close>Отмена</button><button class="btn btn--glow" data-o-send' + (O.busy ? ' disabled' : '') + '>' + (O.busy ? 'Отправляем…' : 'Заказать настройку') + '</button>';
+      foot = '<button class="btn btn--line" data-close>Отмена</button><button class="btn btn--glow" data-o-send' + (O.busy ? ' disabled' : '') + '>' + (O.busy ? 'Отправляем…' : O.pack === 'trial' ? 'Записаться на пробный запуск' : 'Заказать настройку') + '</button>';
     }
     $('#layer').innerHTML = '<div class="modal" data-scrim="order"><div class="wiz" role="dialog" aria-modal="true" aria-labelledby="oTitle">' + head + '<div class="wiz__b">' + body + '</div><div class="wiz__f">' + foot + '</div></div></div>';
     if (!O.busy) { var first = O.err ? $('.wiz [role=alert]') : $('.wiz input.inp, .wiz .btn'); if (first && first.focus) first.focus(); }
@@ -639,7 +647,7 @@
     else O.err = '';
     if (O.err) { renderOrder(); return; }
     if (!CFG.endpoint) { O.err = 'Форма временно не работает. Напишите нам: ' + mailLink(); renderOrder(); return; }
-    var label = p ? 'AI ' + p.name : 'Не выбран — помочь выбрать';
+    var label = (O.pack === 'trial' ? 'Пробный запуск ' + OFFER.days + ' дня, ' + rub(OFFER.price) : 'Полная настройка') + ' · ' + (p ? 'AI ' + p.name : 'сотрудник не выбран');
     var payload = {
       type: 'ai_training', plan: label, name: F.name.trim(), org: F.company.trim(), email: F.email.trim(), phone: F.contact.trim(),
       message: F.note.trim(), note: 'AI-сотрудник — ' + label, website: F.website, elapsed: Date.now() - O.opened,
@@ -684,8 +692,10 @@
     if (d.open) { e.stopPropagation(); openDrawer(d.open); return; }
     if (d.close !== undefined) { closeLayer(); return; }
     if (d.tab) { D.tab = d.tab; renderDrawer(); var tb = $('[data-tab="' + d.tab + '"]'); if (tb) tb.focus(); return; }
-    if (d.hire !== undefined) { openOrder(d.hire); return; }
-    if (d.hireCalc) { openOrder(CS[d.hireCalc] ? CS[d.hireCalc].pid : ''); return; }
+    if (d.hire !== undefined) { openOrder(d.hire, 'trial'); return; }
+    if (d.hireFull !== undefined) { openOrder(d.hireFull, 'full'); return; }
+    if (d.hireCalc) { openOrder(CS[d.hireCalc] ? CS[d.hireCalc].pid : '', 'trial'); return; }
+    if (d.oPack) { O.pack = d.oPack; renderOrder(); var pk = $('[data-o-pack="' + d.oPack + '"]'); if (pk) pk.focus(); return; }
     if (d.wizard !== undefined) { openWizard(d.wizard); return; }
     if (d.oSend !== undefined) { if (!O.busy) sendOrder(); return; }
     if (d.hrdemo !== undefined) { openHR(); return; }

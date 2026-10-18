@@ -1,0 +1,7 @@
+{
+  "price": 15000,
+  "days": 3,
+  "fullFrom": 60000,
+  "subFrom": 2000,
+  "market": { "from": 50000, "to": 250000, "days": "2–3 недели" }
+}
