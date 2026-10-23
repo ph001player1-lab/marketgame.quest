@@ -3,18 +3,17 @@ layout: layouts/base.njk
 permalink: /agents/
 pageKind: agents
 hasPrograms: false
-title: "Карьера в Бизнес Квесте — вакансии B2B-менеджеров по продажам"
-ogTitle: "Вакансии: B2B-менеджер по продажам — без опыта и с опытом"
-description: "Удалённая работа в отделе продаж: B2B-менеджер без опыта (обучение с нуля, свободный график) и B2B-менеджер с опытом (оклад 100 000 ₽ + 15%, доход 150 000–350 000 ₽ в месяц). Калькулятор дохода, карта продаж на 90 дней и плейбук."
+title: "Карьера в Бизнес Квесте — агент по распространению B2B-продукта"
+ogTitle: "Вакансия: агент по распространению B2B-продукта — 50% с выручки и продлений"
+description: "Удалённая работа агентом по распространению B2B-продукта «Бизнес Квест»: без оклада, 50% с выручки по новым продажам и 50% с продлений, 3 500 ₽ за игру в роли ведущего, свободный график и обучение с нуля. Калькулятор дохода, карта продаж на 90 дней и плейбук."
 ---
-{# Страница карьеры: две вакансии отдела продаж, калькулятор дохода
-   менеджера с опытом, карта продаж и плейбук. Тексты вакансий, условия,
-   сценарий калькулятора и воронка — src/_data/agents.js; цены —
+{# Страница карьеры: вакансия «Агент по распространению B2B-продукта»,
+   калькулятор дохода агента, карта продаж и плейбук. Текст вакансии,
+   условия, сценарий калькулятора и воронка — src/_data/agents.js; цены —
    pricing.json. Считает и отправляет отклик assets/js/agents.js. #}
-{% set T = agents.terms.manager %}
-{% set J = agents.terms.junior %}
-{% set jRate = (J.rate * 100) | round %}
-{% set jRenew = (J.renewalRate * 100) | round %}
+{% set T = agents.terms.agent %}
+{% set V = agents.vacancies[0] %}
+{% set renew = (T.renewalRate * 100) | round %}
 {% set D = agents.defaults %}
 {% set FN = agents.funnel %}
 {% set P = pricing.packages %}
@@ -25,17 +24,17 @@ description: "Удалённая работа в отделе продаж: B2B-
 <section class="hero">
   <div class="wrap hero__in">
     <div class="hero__text">
-      <span class="eyebrow">Карьера · Отдел продаж</span>
+      <span class="eyebrow">Карьера · Агентам</span>
       <h1>Продавайте «Бизнес Квест» <span>сообществам, компаниям и банкам</span></h1>
-      <p class="lede">Мы разрабатываем цифровые бизнес-симуляторы для бизнеса и расширяем команду отдела продаж. Две открытые вакансии: для тех, кто хочет освоить B2B-продажи с нуля, и для опытных B2B-менеджеров. Работа удалённая.</p>
+      <p class="lede">Мы разрабатываем цифровые бизнес-симуляторы для бизнеса и ищем агентов по распространению B2B-продукта. Без оклада: {{ rate }}% с выручки по каждой новой продаже и {{ renew }}% с каждого продления. Работа удалённая, график свободный.</p>
       <div class="btns">
-        <a class="btn" href="#vacancies">Смотреть вакансии</a>
+        <a class="btn" href="#vacancies">Смотреть вакансию</a>
         <a class="btn btn--line" href="#apply">Откликнуться</a>
       </div>
       <p class="undercta">Удалённо · вся Россия · готовая база потенциальных клиентов и обучение продукту.</p>
     </div>
     <aside class="glance" aria-labelledby="glanceTitle">
-      <p class="glance__t" id="glanceTitle">Две открытые вакансии</p>
+      <p class="glance__t" id="glanceTitle">Открытая вакансия</p>
       {% for v in agents.vacancies %}
       <div class="glance__role">
         <p class="glance__name"><a href="#vac-{{ v.key }}">{{ v.title }}</a></p>
@@ -50,8 +49,8 @@ description: "Удалённая работа в отделе продаж: B2B-
 
 <section class="sect" id="vacancies" aria-labelledby="vacTitle">
   <div class="wrap">
-    <span class="eyebrow">Вакансии</span>
-    <h2 id="vacTitle">Открытые вакансии</h2>
+    <span class="eyebrow">Вакансия</span>
+    <h2 id="vacTitle">Открытая вакансия</h2>
     <p class="lede">«Бизнес Квест» — живой бизнес-симулятор: от 4 до 20 команд управляют конкурирующими компаниями на одном рынке — цена, реклама, производство, кредиты — и после каждого хода видят, как меняется рейтинг. Бизнес-сообщества и компании проводят игру для своих участников, банки её спонсируют. Знакомство с клиентом начинается с бесплатной демо-игры.</p>
 
     <div class="roles">
@@ -78,7 +77,7 @@ description: "Удалённая работа в отделе продаж: B2B-
         </details>
 
         <div class="btns">
-          <a class="btn" href="#apply" data-apply-role="{{ v.key }}">Откликнуться</a>
+          <a class="btn" href="#apply">Откликнуться</a>
           {% if v.url %}<a class="btn btn--line" href="{{ v.url }}" target="_blank" rel="noopener">Открыть на hh.ru</a>{% endif %}
         </div>
       </article>
@@ -92,15 +91,9 @@ description: "Удалённая работа в отделе продаж: B2B-
   <div class="wrap">
     <span class="eyebrow">Калькулятор дохода</span>
     <h2 id="calcTitle">Сколько можно заработать за первые 90 дней</h2>
-    <p class="lede">Выберите вакансию и введите продажи, которые ожидаете за 90 дней. Цены — те же, что на страницах программ.</p>
+    <p class="lede">Агент получает {{ rate }}% с выручки по новым продажам, {{ renew }}% с продлений и {{ T.perGame | rub }} за каждую игру, которую проведёт как ведущий. Введите продажи, которые ожидаете за 90 дней. Цены — те же, что на страницах программ.</p>
 
-    <div class="calc ecalc" data-ecalc data-role="junior">
-      <div class="ecalc__roles" role="radiogroup" aria-label="Вакансия">
-        <label class="ecalc__role"><input type="radio" name="calcRole" value="junior" checked>
-          <span><b>Без оклада</b><small>{{ jRate }}% с новых продаж, {{ jRenew }}% с продлений и {{ J.perGame | rub }} за каждую игру, которую вы проведёте как ведущий</small></span></label>
-        <label class="ecalc__role"><input type="radio" name="calcRole" value="senior">
-          <span><b>С окладом</b><small>{{ T.salary | rub }} в месяц и {{ rate }}% с каждого контракта, нового и продления</small></span></label>
-      </div>
+    <div class="calc ecalc" data-ecalc>
 
       <div class="calc__presets" role="group" aria-label="Пример">
         <span class="calc__presets-t">Пример:</span>
@@ -132,7 +125,7 @@ description: "Удалённая работа в отделе продаж: B2B-
             <legend>Подробности</legend>
             <div class="ecalc__fields">
               <label class="calc__field">Сообществ в одной сделке с банком<input type="number" name="bankChambers" value="{{ D.bankChambers }}" min="{{ B.volumeFrom }}" max="200" step="1" inputmode="numeric"></label>
-              <label class="calc__field" data-only="junior">Игр, которые вы проведёте как ведущий, по {{ J.perGame | rub }}<input type="number" name="hosted" value="{{ D.hosted }}" min="0" max="999" step="1" inputmode="numeric"></label>
+              <label class="calc__field">Игр, которые вы проведёте как ведущий, по {{ T.perGame | rub }}<input type="number" name="hosted" value="{{ D.hosted }}" min="0" max="999" step="1" inputmode="numeric"></label>
               <label class="calc__field">Годовые контракты, которые продлеваются, % (допущение)<input type="number" name="renew" value="{{ D.renew }}" min="0" max="100" step="5" inputmode="numeric"></label>
             </div>
           </fieldset>
@@ -143,16 +136,14 @@ description: "Удалённая работа в отделе продаж: B2B-
           <p class="calc__total plus" data-out="quarter">—</p>
           <p class="calc__verdict" data-out="verdict"></p>
           <dl class="calc__stats">
-            <div data-only="senior"><dt>Оклад за 3 месяца</dt><dd data-out="salary">—</dd></div>
-            <div><dt>Процент с продаж, <span data-out="rate">{{ jRate }}%</span></dt><dd data-out="commission">—</dd></div>
-            <div data-only="junior"><dt>Игры в роли ведущего</dt><dd data-out="hosting">—</dd></div>
+            <div><dt>{{ rate }}% с выручки по продажам</dt><dd data-out="commission">—</dd></div>
+            <div><dt>Игры в роли ведущего</dt><dd data-out="hosting">—</dd></div>
           </dl>
           <div class="ecalc__more">
             <div>
               <p class="calc__lab">В среднем в месяц</p>
               <p class="ecalc__num" data-out="month">—</p>
-              <p class="ecalc__sub" data-only="senior">Ориентир вакансии — {{ T.income[0] | rub }}–{{ T.income[1] | rub }}</p>
-              <p class="ecalc__sub" data-only="junior">Без оклада: доход зависит только от продаж</p>
+              <p class="ecalc__sub">Без оклада: доход зависит только от продаж</p>
             </div>
             <div>
               <p class="calc__lab">Продления на второй год</p>
@@ -161,7 +152,7 @@ description: "Удалённая работа в отделе продаж: B2B-
             </div>
           </div>
           <p class="ecalc__warn">Это пример, а не гарантия дохода.</p>
-          <p class="calc__fine">Процент считается от суммы контракта и выплачивается по мере оплаты клиентом. Второй год — продления годовых программ и спонсорства банков, проданных за первые 12 месяцев, при тех же продажах каждые 90 дней.</p>
+          <p class="calc__fine">Процент считается от выручки по контракту и выплачивается по мере оплаты клиентом. Второй год — продления годовых программ и спонсорства банков, проданных за первые 12 месяцев, при тех же продажах каждые 90 дней.</p>
         </div>
       </div>
       <noscript><p class="calc__take">Включите JavaScript, чтобы пользоваться калькулятором.</p></noscript>
@@ -261,19 +252,12 @@ description: "Удалённая работа в отделе продаж: B2B-
       <span class="eyebrow">Отклик</span>
       <h2 id="applyTitle">Откликнуться на вакансию</h2>
       <p class="lede">Несколько строк о вас: где вы живёте, что продавали и с какими организациями работали. Названия клиентов не нужны.</p>
-      <p class="note">Удобнее по почте? Пришлите резюме на <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a> и укажите в теме название вакансии.</p>
+      <p class="note">Удобнее по почте? Пришлите резюме на <a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a> и укажите в теме «{{ V.title }}».</p>
     </div>
 
     <div class="apply">
       <form class="apply__form" data-apply novalidate>
-        <fieldset class="lf__row lf__type">
-          <legend>Вакансия</legend>
-          <div class="seg seg--sm seg--two">
-            {% for v in agents.vacancies %}
-            <label class="seg__opt"><input type="radio" name="role" value="{{ v.key }}" data-label="{{ v.title }}"><span>{{ v.tag }}</span></label>
-            {% endfor %}
-          </div>
-        </fieldset>
+        <input type="hidden" name="role" value="{{ V.title }}">
 
         <div class="lf__two">
           <div class="lf__row"><label for="apName">Имя и фамилия</label><input id="apName" name="name" type="text" autocomplete="name" required></div>

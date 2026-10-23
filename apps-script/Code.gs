@@ -544,7 +544,7 @@ var CRM_CODEC = {
 var CRM_DATES = { team: ['added'], clients: ['created', 'lostAt', 'last'], games: ['at', 'createdAt', 'updatedAt'], pays: ['date', 'paidAt', 'createdAt'], log: ['date'] };
 var CRM_NUMS = { team: ['rate'], games: ['people', 'participants'], pays: ['amount'] };
 var CRM_STAGES = [['demo', 'Демо назначено'], ['demo_done', 'Демо проведено'], ['pilot', 'Пробная игра'], ['single', 'Разовая игра'], ['annual', 'Годовой контракт'], ['lost', 'Отказ / пауза']];
-var CRM_PLANS = { '0.2': 'без фикса, 20%', '0.15': 'фикс + 15%' };
+var CRM_PLANS = { '0.5': 'агент, 50%' };
 
 // Часовые пояса, из которых менеджер выбирает время игры. Тот же список —
 // в src/assets/js/crm.js (TZ_RU и TZ_WORLD). [пояс, город, Россия ли]
@@ -1289,7 +1289,7 @@ var CRM_ACTIONS = {
     if (!crmValidEmail(email)) return { error: 'Проверьте адрес почты.' };
     if (crmFindUser(team, email)) return { error: 'Эта почта уже в списке.' };
     var role = CRM_ROLE[d.role] ? d.role : 'manager';
-    var rate = role === 'manager' ? (Number(d.rate) === 0.15 ? 0.15 : 0.2) : '';
+    var rate = role === 'manager' ? 0.5 : '';
     crmSave(team, { email: email, name: name, role: role, plan: role === 'manager' ? CRM_PLANS[String(rate)] : '', rate: rate, active: true, added: Date.now() });
     crmLog(me.email, 'Добавлен сотрудник', name + ' · ' + email + ' · ' + CRM_ROLE[role]);
     return {};

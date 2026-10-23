@@ -1,6 +1,7 @@
-/* Страница /agents/: вакансии отдела продаж, калькулятор дохода менеджера
-   с опытом (оклад + процент с контрактов), карта продаж на 90 дней,
-   плейбук по профилям и форма отклика на вакансию.
+/* Страница /agents/: вакансия «Агент по распространению B2B-продукта»,
+   калькулятор дохода агента (процент с выручки, процент с продлений и
+   плата за игры в роли ведущего), карта продаж на 90 дней, плейбук по
+   профилям и форма отклика.
 
    Условия, сценарий по умолчанию и допущения воронки лежат в самой
    странице блоком <script id="mg-agents"> (src/_data/agents.js), цены
@@ -31,18 +32,13 @@
     return Math.min(max, Math.max(min, n));
   }
 
-  // --- калькулятор дохода менеджера с опытом --------------------------------
+  // --- калькулятор дохода агента -------------------------------------------
 
   var calc = doc.querySelector('[data-ecalc]');
   var cform = calc && calc.querySelector('[data-ecalc-form]');
   var out = {};
   var presetBtn = calc && calc.querySelector('[data-preset]');
-  var TERMS = { junior: A.terms.junior, senior: A.terms.manager };
-
-  function role() {
-    var r = calc.querySelector('input[name="calcRole"]:checked');
-    return r ? r.value : 'junior';
-  }
+  var T = A.terms.agent;
 
   if (calc) {
     each(calc.querySelectorAll('[data-out]'), function (el) { out[el.getAttribute('data-out')] = el; });
@@ -74,10 +70,7 @@
   }
 
   function render() {
-    var r = role();
-    var T = TERMS[r];
     var v = values();
-    calc.setAttribute('data-role', r);
 
     var bankValue = v.bank * v.bankChambers * PRICE.bank;
     var value = v.pilot * PRICE.pilot + v.signature * PRICE.signature + v.annual * PRICE.annual + bankValue;
@@ -86,23 +79,20 @@
     var sales = v.pilot + v.signature + v.annual + v.bank;
 
     var commission = value * T.rate;
-    var salary = T.salary * MONTHS;
-    var hosting = r === 'junior' ? v.hosted * T.perGame : 0;
-    var quarter = salary + commission + hosting;
+    var hosting = v.hosted * T.perGame;
+    var quarter = commission + hosting;
     // Второй год: процент с продлений контрактов, проданных за первые
     // 12 месяцев (те же продажи каждые 90 дней)
     var year2 = yearly * 4 * T.renewalRate * v.renew / 100;
 
     out.quarter.textContent = money(quarter);
-    out.salary.textContent = money(salary);
     out.commission.textContent = money(commission);
-    out.rate.textContent = Math.round(T.rate * 100) + '%';
     out.hosting.textContent = money(hosting);
     out.month.textContent = money(quarter / MONTHS);
     out.year2.textContent = money(year2);
 
     var verdict = plural(sales, 'продажа', 'продажи', 'продаж') + ' — контракты на ' + money(value) + '.';
-    if (r === 'junior' && v.hosted) verdict += ' Плюс ' + plural(v.hosted, 'игра', 'игры', 'игр') + ' в роли ведущего.';
+    if (v.hosted) verdict += ' Плюс ' + plural(v.hosted, 'игра', 'игры', 'игр') + ' в роли ведущего.';
     out.verdict.textContent = verdict;
 
     out.year2note.textContent = yearly
@@ -126,7 +116,6 @@
       this.value = values().bankChambers;
       render();
     });
-    each(calc.querySelectorAll('input[name="calcRole"]'), function (i) { i.addEventListener('change', render); });
     if (presetBtn) presetBtn.addEventListener('click', applyDefaults);
     render();
   }
@@ -191,11 +180,6 @@
     if (html) statusBox.innerHTML = html; else statusBox.textContent = text;
   }
 
-  function setApplyRole(r) {
-    if (!form) return;
-    each(form.querySelectorAll('input[name="role"]'), function (i) { i.checked = i.value === r; });
-  }
-
   function toggleExtras() {
     var f = form.elements;
     form.querySelector('[data-ap-country]').hidden = f.region.value !== 'INTL';
@@ -232,10 +216,8 @@
   function validate() {
     each(form.querySelectorAll('.lf__row--bad'), function (r) { r.classList.remove('lf__row--bad'); });
     var f = form.elements;
-    var roleInput = form.querySelector('input[name="role"]:checked');
     var email = f.email.value.trim();
 
-    if (!roleInput) return bad(form.querySelector('input[name="role"]'), 'Пожалуйста, выберите вакансию.');
     if (!f.name.value.trim()) return bad(f.name, 'Пожалуйста, укажите имя.');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return bad(f.email, 'Проверьте адрес электронной почты.');
     if (!f.consent.checked) {
@@ -260,7 +242,7 @@
 
     return {
       type: 'agent_application',
-      role: roleInput.getAttribute('data-label') || roleInput.value,
+      role: f.role.value,
       name: f.name.value.trim(),
       email: email,
       phone: f.phone.value.trim(),
@@ -334,12 +316,10 @@
     prefill();
   }
 
-  // --- кнопки, которые выбирают роль или профиль ----------------------------
+  // --- кнопки «Откликнуться с этим профилем» --------------------------------
 
   doc.addEventListener('click', function (event) {
-    var el = event.target.closest('[data-apply-role], [data-apply-profile]');
-    if (!el) return;
-    if (el.hasAttribute('data-apply-role')) setApplyRole(el.getAttribute('data-apply-role'));
-    if (el.hasAttribute('data-apply-profile') && form) form.elements.profile.value = el.getAttribute('data-apply-profile');
+    var el = event.target.closest('[data-apply-profile]');
+    if (el && form) form.elements.profile.value = el.getAttribute('data-apply-profile');
   });
 })();

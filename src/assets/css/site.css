@@ -471,6 +471,8 @@ button.badge:hover{background:var(--green);color:#fff;border-color:var(--green)}
 
 .roles{display:grid;gap:16px;margin-top:clamp(26px,4vw,40px)}
 @media(min-width:980px){.roles{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}}
+/* одна открытая вакансия — карточка во всю ширину, но строки не длиннее читаемых */
+.roles>.role:only-child{grid-column:1/-1;max-width:880px}
 .role{border:2px solid var(--ink);background:var(--paper);padding:clamp(20px,3vw,30px);scroll-margin-top:16px}
 .role__name{font-family:var(--disp);font-weight:700;font-size:clamp(21px,2.4vw,26px);letter-spacing:-.02em;line-height:1.15;margin:0 0 6px}
 .role__meta{font-size:14px;font-weight:600;color:var(--mute);margin:0 0 18px}
@@ -508,25 +510,15 @@ button.badge:hover{background:var(--green);color:#fff;border-color:var(--green)}
 .newsitem--founder p{color:var(--dark-mute)}
 .newsitem--founder .more{color:#FF9B82}
 
-.ecalc__roles{display:grid;gap:10px;margin-bottom:18px}
-@media(min-width:720px){.ecalc__roles{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.ecalc__role{position:relative;display:block;cursor:pointer}
-.ecalc__role input{position:absolute;opacity:0;pointer-events:none}
-.ecalc__role>span{display:block;height:100%;padding:16px 18px;border:1.5px solid rgba(242,241,236,.28);border-radius:3px;background:#1E1E26;transition:border-color .15s,background .15s}
-.ecalc__role:hover>span{border-color:rgba(242,241,236,.6)}
-.ecalc__role b{display:block;font-family:var(--disp);font-weight:700;font-size:17px;letter-spacing:-.015em;text-transform:uppercase;color:var(--paper);margin-bottom:4px}
-.ecalc__role small{display:block;font-size:14.5px;line-height:1.45;color:var(--dark-mute)}
-.ecalc__role input:checked+span{border-color:var(--red);background:rgba(216,66,42,.16);box-shadow:inset 0 0 0 1px var(--red)}
-.ecalc__role input:focus-visible+span{outline:3px solid var(--red);outline-offset:2px}
-.ecalc[data-role="junior"] [data-only="senior"],.ecalc[data-role="senior"] [data-only="junior"]{display:none}
 .ecalc__table td:nth-child(2){font-size:13.5px;white-space:normal;line-height:1.35}
 .ecalc__table td:last-child{width:96px}
 .ecalc__fields{display:grid;gap:12px;align-items:end}
 @media(min-width:560px){.ecalc__fields{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}}
 .ecalc__fields .calc__field{line-height:1.35}
-.ecalc__more{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
-.ecalc__more>div{border:1px solid rgba(242,241,236,.16);padding:14px}
-.ecalc__num{font-family:var(--disp);font-weight:700;font-size:clamp(20px,2.1vw,24px);letter-spacing:-.025em;line-height:1.1;margin:0 0 6px;font-variant-numeric:tabular-nums;color:var(--paper);white-space:nowrap}
+.ecalc__more{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px;margin-top:18px}
+.ecalc__more>div{border:1px solid rgba(242,241,236,.16);padding:14px;container-type:inline-size}
+/* сумма уменьшается по ширине плитки, чтобы «1 200 000 ₽» не вылезало за рамку */
+.ecalc__num{font-family:var(--disp);font-weight:700;font-size:clamp(20px,2.1vw,24px);font-size:clamp(14px,12.5cqi,24px);letter-spacing:-.025em;line-height:1.1;margin:0 0 6px;font-variant-numeric:tabular-nums;color:var(--paper);white-space:nowrap}
 .ecalc__sub{font-size:13px;color:var(--dark-mute);margin:0;line-height:1.4}
 .ecalc__warn{margin:16px 0 0;padding:10px 12px;border-left:3px solid #E9C27A;background:rgba(233,194,122,.08);font-size:14.5px;font-weight:700;color:var(--paper)}
 
